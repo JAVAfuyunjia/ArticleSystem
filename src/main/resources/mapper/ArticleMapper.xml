@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.articlesystem.dao.ArticleMapper">
+  <resultMap id="BaseResultMap" type="com.articlesystem.entity.Article">
+    <result column="article_id" jdbcType="INTEGER" property="articleId" />
+    <result column="article_user_id" jdbcType="INTEGER" property="articleUserId" />
+    <result column="article_title" jdbcType="VARCHAR" property="articleTitle" />
+    <result column="article_is_comment" jdbcType="INTEGER" property="articleIsComment" />
+    <result column="article_create_time" jdbcType="TIMESTAMP" property="articleCreateTime" />
+    <result column="article_thumbnail" jdbcType="VARCHAR" property="articleThumbnail" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.articlesystem.entity.ArticleWithBLOBs">
+    <result column="article_content" jdbcType="LONGVARCHAR" property="articleContent" />
+    <result column="article_summary" jdbcType="LONGVARCHAR" property="articleSummary" />
+  </resultMap>
+  <sql id="Blob_Column_List">
+    article_content, article_summary
+  </sql>
+  <insert id="insert" parameterType="com.articlesystem.entity.ArticleWithBLOBs">
+    insert into as_article (article_id, article_user_id, article_title, 
+      article_is_comment, article_create_time, 
+      article_thumbnail, article_content, article_summary
+      )
+    values (#{articleId,jdbcType=INTEGER}, #{articleUserId,jdbcType=INTEGER}, #{articleTitle,jdbcType=VARCHAR}, 
+      #{articleIsComment,jdbcType=INTEGER}, #{articleCreateTime,jdbcType=TIMESTAMP}, 
+      #{articleThumbnail,jdbcType=VARCHAR}, #{articleContent,jdbcType=LONGVARCHAR}, #{articleSummary,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.articlesystem.entity.ArticleWithBLOBs">
+    insert into as_article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="articleId != null">
+        article_id,
+      </if>
+      <if test="articleUserId != null">
+        article_user_id,
+      </if>
+      <if test="articleTitle != null">
+        article_title,
+      </if>
+      <if test="articleIsComment != null">
+        article_is_comment,
+      </if>
+      <if test="articleCreateTime != null">
+        article_create_time,
+      </if>
+      <if test="articleThumbnail != null">
+        article_thumbnail,
+      </if>
+      <if test="articleContent != null">
+        article_content,
+      </if>
+      <if test="articleSummary != null">
+        article_summary,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="articleId != null">
+        #{articleId,jdbcType=INTEGER},
+      </if>
+      <if test="articleUserId != null">
+        #{articleUserId,jdbcType=INTEGER},
+      </if>
+      <if test="articleTitle != null">
+        #{articleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="articleIsComment != null">
+        #{articleIsComment,jdbcType=INTEGER},
+      </if>
+      <if test="articleCreateTime != null">
+        #{articleCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="articleThumbnail != null">
+        #{articleThumbnail,jdbcType=VARCHAR},
+      </if>
+      <if test="articleContent != null">
+        #{articleContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="articleSummary != null">
+        #{articleSummary,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.articlesystem.mapper.CommentMapper">
+  <resultMap id="BaseResultMap" type="com.articlesystem.entity.Comment">
+    <result column="comment_id" jdbcType="INTEGER" property="commentId" />
+    <result column="comment_pid" jdbcType="INTEGER" property="commentPid" />
+    <result column="comment_pname" jdbcType="VARCHAR" property="commentPname" />
+    <result column="comment_article_id" jdbcType="INTEGER" property="commentArticleId" />
+    <result column="comment_author_name" jdbcType="VARCHAR" property="commentAuthorName" />
+    <result column="comment_author_url" jdbcType="VARCHAR" property="commentAuthorUrl" />
+    <result column="comment_author_avatar" jdbcType="VARCHAR" property="commentAuthorAvatar" />
+    <result column="comment_content" jdbcType="VARCHAR" property="commentContent" />
+    <result column="comment_create_time" jdbcType="TIMESTAMP" property="commentCreateTime" />
+    <result column="comment_role" jdbcType="INTEGER" property="commentRole" />
+    <result column="comment_user_id" jdbcType="INTEGER" property="commentUserId" />
+  </resultMap>
+  <insert id="insert" parameterType="com.articlesystem.entity.Comment">
+    insert into as_comment (comment_id, comment_pid, comment_pname, 
+      comment_article_id, comment_author_name, comment_author_url, 
+      comment_author_avatar, comment_content, comment_create_time, 
+      comment_role, comment_user_id)
+    values (#{commentId,jdbcType=INTEGER}, #{commentPid,jdbcType=INTEGER}, #{commentPname,jdbcType=VARCHAR}, 
+      #{commentArticleId,jdbcType=INTEGER}, #{commentAuthorName,jdbcType=VARCHAR}, #{commentAuthorUrl,jdbcType=VARCHAR}, 
+      #{commentAuthorAvatar,jdbcType=VARCHAR}, #{commentContent,jdbcType=VARCHAR}, #{commentCreateTime,jdbcType=TIMESTAMP}, 
+      #{commentRole,jdbcType=INTEGER}, #{commentUserId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.articlesystem.entity.Comment">
+    insert into as_comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="commentId != null">
+        comment_id,
+      </if>
+      <if test="commentPid != null">
+        comment_pid,
+      </if>
+      <if test="commentPname != null">
+        comment_pname,
+      </if>
+      <if test="commentArticleId != null">
+        comment_article_id,
+      </if>
+      <if test="commentAuthorName != null">
+        comment_author_name,
+      </if>
+      <if test="commentAuthorUrl != null">
+        comment_author_url,
+      </if>
+      <if test="commentAuthorAvatar != null">
+        comment_author_avatar,
+      </if>
+      <if test="commentContent != null">
+        comment_content,
+      </if>
+      <if test="commentCreateTime != null">
+        comment_create_time,
+      </if>
+      <if test="commentRole != null">
+        comment_role,
+      </if>
+      <if test="commentUserId != null">
+        comment_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="commentId != null">
+        #{commentId,jdbcType=INTEGER},
+      </if>
+      <if test="commentPid != null">
+        #{commentPid,jdbcType=INTEGER},
+      </if>
+      <if test="commentPname != null">
+        #{commentPname,jdbcType=VARCHAR},
+      </if>
+      <if test="commentArticleId != null">
+        #{commentArticleId,jdbcType=INTEGER},
+      </if>
+      <if test="commentAuthorName != null">
+        #{commentAuthorName,jdbcType=VARCHAR},
+      </if>
+      <if test="commentAuthorUrl != null">
+        #{commentAuthorUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="commentAuthorAvatar != null">
+        #{commentAuthorAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="commentContent != null">
+        #{commentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="commentCreateTime != null">
+        #{commentCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentRole != null">
+        #{commentRole,jdbcType=INTEGER},
+      </if>
+      <if test="commentUserId != null">
+        #{commentUserId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

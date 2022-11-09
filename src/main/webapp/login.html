@@ -1,0 +1,421 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <script src="resource/assets/js/jquery-1.12.4.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="resource/assets/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <link href="resource/assets/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="resource/assets/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="resource/assets/layui/css/layui.css"/>
+    <style type="text/css">
+        html,
+        body {
+            background: url(resource/assets/img/longingBg2.jpg);
+            width:100%;
+            height:100%;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            background-attachment: fixed;
+        }
+
+        /* 导航栏设置样式 */
+        ul {
+
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 75px;
+            overflow: auto;
+        }
+
+        ul li {
+            height: 100%;
+            float: left;
+        }
+
+        ul li p {
+            font-size: 350%;
+            font-family: KaiTi;
+            font-style: normal;
+            color: highlighttext;
+        }
+
+        ul li a {
+            display: block;
+            color: highlighttext;
+            text-align: center;
+            padding: 7px;
+            padding-bottom: 3px;
+            text-decoration: none;
+            font-family: KaiTi;
+            font-size: 30px;
+        }
+
+        ul li a.active {
+            color: #E38D13;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .clearFix::after {
+            content: '';
+            clear: both;
+            display: block;
+        }
+
+        .top {
+            position: absolute;
+            z-index: 99;
+            text-align: center;
+            left: 0;
+            right: 0;
+        }
+
+        .topNav {
+            width: 100%;
+            height: 20%;
+            margin: 0 auto;
+            padding-top: 5px;
+        }
+
+        /*登录框  */
+        .login-box {
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            position: absolute;
+            top: 50%;
+            margin-top: -200px;
+
+        }
+
+        @media screen and (min-width: 500px) {
+            .login-box {
+                left: 50%;
+                /*设置负值，为要定位子盒子的一半宽度*/
+                margin-left: -250px;
+            }
+        }
+
+        .form {
+            width: 80%;
+            max-width: 500px;
+            height: 275px;
+            margin: 25px auto 0px auto;
+            padding-top: 25px;
+        }
+
+        .login-content {
+            height: 300px;
+            width: 100%;
+            max-width: 500px;
+            background-color: rgba(255, 250, 2550, .6);
+            float: left;
+        }
+
+        .input-group {
+            margin: 0px 0px 30px 0px !important;
+        }
+
+        .form-control,
+        .input-group {
+            height: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 0px !important;
+        }
+
+        .login-title {
+            padding: 20px 10px;
+            background-color: #0C0C0C;
+        }
+
+        .login-title h1 {
+            margin-top: 10px !important;
+        }
+
+        .login-title small {
+            color: #fff;
+        }
+
+        .link p {
+            line-height: 20px;
+            margin-top: 30px;
+        }
+
+        .btn-sm {
+            padding: 8px 24px !important;
+            font-size: 16px !important;
+        }
+        .modal-content{
+            background: url(resource/assets/img/longingBg2.jpg);
+            width:100%;
+            height:50%;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+    </style>
+
+</head>
+<body>
+<!-- 标题 -->
+<div class="top">
+</div>
+<!--登录模态框  -->
+<div class="login-box">
+    <div class="login-title text-center">
+        <h1>
+            <small>登录写文章</small>
+        </h1>
+    </div>
+    <div class="login-content ">
+        <div class="form">
+            <form method="post" id="form">
+                <input hidden="hidden" type="text" value="checkLogin" name="method">
+                <div class="form-group">
+                    <div class="col-xs-12  ">
+                        <div class="input-group">
+									<span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-user"></span></span> <input type="text" id="name"
+                                                                                                   name="logname"
+                                                                                                   class="form-control"
+                                                                                                   placeholder="用户名">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12  ">
+                        <div class="input-group">
+									<span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-lock"></span></span> <input type="password"
+                                                                                                   id="password"
+                                                                                                   name="logpassword"
+                                                                                                   class="form-control"
+                                                                                                   placeholder="密码">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group form-actions">
+                    <div class="col-xs-4 col-xs-offset-4 ">
+                        <button type="button" class="btn btn-sm btn-info" id="submit-button">
+                            <span class="glyphicon glyphicon-off"></span> 登录
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-6 link">
+                        <p class="text-center remove-margin">
+                            <small></small>
+                        </p>
+                    </div>
+                    <div class="col-xs-6 link">
+                        <p class="text-center remove-margin">
+                            <small>还没注册?</small>
+                            <button type="button" class="btn btn-primary" id="registerUser">注冊</button>
+                        </p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- 用户注册Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" >
+            <div class="modal-header" style="border: 0; color: white;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <!--用户注册表单  -->
+            <div class="modal-body">
+                <form class="form-horizontal" id="registerform_add">
+                    <div class="form-group">
+                        <label for="registerName_input" class="col-sm-2 control-label"
+                               style="font-size: 13px;color: #050505">用户名:</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="loginName" class="form-control" id="registerName_input"
+                                   placeholder="张三" > <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword_input" class="col-sm-2 control-label"
+                               style="font-size: 13px;color: #050505">电话号码：</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="loginPhoneNum" class="form-control" id="register_PhoneNum" > <span
+                                class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword_input" class="col-sm-2 control-label"
+                               style="font-size: 13px;color: #050505">输入密码：</label>
+                        <div class="col-sm-10">
+                            <input type="password" name="loginPassword" class="form-control"
+                                   id="registerPassword_input" > <span class="help-block"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword_input" class="col-sm-2 control-label"
+                               style="font-size: 13px;color: #050505">确认密码：</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="registerPassword_input2" > <span
+                                class="help-block"></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer" style="border: 0;">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="registerSave">立即注册</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    // 登录验证
+    $("#submit-button").click(function () {
+        let password = $("#password").val();
+        let name = $("#name").val();
+
+        if(name == null || name == ''){
+            layer.msg("用户名不能为空！！")
+        }else if(password == null || password == ''){
+            layer.msg("密码不能为空！！")
+        }else{
+
+        $.ajax({
+            url : "userServlet?method=checkLogin",
+            type : "POST",
+            dataType : "json",
+            data : $("#form").serialize(),
+            success : function (result) {
+                console.log(result.code);
+                if (result.code == 200){
+                    layer.msg("登录成功！")
+                    window.location.href = "manager?method=managerHome";
+                }else if (result.code == 100){
+                    layer.msg("用户名或密码错误！")
+                }
+
+            }
+
+        });
+
+        }
+    });
+
+
+    //点击注册按钮
+    $("#registerUser").click(function () {
+        //清空表单同时清空样式
+        reset_Info("#registerform_add");
+        //调出模态框
+        $("#registerModal").modal({
+            backdrop: "static"
+        });
+    });
+
+    //清空表单同时清空样式
+
+    function reset_Info(ele) {
+        //清空表单内容
+        $(ele)[0].reset();
+        //清空样式
+        //.removeClass("has-error has-success")
+        $(ele).find("*").removeClass("has-error has-success");
+        $(ele).find(".help-block").text("");
+    }
+
+    // 校验电话号码是否合法。
+    $("#register_PhoneNum").change(function () {
+        var register_PhoneNum = this.value;
+        var patt = /^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$/;
+        var flag = patt.test(register_PhoneNum);
+
+        if (flag) {
+            show_validata_msg(
+                "#register_PhoneNum",
+                "success", "电话号码可用");
+        } else {
+            show_validata_msg(
+                "#register_PhoneNum",
+                "error",
+                "电话号码不可用");
+        }
+
+
+    });
+
+    //将输入框的设置样式，同时添加提示信息。
+    function show_validata_msg(eleId, status, msg) {
+        //添加样式之前清空类属性
+        $(eleId).parent().removeClass("has-error has-success");
+        $(eleId).next().text("");
+        if (status == "success") {
+            $(eleId).parent().addClass("has-success");
+            $(eleId).next().text(msg);
+        } else if (status == "error") {
+            $(eleId).parent().addClass("has-error");
+            $(eleId).next().text(msg);
+        }
+    }
+
+    //点击立即注册按钮
+    $("#registerSave").click(
+        function () {
+            //校验两次输入的密码是否相同
+            var can = checkPassword("#registerPassword_input2",
+                "#registerPassword_input");
+            if (can) {
+                saveUser();
+                var userName = $("#registerName_input").val();
+                layer.msg("恭喜你  " + userName + "  注册成功");
+                $("#registerModal").modal("hide");
+            }
+            //保存数据
+        });
+
+    //校验对话框的内容是否相同
+    function checkPassword(IdOne, IdTow) {
+        var valueOne = $(IdOne).val();
+        var valueTow = $(IdTow).val();
+        if (valueOne != valueTow) {
+            show_validata_msg(IdOne, "error", "您输入的两次密码不一致")
+            show_validata_msg(IdTow, "error", "您输入的两次密码不一致")
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function saveUser() {
+        $("#registerPassword_input2").val(null);
+        $
+            .ajax({
+                url: "userServlet?method=Register",
+                type: "POST",
+                data: $("#registerform_add").serialize(),
+                success: function (result) {
+                }
+            });
+    }
+</script>
+</body>
+</html>

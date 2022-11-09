@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>管理页面</title>
+    <script src="resource/assets/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="resource/assets/js/jquery-1.12.4.min.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="resource/assets/layui/css/layui.css"/>
+    <link rel="stylesheet" type="text/css" href="resource/assets/plugin/font-awesome/css/font-awesome.css"/>
+    <style type="text/css">
+
+    </style>
+</head>
+<body>
+
+<div class="layui-layout-admin">
+    // 头部导航栏
+    <div class="layui-header">
+        <div class="layui-logo"><a href="/admin" style="color:#009688;">
+            付云佳文章管理后台
+        </a>
+        </div>
+
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item" style=""><a href="/" target="_blank">去前台</a></li>
+
+            <span class="layui-nav-bar" style="left: 54px; top: 55px; width: 0px; opacity: 0;"></span>
+        </ul>
+
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="manager?method=managerProfile">
+                    <img id="ImgDasplay" src="resource/assets/img/defaultAvatar2.jpeg" class="layui-nav-img">
+                    <span id="nameDisplay"></span><span class="layui-nav-more"></span>
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="manager?method=logout">退出</a>
+            </li>
+            <span class="layui-nav-bar"></span>
+        </ul>
+    </div>
+    <!--侧边导航栏-->
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree" style="background-color: #282828;">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">文章<span class="layui-nav-more"></span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <div id="articleInsert"><a href="manager?method=managerArticleInsert">写文章</a></div>
+                        </dd>
+                        <dd>
+                            <div><a href="manager?method=managerArticles">全部文章</a></div>
+                        </dd>
+
+
+
+                    </dl>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+    //内容主体
+    <div class="layui-body">
+        <div id="layui-container" style="padding: 15px;">
+            <blockquote class="layui-elem-quote">
+						<span class="layui-breadcrumb" lay-separator="/" style="visibility: visible;">
+                             <a href="#">首页</a>
+                            <a href="#">写文章</a>
+						</span>
+            </blockquote>
+            <form class="layui-form" method="post" id="myForm" >
+                <input type="hidden" name="userId" id="userId" >
+                <div class="layui-form-item">
+                    <label class="layui-form-label">标题 <span style="color: #FF5722; ">*</span></label>
+                    <div class="layui-input-block">
+                        <input type="text" name="articleTitle" lay-verify="required" id="title" autocomplete="off"
+                               placeholder="请输入标题" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">文章内容</label>
+                    <div class="layui-input-block">
+                        <textarea name="articleContent" placeholder="请输入文章内容" class="layui-textarea"
+                                  lay-verify="required"></textarea>
+                    </div>
+                </div>
+
+
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">缩略图</label>
+                    <div class="layui-input-inline">
+                        <div class="layui-upload">
+                            <div class="layui-upload-list" style="">
+                                <img class="layui-upload-img" id="demo1" width="100" height="100">
+                                <p id="demoText"></p>
+                            </div>
+                            <button type="button" class="layui-btn" id="test1">上传图片</button>
+                            <input
+                                    class="layui-upload-file" type="file" name="file">
+                            <input type="hidden" name="articleThumbnail" id="articleThumbnail">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">分类 <span style="color: #FF5722; ">*</span> </label>
+                    <div class="layui-input-inline">
+                        <select name="articleCategoryId" id="articleCategoryId"
+                                equired="">
+                            <option value="0" selected="">文章分类</option>
+                            <option value="100000009">计算机</option>
+                            <option value="100000010">军事</option>
+                            <option value="100000011">生活</option>
+                            <option value="100000012">体育</option>
+                            <option value="100000013">科技</option>
+                            <option value="100000014">国际</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" id="as-submit">立即提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    //上传图片
+    layui.use('upload', function () {
+        var $ = layui.jquery,
+            upload = layui.upload;
+        var uploadInst = upload.render({
+            elem: '#test1',
+            url: 'manager/upload/img',
+            before: function (obj) {
+                obj.preview(function (index, file, result) {
+                    $('#demo1').attr('src', result);
+                });
+            },
+            done: function (res) {
+                console.log(res.extend.fileUrl);
+                $("#articleThumbnail").attr("value", res.extend.fileUrl);
+                if (res.code == 100) {
+                    return layer.msg('上传失败');
+                }
+            },
+            error: function () {
+                var demoText = $('#demoText');
+                demoText.html('' +
+                    '<span style="color: #ff5722;">上传失败</span>' +
+                    ' <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
+            }
+        });
+
+    });
+</script>
+<script>
+    $("#as-submit").click(function(){
+        $.ajax({
+            url : "article?method=articleInsert",
+            type: "POST",
+            dataType: "json",
+            data : $("#myForm").serialize(),
+            success : function (result) {
+
+            },
+        });
+
+    });
+
+</script>
+<script>
+    // 回显用户表单内容。
+    $(document).ready(function(){
+        $.ajax({
+            url : "userServlet?method=getUser",
+            type : "POST",
+            dataType : "json",
+            success : function (result) {
+                // 回显菜单栏名字和头像
+                $("#nameDisplay").text(result.extend.user.userName);
+
+                $("#ImgDasplay").attr('src',result.extend.user.userAvatar);
+                // 用户id回显
+                $("#userId").val(result.extend.user.userId);
+
+            }
+
+        });
+
+
+
+    });
+
+
+</script>
+
+</body>
+
+</html>

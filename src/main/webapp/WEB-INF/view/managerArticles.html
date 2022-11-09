@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>管理页面</title>
+    <script src="resource/assets/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="resource/assets/js/jquery-1.12.4.min.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="resource/assets/layui/css/layui.css"/>
+    <link rel="stylesheet" type="text/css" href="resource/assets/plugin/font-awesome/css/font-awesome.css"/>
+    <style type="text/css">
+
+    </style>
+</head>
+<body>
+
+<div class="layui-layout-admin">
+    // 头部导航栏
+    <div class="layui-header">
+        <div class="layui-logo"><a href="/admin" style="color:#009688;">
+            付云佳文章管理后台
+        </a>
+        </div>
+
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item" style=""><a href="/" target="_blank">去前台</a></li>
+
+            <span class="layui-nav-bar" style="left: 54px; top: 55px; width: 0px; opacity: 0;"></span>
+        </ul>
+
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="manager?method=managerProfile">
+                    <img id="ImgDasplay" src="resource/assets/img/defaultAvatar2.jpeg" class="layui-nav-img">
+                    <span id="nameDisplay"></span><span class="layui-nav-more"></span>
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="manager?method=logout">退出</a>
+            </li>
+            <span class="layui-nav-bar"></span>
+        </ul>
+    </div>
+    <!--侧边导航栏-->
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree" style="background-color: #282828;">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">文章<span class="layui-nav-more"></span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <div id="articleInsert"><a href="manager?method=managerArticleInsert">写文章</a></div>
+                        </dd>
+                        <dd>
+                            <div><a href="manager?method=managerArticles">全部文章</a></div>
+                        </dd>
+
+
+
+                    </dl>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+    //内容主体
+    <div class="layui-body">
+        <div id="layui-container" style="padding: 15px;">
+            所有文章
+        </div>
+
+
+    </div>
+
+</div>
+<script>
+
+    $(document).ready(function(){
+        // 回显用户表单内容。
+        $.ajax({
+            url : "userServlet?method=getUser",
+            type : "POST",
+            dataType : "json",
+            success : function (result) {
+                // 回显菜单栏名字和头像
+                $("#nameDisplay").text(result.extend.user.userName);
+
+                $("#ImgDasplay").attr('src',result.extend.user.userAvatar);
+
+            }
+
+        });
+
+
+
+    });
+
+
+</script>
+
+
+</body>
+
+</html>

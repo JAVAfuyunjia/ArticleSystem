@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>文件管理系统首页</title>
+		
+		<script src="resource/assets/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="resource/assets/css/style.css" />
+	
+		<script src="resource/assets/js/jquery-1.12.4.min.js" type="text/javascript" charset="utf-8"></script>
+
+			<link rel="stylesheet" type="text/css" href="resource/assets/layui/css/layui.css" />
+		<style type="text/css">
+			.mydynamic{
+				font-family: "楷体";
+				width: 185px;
+				font-size: 25px;
+				font-weight: 800;
+				background: url(resource/assets/img/yinxing4.jpg);
+				background-clip: text;
+				-webkit-background-clip: text;
+				color: transparent;
+				animation: dynamic 40s infinite alternate linear;
+			}
+			@keyframes dynamic{
+				0%{
+					background-position: 0%;
+				}
+				100%{
+					background-position: 100%;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!--头部导航栏--->
+		<div class="layui-row">
+			<div class="layui-col-md12" id="topbar">
+				<ul class="layui-nav layui-bg-molv" style="background-color: #282828;">
+					<li class="layui-nav-item">
+						<div class="mydynamic"><i class="layui-icon layui-icon-read" style="font-size: 30px;"></i>文章管理系统</div>
+					</li>
+					<li class="layui-nav-item "><a href="">首页</a></li>
+					<li class="layui-nav-item "><a href="">计算机</a></li>
+					<li class="layui-nav-item"><a href="">军事</a></li>
+					<li class="layui-nav-item"><a href="">生活</a></li>
+					<li class="layui-nav-item"><a href="">体育</a></li>
+					<li class="layui-nav-item"><a href="">科技</a></li>
+					<li class="layui-nav-item"><a href="">国际</a></li>
+
+					
+					<li class="layui-nav-item" style="float: right;"> <a href="login.html"><button type="button" class="layui-btn layui-btn-radius" id="registerUser">登录写文章
+					</button></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="layui-fluid" style="margin-top: 20px;">
+			<div class="layui-row" style="background-color: #303030;">
+				<nav class="breadcrumb" style="background-color: #303030;">
+					<div class="bull"><i class="fa fa-volume-up"></i></div>
+					<div id="scrolldiv">
+						<div class="scrolltext">
+							<ul style="margin-top: 0px;">
+								<li class="scrolltext-title">
+									<a href="/notice/4" rel="bookmark">一蓑烟雨任平生</a>
+								</li>
+								<li class="scrolltext-title">
+									<a href="/notice/5" rel="bookmark">竹杖芒鞋轻胜马</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+			</div>
+
+			<div class="layui-row" style="background-color: #282828;">
+					<div id="primary" class="content-area">
+						<main id="main" class="site-main" role="main">
+							<article class="post type-post">
+								<hr color="#d6d6d6" />
+								<figure class="thumbnail">
+									<a href="/article/27">
+										<img width="280" height="210" src="resource/assets/img/yinxing4.jpg"
+											class="attachment-content size-content wp-post-image"
+											alt="SpringCloud 中使用 Eureka 和 Feign 实现增删改查">
+									</a>
+									<span class="cat">
+										<a href="/category/100000000">
+											未分类</a>
+									</span>
+								</figure>
+
+								<header class="entry-header">
+									<h2 class="entry-title">
+										<a href="/article/27" rel="bookmark">
+											SpringCloud 中使用 Eureka 和 Feign 实现增删改查</a>
+									</h2>
+								</header>
+
+								<div class="entry-content">
+									<div class="archive-content">
+										在没有接触微服务或者分布式项目之前，我们的项目时没有分层的，我们的服务也是没有分层的。比如，我们有5台服务器使用 Nginx 做负载均衡，上面都是安装了我们的
+										Tomcat 服务器，部署的一样的项目。当用户访问某个请求的时候，按照负载均衡的机制(随机、轮询之类)来转发到对应的服务器上，然后在该服务器...
+									</div>
+									<span class="title-l"></span>
+									<span class="new-icon">
+									</span>
+									<span class="entry-meta">
+										<span class="date">
+											2018年11月26日
+											&nbsp;&nbsp;
+										</span>
+										<span class="views">
+											<i class="fa fa-eye"></i>
+											3 views
+										</span>
+										<span class="comment">&nbsp;&nbsp;
+											<a href="/article/27#comments" rel="external nofollow">
+												<i class="fa fa-comment-o"></i>
+												4</a>
+										</span>
+									</span>
+									<div class="clear"></div>
+								</div><!-- .entry-content -->
+
+								<span class="entry-more">
+									<a href="/article/27" rel="bookmark">
+										阅读全文
+									</a>
+								</span>
+							
+								
+							</article>
+				
+							<article class="post type-post">
+											<hr color="#d6d6d6"/>
+								<figure class="thumbnail">
+									<a href="/article/27">
+										<img width="280" height="210" src="resource/assets/img/yinxing2.jpg"
+											class="attachment-content size-content wp-post-image"
+											alt="SpringCloud 中使用 Eureka 和 Feign 实现增删改查">
+									</a>
+									<span class="cat">
+										<a href="/category/100000000">
+											未分类</a>
+									</span>
+								</figure>
+
+								<header class="entry-header">
+									<h2 class="entry-title">
+										<a href="/article/27" rel="bookmark">
+											SpringCloud 中使用 Eureka 和 Feign 实现增删改查</a>
+									</h2>
+								</header>
+
+								<div class="entry-content">
+									<div class="archive-content">
+										在没有接触微服务或者分布式项目之前，我们的项目时没有分层的，我们的服务也是没有分层的。比如，我们有5台服务器使用 Nginx 做负载均衡，上面都是安装了我们的
+										Tomcat 服务器，部署的一样的项目。当用户访问某个请求的时候，按照负载均衡的机制(随机、轮询之类)来转发到对应的服务器上，然后在该服务器...
+									</div>
+									<span class="title-l"></span>
+									<span class="new-icon">
+									</span>
+									<span class="entry-meta">
+										<span class="date">
+											2018年11月26日
+											&nbsp;&nbsp;
+										</span>
+										<span class="views">
+											<i class="fa fa-eye"></i>
+											3 views
+										</span>
+										<span class="comment">&nbsp;&nbsp;
+											<a href="/article/27#comments" rel="external nofollow">
+												<i class="fa fa-comment-o"></i>
+												4</a>
+										</span>
+									</span>
+									<div class="clear"></div>
+								</div><!-- .entry-content -->
+
+								<span class="entry-more">
+									<a href="/article/27" rel="bookmark">
+										阅读全文
+									</a>
+								</span>
+							</article>
+						</main>
+						<nav class="navigation pagination" role="navigation">
+							<div class="nav-links">
+								<a class="page-numbers current">1</a>
+								<a class="page-numbers" href="/article?pageIndex=2">2</a>
+								<a class="page-numbers" href="/article?pageIndex=3">3</a>
+								<a class="page-numbers" href="/article?pageIndex=2">
+									<span class="fa fa-angle-right"></span>
+								</a>
+							</div>
+						</nav>
+					</div>
+
+					<div id="sidebar" class="widget-area all-sidebar"
+						style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
+						<div class="theiaStickySidebar"
+							style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none;    background-color: gray;">
+							<aside class="widget about">
+								<h3 class="widget-title">
+									<i class="fa fa-bars"></i>关于本站
+								</h3>
+								<div id="feed_widget">
+									<div class="feed-about">
+										<div class="about-main">
+											<div class="about-img">
+												<img src="resource/assets/img/yinxing3.jpg" alt="QR Code">
+											</div>
+											<div class="about-name">努力学习</div>
+											<div class="about-the">
+												程序人生，永不止步</div>
+										</div>
+										<div class="clear"></div>
+										<ul>
+											<li class="tsina">
+												<a title="" href="http://weibo.com/5936412667" target="_blank"
+													rel="external nofollow">
+													<i class="fa fa-weibo"></i>
+												</a>
+											</li>
+											<li class="feed">
+												<a title="" href="https://github.com/saysky" target="_blank"
+													rel="external nofollow">
+													<i class="fa fa-github"></i>
+												</a>
+											</li>
+										</ul>
+										<div class="about-inf">
+											<span class="about-pn">文章 27</span>
+											<span class="about-cn">留言 40</span>
+										</div>
+									</div>
+								</div>
+								<div class="clear"></div>
+							</aside>
+							<aside id="php_text-22" class="widget php_text">
+								<h3 class="widget-title">
+									<i class="fa fa-bars"></i>网站概况
+								</h3>
+								<div class="textwidget widget-text">
+									<ul class="site-profile">
+										<li><i class="fa fa-file-o"></i> 文章总数：27 篇</li>
+										<li><i class="fa fa-commenting-o"></i> 留言数量：40 条</li>
+										<li><i class="fa fa-folder-o"></i> 分类数量：24 个</li>
+										<li><i class="fa fa-tags"></i> 标签总数：35 个</li>
+										<li><i class="fa fa-link"></i> 链接数量：5 个</li>
+										<li><i class="fa fa-eye"></i> 浏览总量：153 次</li>
+										<li><i class="fa fa-pencil-square-o"></i> 最后更新：
+											<span style="color:#2F889A">
+												2022年10月06日</span>
+										</li>
+									</ul>
+								</div>
+								<div class="clear"></div>
+							</aside>
+							<aside class="widget">
+								<h3 class="widget-title">
+									<i class="fa fa-bars"></i>所有标签
+								</h3>
+								<div class="tagcloud">
+									<a href="/tag/36" class="tag-link-129 tag-link-position-1" style="font-size: 14px;">
+										IDEA</a>
+									<a href="/tag/37" class="tag-link-129 tag-link-position-1" style="font-size: 14px;">
+										Shiro</a>
+									<a href="/tag/38" class="tag-link-129 tag-link-position-1" style="font-size: 14px;">
+										RocketMQ</a>
+									<div class="clear"></div>
+								</div>
+								<div class="clear"></div>
+							</aside>
+							<aside id="recent_comments-2" class="widget recent_comments wow fadeInUp"
+								data-wow-delay="0.3s">
+								<h3 class="widget-title"><i class="fa fa-bars"></i>近期评论</h3>
+								<div id="message" class="message-widget">
+									<ul>
+										<li style="border: none;">
+											<a href="/article/27/#anchor-comment-38" rel="external nofollow">
+												<span class="comment_author">
+													<strong>游客</strong>
+												</span>
+												22222233</a>
+										</li>
+										<li style="border: none;">
+											<a href="/article/32/#anchor-comment-37" rel="external nofollow">
+												<span class="comment_author">
+													<strong>言曌</strong>
+												</span>
+												222</a>
+										</li>
+										<li style="border: none;">
+											<a href="/article/32/#anchor-comment-36" rel="external nofollow">
+												<span class="comment_author">
+													<strong>游客</strong>
+												</span>
+												6666</a>
+										</li>
+									</ul>
+								</div>
+								<div class="clear"></div>
+							</aside>
+						</div>
+					</div>
+
+
+			</div>
+			<div class="layui-row">
+
+
+			</div>
+		</div>
+		<script type="text/javascript">
+			<!--导航 依赖element模-->
+			layui.use('element',
+			function()
+			{
+			var
+			element
+			=
+			layui.element;
+			});
+			
+		</script>
+		
+	</body>
+</html>
