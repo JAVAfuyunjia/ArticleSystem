@@ -29,6 +29,15 @@ public class ArticleServiceImpl implements ArticleService {
     public void insertArticle(Article article) {
         // 插入文章
         article.setArticleCreateTime(new Date());
+        //文章摘要
+        int summaryLength = 150;
+        String summaryText = article.getArticleContent();
+        if (summaryText.length() > summaryLength) {
+            String summary = summaryText.substring(0, summaryLength);
+            article.setArticleSummary(summary);
+        } else {
+            article.setArticleSummary(summaryText);
+        }
         Integer articleId = articleDao.insert(article);
 
 

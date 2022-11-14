@@ -76,8 +76,8 @@ public class ArticleDao {
         try {
             connection = JDBCUtils.getConnection();
             String sql = "INSERT INTO " +
-                    "`as_article`(article_user_id,article_title,article_content,article_create_time,article_thumbnail) " +
-                    "VALUES(?,?,?,?,?);";
+                    "`as_article`(article_user_id,article_title,article_content,article_create_time,article_thumbnail,article_summary) " +
+                    "VALUES(?,?,?,?,?,?);";
             ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
             ps.setInt(1,article.getArticleUserId());
@@ -85,7 +85,7 @@ public class ArticleDao {
             ps.setString(3,article.getArticleContent());
             ps.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
             ps.setString(5,article.getArticleThumbnail());
-
+            ps.setString(6,article.getArticleSummary());
 
             ps.execute();
 
