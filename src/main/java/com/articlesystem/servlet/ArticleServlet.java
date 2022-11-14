@@ -59,7 +59,7 @@ public class ArticleServlet extends HttpServlet {
      * @throws IOException
      * @throws ServletException
      */
-    public void articleInsert(HttpServletRequest request,HttpServletResponse response) {
+    public void articleInsert(HttpServletRequest request,HttpServletResponse response) throws IOException {
         String articleTitle = request.getParameter("articleTitle");
         String articleContent = request.getParameter("articleContent");
         String articleThumbnail = request.getParameter("articleThumbnail");
@@ -76,7 +76,7 @@ public class ArticleServlet extends HttpServlet {
 
         articleService.insertArticle(article);
 
-
+        MyUtils.JsonResultToWrite(Msg.success(),response.getWriter());
     }
 
 

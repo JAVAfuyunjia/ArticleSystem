@@ -22,7 +22,7 @@ import java.lang.reflect.Method;
  */
 @WebServlet(urlPatterns = "/userServlet")
 public class UserServlet extends HttpServlet {
-      UserService userService = new UserServiceImpl();
+    UserService userService = new UserServiceImpl();
 
     /**
      *
@@ -31,7 +31,7 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request,response);
+        doPost(request, response);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class UserServlet extends HttpServlet {
             Method method = getClass().getDeclaredMethod(methodName, HttpServletRequest.class,
                     HttpServletResponse.class);
             method.setAccessible(true);
-            method.invoke(this,request,response);
+            method.invoke(this, request, response);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException();
@@ -52,11 +52,12 @@ public class UserServlet extends HttpServlet {
 
     /**
      * 用户注册
+     *
      * @param request
      * @param response
      * @throws IOException
      */
-    public void Register(HttpServletRequest request,HttpServletResponse response) throws IOException {
+    public void Register(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // 1.获取注用户册数据。
         String loginName = request.getParameter("loginName");
         String loginPhoneNum = request.getParameter("loginPhoneNum");
@@ -66,18 +67,18 @@ public class UserServlet extends HttpServlet {
         User user = new User(null, loginName, loginPassword, loginPhoneNum, null, null);
 
         // 3.将数据插入数据。
-        boolean can  = userService.insert(user);
+        boolean can = userService.insert(user);
 
         // 4.封装返回数据。
         Msg msg;
-        if(can){
+        if (can) {
             msg = Msg.success();
-        }else {
+        } else {
             msg = Msg.fail();
         }
 
         // 5.返回结果数据给前端。
-        MyUtils.JsonResultToWrite(msg,response.getWriter());
+        MyUtils.JsonResultToWrite(msg, response.getWriter());
 
     }
 
@@ -97,15 +98,15 @@ public class UserServlet extends HttpServlet {
 
         Msg msg;
         User user = userService.getUserByUserName(username);
-        if(user != null && passwordToMd5.equals(user.getUserPass())){
+        if (user != null && passwordToMd5.equals(user.getUserPass())) {
             msg = Msg.success();
-            request.getSession().setAttribute("user",user);
-        }else{
+            request.getSession().setAttribute("user", user);
+        } else {
             msg = Msg.fail();
         }
 
         // 返回数据给前端。
-        MyUtils.JsonResultToWrite(msg,response.getWriter());
+        MyUtils.JsonResultToWrite(msg, response.getWriter());
 
     }
 
@@ -118,45 +119,44 @@ public class UserServlet extends HttpServlet {
      */
 
     public void userUpdate(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-    String userName = request.getParameter("userName");
-    String userPhone = request.getParameter("userPhone");
-    String userAvatar = request.getParameter("userAvatar");
-    Integer userId = Integer.parseInt(request.getParameter("userId"));
-    String originalUserPass = request.getParameter("originalUserPass");
-    String newUserPass = request.getParameter("newUserPass");
+        String userName = request.getParameter("userName");
+        String userPhone = request.getParameter("userPhone");
+        String userAvatar = request.getParameter("userAvatar");
+        Integer userId = Integer.parseInt(request.getParameter("userId"));
+        String originalUserPass = request.getParameter("originalUserPass");
+        String newUserPass = request.getParameter("newUserPass");
 
-    // 加密新旧密码
-    String originalUserPassToMd5 = MyUtils.strToMd5(originalUserPass);
-    String newUserPassToMd5 = MyUtils.strToMd5(newUserPass);
-
-
-    Msg msg;
-    boolean isCan = false;
-
-    String userPass = userService.getUser(userId).getUserPass();
-    User user = new User(userId, userName, newUserPassToMd5, userPhone, null, userAvatar);
-
-    // 密码校验
-    if(user != null && originalUserPassToMd5.equals(userPass)){
+        // 加密新旧密码
+        String originalUserPassToMd5 = MyUtils.strToMd5(originalUserPass);
+        String newUserPassToMd5 = MyUtils.strToMd5(newUserPass);
 
 
-        isCan = userService.update(user);
+        Msg msg;
+        boolean isCan = false;
 
-    }
+        String userPass = userService.getUser(userId).getUserPass();
+        User user = new User(userId, userName, newUserPassToMd5, userPhone, null, userAvatar);
 
-    if (isCan){
-        msg = Msg.success().add("mesage","用户更新成功！！");
-    }else {
-        msg = Msg.fail().add("mesage","用户更新失败！！");
-
-    }
-    // 返回数据给前端。
-    MyUtils.JsonResultToWrite(msg,response.getWriter());
+        // 密码校验
+        if (user != null && originalUserPassToMd5.equals(userPass)) {
 
 
+            isCan = userService.update(user);
+
+        }
+
+        if (isCan) {
+            msg = Msg.success().add("mesage", "用户更新成功！！");
+        } else {
+            msg = Msg.fail().add("mesage", "用户更新失败！！");
+
+        }
+        // 返回数据给前端。
+        MyUtils.JsonResultToWrite(msg, response.getWriter());
 
 
     }
+
     /**
      * 获取用户信息。
      *
@@ -166,18 +166,15 @@ public class UserServlet extends HttpServlet {
      */
 
     public void getUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        int userId = ((User)request.getSession().getAttribute("user")).getUserId();
+        int userId = ((User) request.getSession().getAttribute("user")).getUserId();
 
         User user = userService.getUser(userId);
 
-        Msg msg = Msg.success().add("user",user);
+        Msg msg = Msg.success().add("user", user);
 
         // 返回数据给前端。
-        MyUtils.JsonResultToWrite(msg,response.getWriter());
+        MyUtils.JsonResultToWrite(msg, response.getWriter());
     }
-
-
-
 
 
 }

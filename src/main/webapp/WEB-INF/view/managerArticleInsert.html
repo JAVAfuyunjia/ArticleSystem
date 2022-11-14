@@ -55,7 +55,6 @@
                         </dd>
 
 
-
                     </dl>
                 </li>
 
@@ -72,8 +71,8 @@
                             <a href="#">写文章</a>
 						</span>
             </blockquote>
-            <form class="layui-form" method="post" id="myForm" >
-                <input type="hidden" name="userId" id="userId" >
+            <form class="layui-form" method="post" id="myForm">
+                <input type="hidden" name="userId" id="userId">
                 <div class="layui-form-item">
                     <label class="layui-form-label">标题 <span style="color: #FF5722; ">*</span></label>
                     <div class="layui-input-block">
@@ -86,11 +85,9 @@
                     <label class="layui-form-label">文章内容</label>
                     <div class="layui-input-block">
                         <textarea name="articleContent" placeholder="请输入文章内容" class="layui-textarea"
-                                  lay-verify="required"></textarea>
+                                  lay-verify="required" id="content"></textarea>
                     </div>
                 </div>
-
-
 
 
                 <div class="layui-form-item">
@@ -172,41 +169,42 @@
     });
 </script>
 <script>
-    $("#as-submit").click(function(){
-        $.ajax({
-            url : "article?method=articleInsert",
-            type: "POST",
-            dataType: "json",
-            data : $("#myForm").serialize(),
-            success : function (result) {
+    $("#as-submit").click(function () {
 
-            },
-        });
-
+        if ($("#articleThumbnail").val() != "" && $("#content").val() != "" && $("#title").val() != "") {
+            $.ajax({
+                url: "article?method=articleInsert",
+                type: "POST",
+                dataType: "json",
+                data: $("#myForm").serialize(),
+                success: function (result) {
+                    console.log(result);
+                    if (result.code == 200) {
+                        window.location.href = "manager?method=toHome";
+                    }
+                },
+            });
+        }
     });
+
 
 </script>
 <script>
     // 回显用户表单内容。
-    $(document).ready(function(){
+    $(document).ready(function () {
         $.ajax({
-            url : "userServlet?method=getUser",
-            type : "POST",
-            dataType : "json",
-            success : function (result) {
+            url: "userServlet?method=getUser",
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
                 // 回显菜单栏名字和头像
                 $("#nameDisplay").text(result.extend.user.userName);
 
-                $("#ImgDasplay").attr('src',result.extend.user.userAvatar);
+                $("#ImgDasplay").attr('src', result.extend.user.userAvatar);
                 // 用户id回显
                 $("#userId").val(result.extend.user.userId);
-
             }
-
         });
-
-
-
     });
 
 

@@ -1,8 +1,10 @@
 package com.articlesystem.test;
 
+import com.articlesystem.Utils.MyUtils;
 import com.articlesystem.dao.ArticleDao;
 import com.articlesystem.dao.UserDao;
 import com.articlesystem.entity.Article;
+import com.articlesystem.entity.Msg;
 import com.articlesystem.entity.User;
 import com.articlesystem.service.ArticleService;
 import com.articlesystem.service.UserService;
@@ -30,8 +32,7 @@ public class TestArticleService {
        article.setArticleTitle("标题3");
        article.setArticleContent("内容3");
        article.setCategoryId(10008);
-//       Integer primaryKey = articleDao.insert(article);
-//       System.out.println(primaryKey);
+
        articleService.insertArticle(article);
 
 

@@ -188,8 +188,9 @@
                 // 设置图片回显
                 if(result.extend.user.userAvatar != ""){
                 $("#demo1").attr('src', result.extend.user.userAvatar);
-                }
+                $("#userAvatar").val(result.extend.user.userAvatar);
 
+                }
                 // 用户名回显
                 $("#userName").val(result.extend.user.userName);
 
@@ -198,11 +199,7 @@
                 // 用户id回显
                 $("#userId").val(result.extend.user.userId);
             }
-
         });
-
-
-
     });
 
 
@@ -216,8 +213,6 @@
         if (!flag) {
             layer.msg("电话号码不可用");
         }
-
-
     });
     
     
@@ -225,20 +220,24 @@
     $("#as-update-btn").click(function () {
         // layer.msg("点到我了");
         // 更改用户信息。
-        if($("#NewuserPass").val() != "" || $("#OriginaluUerPass").val() != "" || $("#userPhoneNum").val() != "" || $("#userName").val() != ""){
+        if($("#NewuserPass").val() != "" && $("#OriginaluUerPass").val() != "" && $("#userPhoneNum").val() != "" && $("#userName").val() != ""){
             $.ajax({
                 url : "userServlet?method=userUpdate",
                 type : "POST",
                 dataType : "json",
                 data : $("#userForm").serialize(),
                 success : function (result) {
-                    console.log(result.extend);
+                    console.log(result);
                     if (result.code == 200){
+                    layer.msg(result.extend.mesage);
+
                     window.location.href="manager?method=logout";
 
 
                     }else if (result.code == 100){
-                        return false;
+                        layer.msg(result.extend.mesage);
+
+                        window.location.href="manager?method=managerProfile";
                     }
                 }
             });

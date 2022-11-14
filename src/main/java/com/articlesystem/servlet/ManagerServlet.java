@@ -74,6 +74,12 @@ public class ManagerServlet extends HttpServlet {
         response.sendRedirect("login.html");
     }
 
+    public void toHome(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
+
+
+        response.sendRedirect("index.html");
+    }
+
 
 
 
