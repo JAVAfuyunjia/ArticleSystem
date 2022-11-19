@@ -1,6 +1,8 @@
 package com.articlesystem.servlet;
 
+import com.articlesystem.Utils.ArticleSystemConstant;
 import com.articlesystem.Utils.MyUtils;
+import com.articlesystem.Utils.PageUtils;
 import com.articlesystem.entity.Article;
 import com.articlesystem.entity.Msg;
 import com.articlesystem.entity.User;
@@ -78,6 +80,70 @@ public class ArticleServlet extends HttpServlet {
 
         MyUtils.JsonResultToWrite(Msg.success(),response.getWriter());
     }
+
+    /**
+     * 查询文章
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    public void getArticles(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        int currentPage = (request.getParameter("currentPage") == null) ? 1 : Integer.parseInt(request.getParameter("currentPage"));
+        String keyword = (request.getParameter("keyword") == null) ? "" : (request.getParameter("keyword"));
+        int pageSize = ArticleSystemConstant.PAGE_SIZE;
+
+        PageUtils<Article> pageInfo = articleService.getArticlePageInfo(keyword, currentPage, pageSize);
+        //System.out.print(pageInfo.toString());
+        MyUtils.JsonResultToWrite(pageInfo.toString(),response.getWriter());
+
+    }
+
+    /**
+     * 通过文章ID获取文章对象
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    public void getArticleByArticleId(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        int articleId = Integer.parseInt(request.getParameter("articleId"));
+        Article article = articleService.getArticleByArticleId(articleId);
+        Msg msg = Msg.success().add("article",article);
+        MyUtils.JsonResultToWrite(msg,response.getWriter());
+    }
+
+    /**
+     * 通过category获取文章list
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    public void getArticlesByCategoryId(HttpServletRequest request,HttpServletResponse response) throws IOException {
+
+        int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+        int currentPage = (request.getParameter("currentPage") == null) ? 1 : Integer.parseInt(request.getParameter("currentPage"));
+        int pageSize = ArticleSystemConstant.PAGE_SIZE;
+
+
+        PageUtils<Article> pageInfo = articleService.getArticlePageInfoByCategoryId(categoryId,currentPage,pageSize);
+        //System.out.print(pageInfo.toString());
+        MyUtils.JsonResultToWrite(pageInfo.toString(),response.getWriter());
+
+    }
+
+    /**
+     * 查看文章全文
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     */
+    public void toArticleView(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
+
+
+        request.getRequestDispatcher("/WEB-INF/view/ArticleView.html").forward(request,response);
+    }
+
+
 
 
 

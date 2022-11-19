@@ -1,9 +1,8 @@
 package com.articlesystem.dao;
 
 import com.articlesystem.Utils.JDBCUtils;
-import com.articlesystem.Utils.MyUtils;
+import com.articlesystem.Utils.PageUtils;
 import com.articlesystem.entity.Article;
-import com.articlesystem.entity.ArticleId;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -135,5 +134,117 @@ public class ArticleDao {
 
             }
         }
+    }
+
+    public PageUtils<Article> getArticlePageInfo(String keyword, int currentPage, int pageSize) {
+        Connection connection = null;
+        int startIndex = (currentPage-1)*pageSize;
+        PageUtils<Article> articlesPageInfo = null;
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "SELECT a.article_id AS articleId,article_user_id AS articleUserId,article_title AS articleTitle,article_is_comment AS articleIsComment,article_create_time AS articleCreateTime,article_summary AS articleSummary,article_thumbnail AS articleThumbnail,category_name AS categoryName " +
+                    "FROM as_article a JOIN as_article_category_ref ac ON a.article_id = ac.article_id JOIN as_category c ON ac.category_id = c.category_id " +
+                    "WHERE a.article_title LIKE '%"+keyword+"%'" +" ORDER BY a.article_create_time desc "+
+                    "LIMIT ?,?;";
+            Object[] param = {startIndex,pageSize};
+            BeanListHandler<Article> articleBeanListHandler = new BeanListHandler<>(Article.class);
+            List<Article> articleList = queryRunner.query(connection, sql, articleBeanListHandler, param);
+
+            String countSql = "SELECT COUNT(*) FROM as_article a WHERE a.article_title LIKE '%"+keyword+"%';";
+            ScalarHandler<Object> scalarHandler = new ScalarHandler<>();
+            Long totalNum = (long) queryRunner.query(connection, countSql, scalarHandler);
+
+
+            articlesPageInfo = new PageUtils<Article>();
+            articlesPageInfo.setList(articleList);
+            articlesPageInfo.setCurrentPage(currentPage);
+            articlesPageInfo.setPageSize(pageSize);
+            articlesPageInfo.setTotalNum(Integer.parseInt(totalNum.toString()));
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            if(connection != null){
+                JDBCUtils.releaseConnection(connection);
+
+            }
+        }
+
+
+        return articlesPageInfo;
+    }
+
+    /**
+     * 通过categoryId获取文章list
+     * @param categoryId
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    public PageUtils<Article> getArticlePageInfoByCategoryId(int categoryId, int currentPage, int pageSize) {
+
+        Connection connection = null;
+        int startIndex = (currentPage-1)*pageSize;
+        PageUtils<Article> articlesPageInfo = null;
+        try {
+            connection = JDBCUtils.getConnection();
+            BeanListHandler<Article> articleBeanListHandler = new BeanListHandler<>(Article.class);
+            String sql = "SELECT a.article_id AS articleId,article_user_id AS articleUserId,article_title AS articleTitle,article_is_comment AS articleIsComment,article_create_time AS articleCreateTime,article_summary AS articleSummary,article_thumbnail AS articleThumbnail,category_name AS categoryName " +
+                    "FROM as_article a JOIN as_article_category_ref ac ON a.article_id = ac.article_id JOIN as_category c ON ac.category_id = c.category_id " +
+                    "WHERE ac.category_id = ? " +"ORDER BY a.article_create_time desc "+
+                    "LIMIT ?,?;";
+            Object[] param = {categoryId,startIndex,pageSize};
+
+            List<Article> articleList = queryRunner.query(connection, sql, articleBeanListHandler, param);
+
+            String countSql = "SELECT COUNT(*) FROM as_article_category_ref ac WHERE ac.category_id =?;";
+            ScalarHandler<Object> scalarHandler = new ScalarHandler<>();
+            Long totalNum = (long) queryRunner.query(connection, countSql, scalarHandler,categoryId);
+
+
+            articlesPageInfo = new PageUtils<Article>();
+            articlesPageInfo.setList(articleList);
+            articlesPageInfo.setCurrentPage(currentPage);
+            articlesPageInfo.setPageSize(pageSize);
+            articlesPageInfo.setTotalNum(Integer.parseInt(totalNum.toString()));
+
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            if (connection != null){
+                JDBCUtils.releaseConnection(connection);
+            }
+        }
+        return articlesPageInfo;
+    }
+
+    /**
+     * 通过ArticleId查询文章对象
+     * @param articleId
+     * @return
+     */
+    public Article getArticleByArticleId(int articleId) {
+        Connection connection = null;
+        BeanHandler<Article> articleBeanHandler = new BeanHandler<>(Article.class);
+        Article article = null;
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "SELECT article_id AS articleId,article_user_id AS articleUserId,article_title AS articleTitle,article_is_comment AS articleIsComment,article_create_time AS articleCreateTime,article_summary AS articleSummary,article_thumbnail AS articleThumbnail,article_content AS articleContent" +
+                    " FROM as_article a " +
+                    "WHERE  article_id= ? ";
+            article = queryRunner.query(connection, sql, articleBeanHandler, articleId);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            if(connection != null){
+                JDBCUtils.releaseConnection(connection);
+
+            }
+        }
+        return article;
     }
 }

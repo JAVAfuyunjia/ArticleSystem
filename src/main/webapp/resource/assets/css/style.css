@@ -1,211 +1,4 @@
 
-/*
-绿色：#009688
-蓝色：#009688
-*/
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
-    border: 0;
-    font-family: inherit;
-    font-size: 100%;
-    font-style: inherit;
-    margin: 0;
-    outline: 0;
-    padding: 0;
-    vertical-align: baseline;
-}
-
-html {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    font-size: 62.5%;
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
-	background-color: #1a1a1a;
-	
-}
-body{
-	background-color: #1a1a1a;
-}
-
-*,
-*:before,
-*:after {
-    -webkit-box-sizing: inherit;
-    -moz-box-sizing: inherit;
-    box-sizing: inherit;
-}
-
-body,
-button,
-input,
-select,
-textarea {
-    font: 14px "Microsoft YaHei", Helvetica, Arial, Lucida Grande, Tahoma, sans-serif;
-    color: #444;
-    line-height: 180%;
-    background: #f1f1f1;
-}
-
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-main,
-nav,
-section {
-    display: block;
-}
-
-pre {
-    border: 1px solid #d1d1d1;
-    line-height: 190%;
-    margin: 0 0 1.75em;
-    max-width: 100%;
-    overflow: auto;
-    padding: 15px;
-    white-space: pre;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-}
-
-ol,ul {
-    list-style: none;
-}
-
-dl {
-    margin-bottom: 1.6em;
-}
-
-dt {
-    font-weight: bold;
-}
-
-dd {
-    margin-bottom: 1.6em;
-}
-
-table,
-th,
-td {
-    border: 1px solid #ddd;
-}
-
-table {
-    border-collapse: separate;
-    border-spacing: 0;
-    border-width: 1px 0 0 1px;
-    margin: 0 0 10px;
-}
-
-caption,
-th,
-td {
-    font-weight: normal;
-    text-align: left;
-}
-
-th {
-    border-width: 0 1px 1px 0;
-    font-weight: 700;
-}
-
-td {
-    border-width: 0 1px 1px 0;
-}
-
-th, td {
-    padding: 5px;
-}
-
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
-    content: "";
-}
-
-blockquote,
-q {
-    -webkit-hyphens: none;
-    -moz-hyphens: none;
-    -ms-hyphens: none;
-    hyphens: none;
-    quotes: none;
-}
-
-a:hover,
-a:active {
-    outline: 0;
-}
-
-a img {
-    border: 0;
-}
-
-a {
-    color: #444;
-    text-decoration: none;
-}
-
-a:visited {
-    color: #555;
-}
-
-a:hover {
-    color: #009688;
-}
-
-.clear {
-    clear: both;
-    display: block;
-}
-
-:focus {
-    outline: 0
-}
-
-button::-moz-focus-inner,
-input::-moz-focus-inner {
-    padding: 0;
-    border: none;
-}
-
-a, button, input {
-    -webkit-tap-highlight-color: rgba(255,0,0,0);
-}
-
-@keyframes fade-in {
-    0% {
-        opacity: 0;
-    }
-
-    40% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-@-webkit-keyframes fade-in {
-    0% {
-        opacity: 0;
-    }
-
-    40% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
 /** 主体 **/
 #content {
     width: 1080px;
@@ -342,30 +135,6 @@ a, button, input {
         line-height: 42px;
         padding: 0 0 0 20px !important;
     }
-}
-/** weibo **/
-.weibo {
-    position: absolute;
-    top: 35px;
-    left: 200px;
-}
-
-.weibo span {
-    display: none;
-}
-
-.weibo .WB_icon_text {
-    display: none;
-}
-
-.follow_text {
-    padding: 3px 0 0 1px !important;
-}
-
-.follow_btn_inner {
-    width: 30px !important;
-    background: transparent !important;
-    padding: 2px 0px;
 }
 
 /** 顶部导航 **/
@@ -1384,9 +1153,10 @@ a, button, input {
 .post, #page .page, .bulletin,
 .single-picture .picture, .type-attachment,
 .single-tao .tao, .single-video .video {
+    height: 120px;
     position: relative;
     margin: 0 0 10px 0;
-    padding: 20px;
+    padding: 32px;
    
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
     border-radius: 2px;
@@ -1409,8 +1179,8 @@ a, button, input {
 
 .entry-header h2 a {
 
-    font-size: 16px;
-    font-size: 1.6rem;
+    font-size: 15px;
+
     line-height: 20px;
     color: aqua;
 }
@@ -1422,8 +1192,8 @@ a, button, input {
 
 .title-l {
     position: absolute;
-    background: #c40000;
-    top: 20px;
+    background: #00c496;
+    top: 32px;
     left: -1px;
     width: 5px;
     height: 25px;
@@ -1432,14 +1202,14 @@ a, button, input {
 
 .entry-more a {
     position: absolute;
-    bottom: 18px;
-    right: -1px;
-    background: #398898;
+    right: 20px;
+    background: #0e8d9f;
     color: #fff;
     line-height: 30px;
     padding: 0 12px;
     display: block;
     border-radius: 2px 0 0 2px;
+    top: 157px;
 }
 
 .entry-more a:hover {
@@ -1465,9 +1235,10 @@ a, button, input {
 /** 文章信息 **/
 .entry-meta {
     position: absolute;
-    bottom: 14px;
+    bottom: 1px;
     color: #999;
     left: 240px;
+    top : 169px;
 }
 
 .format-aside .entry-meta,
@@ -1543,13 +1314,13 @@ a, button, input {
 }
 
 .thumbnail .cat {
-    background: #c40000;
+    border-radius: 0px 8px 2px 0px;
     position: absolute;
     top: 0;
     left: 0;
     filter: alpha(opacity=70);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    background: 0 0 rgba(216, 0, 0, 0.7);
+    background: 0 0 rgba(157, 155, 155, 0.7);
 }
 
 .thumbnail .cat a {
@@ -1681,8 +1452,8 @@ a, button, input {
 /** 正文 **/
 .entry-header h1 {
     position: relative;
-    font-size: 16px;
-    font-size: 1.8rem;
+    font-size: 15px;
+
     line-height: 30px;
     text-align: center;
     margin: 35px -20px 20px -20px;
@@ -3983,366 +3754,6 @@ li.comments-anchor {
 }
 
 
-
-/** 评论图标 **/
-#comments .fa-exclamation-circle,
-#comments .fa-spinner,
-#comments .fa-check-square,
-#comments .fa-pencil-square-o {
-    color: #009688;
-    margin: 5px;
-}
-/** 链接 **/
-.links-box {
-    width: 1080px;
-    margin: 0 auto;
-    padding: 0 0 10px;
-}
-
-#links {
-    margin: 0 -2px;
-}
-
-#links h2 {
-    font-size: 18px;
-    margin: 10px 0;
-    border: none;
-}
-
-.link-f {
-    max-width: 100%;
-    width: auto;
-    height: auto;
-    overflow: hidden;
-}
-
-.link-f a img {
-    max-width: 100%;
-    width: 100%;
-    height: auto;
-    margin: 0 auto;
-    vertical-align: middle;
-}
-
-.link-f a {
-    background: #fff;
-    text-align: center;
-    padding: 5px;
-    display: block;
-    white-space: nowrap;
-    word-wrap: normal;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    border: 1px solid #ddd;
-    border-radius: 2px;
-    transition-duration: .5s;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-}
-
-.link-img a {
-    padding: 0;
-    border: none !important;
-    background: transparent !important;
-}
-
-.link-f a:hover {
-    background: #009688;
-    color: #fff !important;
-    border: 1px solid #009688;
-    transition: all 0.1s ease-in 0s;
-}
-
-.lx7, .child-cat li {
-    float: left;
-    min-height: 1px;
-    padding: 2px;
-}
-
-@media screen and (min-width:280px) {
-    .lx7, .child-cat li {
-        width: 50%;
-        transition-duration: .5s;
-    }
-}
-
-@media screen and (min-width:550px) {
-    .lx7, .child-cat li {
-        width: 33.33333333%;
-    }
-}
-
-@media screen and (min-width:700px) {
-    .lx7, .child-cat li {
-        width: 25%;
-        transition-duration: .5s;
-    }
-}
-
-@media screen and (min-width:900px) {
-    .lx7, .child-cat li {
-        width: 20%;
-        transition-duration: .5s;
-    }
-}
-
-@media screen and (min-width:1024px) {
-    .lx7, .child-cat li {
-        width: 14.2857%;
-        transition-duration: .5s;
-    }
-}
-
-@media screen and (max-width: 550px) {
-    #links {
-        margin: 6px 0 0 0;
-    }
-}
-
-.linkcat h2 {
-    clear: both;
-    padding: 0 0 0 10px;
-}
-
-.link-all a:hover {
-    background: #009688;
-    color: #fff !important;
-    border: 1px solid #009688;
-    transition: all 0.1s ease-in 0s;
-}
-
-.link-all a, #links a {
-    -webkit-transition: -webkit-transform 0.2s;
-    transition: transform 0.2s;
-}
-
-.link-all a:hover, .link-all a:focus, #links a:hover, #links a:focus {
-    -webkit-transform: scale(0.9);
-    transform: scale(0.9);
-}
-/** 页脚 **/
-#colophon {
-    background: #fff;
-    position: relative;
-    width: auto;
-    border-top: 1px solid #ddd;
-    box-shadow: 0 -1px 1px rgba(0, 0, 0, 0.03);
-    margin-top: 20px;
-    min-height:50px;
-}
-
-.site-info {
-    text-align: center;
-    margin: 0 5%;
-    padding: 15px 0;
-}
-
-.add-info {
-    padding: 5px 0;
-    display: block;
-}
-/** 页脚小工具 **/
-#footer-widget-box {
-    background: #555;
-    position: relative;
-    padding: 10px 0;
-    box-shadow: 0 -1px 1px rgba(0, 0, 0, 0.1);
-}
-
-.footer-widget {
-    width: 1080px;
-    margin: 0 auto;
-}
-
-.footer-widget h3 {
-    font-size: 15px;
-    color: #ccc;
-    margin: 15px 0 0 0;
-}
-
-.footer-widget .widget {
-    background: #555;
-    float: left;
-    width: 33.333333333%;
-    padding: 0 20px;
-    border: none;
-    box-shadow: none;
-}
-
-.footer-widget, .footer-widget a {
-    color: #ccc;
-}
-
-.footer-widget a:hover {
-    color: #fff;
-}
-
-.footer-widget .widget ul {
-    padding: 8px 0 15px;
-}
-
-.footer-widget .menu li {
-    float: left;
-    width: 33%;
-}
-
-#footer-widget-box .add-widgets, #footer-widget-box .add-widgets a {
-    color: #fff;
-    text-align: center;
-}
-
-
-/** 分页 **/
-
-.pagination {
-    float: right;
-    margin-top: 10px;
-}
-
-.pagination a,
-.pagination a:visited {
-    float: left;
-    background: #fff;
-    margin: 0 0 10px 5px;
-    padding: 8px 11px;
-    line-height: 100%;
-    border: 1px solid #ddd;
-    border-radius: 2px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-}
-
-.pagination .current {
-    background-color: #398898;
-    color: #ffffff;
-    border: 1px solid #398898;
-}
-.pagination .dots {
-    background: #fff;
-    float: left;
-    margin: 0 0 0 5px;
-    padding: 8px 11px;
-    line-height: 100%;
-    border: 1px solid #ddd;
-    border-radius: 2px;
-}
-
-.pagination span.pages {
-}
-
-.pagination span.current,
-.pagination a:hover {
-    background: #009688;
-    color: #fff;
-    border: 1px solid #009688;
-}
-
-
-
-.nav-links .prev i,
-.nav-links .next i {
-    line-height: 12px;
-    padding: 0px 2px;
-}
-
-
-
-
-/** 等于或小于550px **/
-@media screen and (max-width: 550px) {
-    .pagination {
-        float: right;
-        margin-top: 15px;
-        margin-right: 10px;
-    }
-
-    .pagination a,
-    .pagination a:visited {
-        float: left;
-        background: #fff;
-        margin: 0;
-        padding: 8px 11px;
-        line-height: 100%;
-        border: 1px solid #ddd;
-        border-radius: 2px;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-    }
-    .pagination .dots {
-        background: #fff;
-        float: left;
-        margin: 0;
-        padding: 8px 11px;
-        line-height: 100%;
-        border: 1px solid #ddd;
-        border-radius: 2px;
-    }
-
-}
-/** 无限加载 **/
-
-
-.ias-trigger-next {
-    float: left;
-    cursor: pointer;
-    margin: 4px 0 0 0;
-}
-
-#picture .ias-spinner, #tao .ias-spinner, #picture .ias-trigger-next, #tao .ias-trigger-next {
-    margin: 3px 0 0 5px;
-}
-
-.ias-trigger-next a {
-    background: #fff;
-    color: #999;
-    padding: 6px 11px;
-    line-height: 100%;
-    border: 1px solid #ddd;
-    border-radius: 2px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-}
-
-.ias-trigger-next a:hover {
-    background: #009688;
-    color: #fff;
-    border: 1px solid #009688;
-}
-
-.ias-trigger-next i {
-    margin-right: 5px;
-}
-
-#comments .nav-previous, #comments .nav-next {
-    display: none;
-}
-
-@media screen and (min-width: 550px) {
-    #picture .pagination, #tao .pagination {
-        width: 75%;
-    }
-
-    #picture .nav-links, #tao .nav-links {
-        float: right;
-    }
-}
-
-@media screen and (max-width: 550px) {
-    .ias-trigger-next {
-        float: inherit;
-        text-align: center;
-        margin: -10px auto 0;
-        padding: 10px 11px;
-    }
-
-    .ias-spinner {
-        float: inherit;
-        width: 98%;
-        margin: 0 auto;
-        height: 35px;
-    }
-
-    #picture .ias-spinner, #tao .ias-spinner {
-        height: 45px;
-    }
-}
-
 /** 等于或小于1080px **/
 @media screen and (max-width: 1080px) {
     #content, #colophon, .breadcrumb, .footer-widget, .links-box, .header-sub {
@@ -4471,6 +3882,9 @@ li.comments-anchor {
 
     .entry-more, .entry-direct {
         display: none;
+    }
+    .entry-more{
+        padding-top: 100px;
     }
 
     .thumbnail {

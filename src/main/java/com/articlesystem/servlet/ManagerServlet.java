@@ -34,7 +34,7 @@ public class ManagerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request,response);
     }
-
+        //manager?method=logout
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String methodName = request.getParameter("method");
@@ -79,6 +79,8 @@ public class ManagerServlet extends HttpServlet {
 
         response.sendRedirect("index.html");
     }
+
+
 
 
 

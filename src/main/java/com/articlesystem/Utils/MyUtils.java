@@ -75,4 +75,19 @@ public class MyUtils {
         return true;
     }
 
+
+    public static boolean JsonResultToWrite(String json, PrintWriter writer) {
+        try {
+
+
+            writer.write(json);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            // 3.关闭流。
+            writer.close();
+        }
+        return true;
+    }
 }

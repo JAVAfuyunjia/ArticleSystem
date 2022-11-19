@@ -1,7 +1,9 @@
 package com.articlesystem.service.impl;
 
+import com.articlesystem.Utils.PageUtils;
 import com.articlesystem.dao.ArticleDao;
 import com.articlesystem.entity.Article;
+import com.articlesystem.entity.User;
 import com.articlesystem.service.ArticleService;
 
 import java.util.ArrayList;
@@ -45,4 +47,39 @@ public class ArticleServiceImpl implements ArticleService {
         articleDao.insertArticleRefCategory(article.getCategoryId(),articleId);
 
     }
+
+    /**
+     * 通过关键字查询文章list
+     * @param keyword
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public PageUtils<Article> getArticlePageInfo(String keyword, int currentPage, int pageSize) {
+
+
+        return articleDao.getArticlePageInfo(keyword, currentPage, pageSize);
+    }
+
+    /**
+     * 通过categoryId查询文章list
+     * @param categoryId
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public PageUtils<Article> getArticlePageInfoByCategoryId(int categoryId, int currentPage, int pageSize) {
+        return articleDao.getArticlePageInfoByCategoryId(categoryId,currentPage,pageSize);
+    }
+
+    @Override
+    public Article getArticleByArticleId(int articleId) {
+
+        Article article = articleDao.getArticleByArticleId(articleId);
+        return article;
+    }
+
+
 }

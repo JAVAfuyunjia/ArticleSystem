@@ -4,7 +4,7 @@ import java.awt.print.PrinterAbortException;
 import java.util.Date;
 
 public class Article {
-    private long article_id;
+    private int articleId;
 
     private Integer articleUserId;
 
@@ -20,14 +20,35 @@ public class Article {
 
     private String articleSummary;
 
+    private String categoryName;
+
     private int categoryId;
+
+    public int getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(int articleId) {
+        this.articleId = articleId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+
 
     public Article() {
     }
 
     public long getArticle_id() {
-        return article_id;
+        return articleId;
     }
+
 
     public Integer getArticleUserId() {
         return articleUserId;
@@ -61,9 +82,7 @@ public class Article {
         return categoryId;
     }
 
-    public void setArticle_id(long article_id) {
-        this.article_id = article_id;
-    }
+
 
     public void setArticleUserId(Integer articleUserId) {
         this.articleUserId = articleUserId;
@@ -90,10 +109,14 @@ public class Article {
     }
 
     public void setArticleSummary(String articleSummary) {
+
         this.articleSummary = articleSummary;
     }
 
     public void setCategoryId(int categoryId) {
+
         this.categoryId = categoryId;
     }
+
+
 }
