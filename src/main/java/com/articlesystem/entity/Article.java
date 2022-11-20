@@ -6,6 +6,7 @@ import java.awt.print.PrinterAbortException;
 import java.util.Date;
 
 public class Article {
+    private String name;
     private int articleId;
 
     private Integer articleUserId;
