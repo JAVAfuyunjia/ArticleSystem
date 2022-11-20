@@ -1,393 +1,547 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Document</title>
-		<script src="resource/assets/js/jquery-1.12.4.min.js" type="text/javascript" charset="utf-8"></script>
-		<style>
-			* {
-				margin: 0;
-				padding: 0;
-				box-sizing: border-box;
-			}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="resource/assets/js/jquery-1.12.4.min.js" type="text/javascript" charset="utf-8"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-			/* 设置整体页面高度 */
-			html,
-			body {
-				height: 100%;
-				 background-image: url(resource/assets/img/longingBg2.jpg);
-				background-position: center center;
-				background-size: cover;
-				background-repeat: no-repeat;
-			}
+        /* 设置整体页面高度 */
+        html,
+        body {
+            height: 100%;
+            background-image: url(resource/assets/img/longingBg2.jpg);
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
 
-			/* 上方导航栏 */
-			.nav {
-				width: 100%;
-				height: 50px;
-				background-color: rgba(51, 51, 51, 0.4);
-				color: #fff;
+        /* 上方导航栏 */
+        .nav {
+            width: 100%;
+            height: 50px;
+            background-color: rgba(51, 51, 51, 0.4);
+            color: #fff;
 
-				display: flex;
-				justify-content: left;
-				align-items: center;
-			}
+            display: flex;
+            justify-content: left;
+            align-items: center;
+        }
 
-			/* 导航栏中的图标 */
-			.nav img {
-				width: 40px;
-				height: 40px;
-				margin-left: 30px;
-				margin-right: 10px;
-				border-radius: 50%;
-			}
+        /* 导航栏中的图标 */
+        .nav img {
+            width: 40px;
+            height: 40px;
+            margin-left: 30px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
 
-			/* 导航栏中的占位器 */
-			.nav .spacer {
-				width: 70%;
-			}
+        /* 导航栏中的占位器 */
+        .nav .spacer {
+            width: 70%;
+        }
 
-			/* 导航栏中的按钮 */
-			.nav a {
-				color: #fff;
-				text-decoration: none;
-				padding: 0 10px;
-			}
+        /* 导航栏中的按钮 */
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0 10px;
+        }
 
-			/* 页面内容  版心 */
-			.container {
-				/* 使用 calc 计算高度 */
-				height: calc(100% - 50px);
-				/* 设置版心宽度 */
-				width: 1000px;
-				/* 水平居中 */
-				margin: 0 auto;
-				/* 使用弹性布局 */
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-			}
+        /* 页面内容  版心 */
+        .container {
+            /* 使用 calc 计算高度 */
+            height: calc(100% - 50px);
+            /* 设置版心宽度 */
+            width: 1000px;
+            /* 水平居中 */
+            margin: 0 auto;
+            /* 使用弹性布局 */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-			/* 左侧部分，用来放置用户信息 */
-			.container-left {
-				height: 100%;
-				width: 200px;
-			}
+        /* 左侧部分，用来放置用户信息 */
+        .container-left {
+            height: 100%;
+            width: 200px;
+        }
 
-			/* 右侧部分，用来放置正文 */
-			.container-right {
-				height: 100%;
-				/* 和左侧部分中间留出50px间隙 */
-				width: 795px;
-				/* 若内容溢出则自动加上滚动条 */
-				overflow: auto;
-				background-color: rgba(255, 255, 255, 0.8);
-				border-radius: 10px;
-			}
+        /* 右侧部分，用来放置正文 */
+        .container-right {
+            height: 100%;
+            /* 和左侧部分中间留出50px间隙 */
+            width: 795px;
+            /* 若内容溢出则自动加上滚动条 */
+            overflow: auto;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+        }
 
-			/* 博客正文标题 */
-			.blog-content {
-				padding: 30px;
-			}
+        /* 博客正文标题 */
+        .blog-content {
+            padding: 30px;
+        }
 
-			/* 博客标题 */
-			.blog-content h3 {
-				text-align: center;
-				padding: 20px 0;
-			}
+        /* 博客标题 */
+        .blog-content h3 {
+            text-align: center;
+            padding: 20px 0;
+        }
 
-			/* 博客日期 */
-			.blog-content .date {
-				color: #7b807a;
-				padding: 10px 0;
-		
-			}
+        /* 博客日期 */
+        .blog-content .date {
+            color: #7b807a;
+            padding: 10px 0;
 
-			/* 博客内容段落 */
-			.blog-content p {
-				text-indent: 2em;
-				padding: 10px 0;
-			}
-			.ttp-avatar {
-			    position: relative;
-			    display: inline-block;
-			    -webkit-box-sizing: border-box;
-			    -moz-box-sizing: border-box;
-			    box-sizing: border-box;
-			    border: 1px solid #f2f2f2;
-			    border-radius: 50%;
-			    width: 36px;
-			    height: 36px;
-			    background: url(resource/assets/img/longingBg2.jpg) no-repeat 50%;
-			    background-size: contain;
+        }
+
+        /* 博客内容段落 */
+        .blog-content p {
+            text-indent: 2em;
+            padding: 10px 0;
+        }
+
+        .ttp-avatar {
+            position: relative;
+            display: inline-block;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            border: 1px solid #f2f2f2;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            background-size: contain;
+        }
+
+        .ttp-avatar img {
+            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+            -o-object-fit: cover;
+            object-fit: cover;
+        }
+
+        .ttp-comment-input {
+            width: 600px;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            padding: 16px;
+            background: #f8f8f8;
+        }
+
+        .ttp-comment-input .submit-btn {
+            border: none;
+            border-radius: 4px;
+            padding: 6px 18px;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 20px;
+            color: #fff;
+            background: #505050b0;
+            cursor: pointer;
+            float: right;
+        }
+
+        /* 展示用户信息的卡片 */
+        .card {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 30px;
+        }
+
+        /* 用户头像 */
+        .card img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+        }
+
+        /* 用户名 */
+        .card h3 {
+            text-align: center;
+            padding: 10px;
+        }
+
+        /* 用户gitee连接 */
+        .card a {
+            display: block;
+            text-align: center;
+            color: #999;
+            text-decoration: none;
+            padding: 10px;
+        }
+
+        /* 展示文章数目的面板 */
+        .card .counter {
+            padding: 5px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .ttp-comment-input .comment-textarea {
+            display: block;
+            border: 0;
+            padding: 0;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            max-height: 72px;
+            width: 100%;
+            height: 24px;
+            font-size: 16px;
+            line-height: 24px;
+            color: #222;
+            outline: none;
+            resize: none;
+            background: #f8f8f8;
+            -webkit-transition: height .3s ease-in-out;
+            -moz-transition: height .3s ease-in-out;
+            transition: height .3s ease-in-out;
+        }
+
+        .user-name {
+            position: relative;
+            bottom: 9px;
+            display: inline-block;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 24px;
+            color: #222;
+        }
+
+        dl, dt, fieldset, figure, form, h1, h2, h3, h4, h5, h6, hr, html, input, legend, li, menu, ol, p, pre, table, td, textarea, th, ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        .comment-list {
+            padding-top: 40px;
+        }
+
+        .comment-info {
+            padding-left: 40px;
+        }
+
+        .ttp-comment-item {
+            position: relative;
+            top: 20px;
+
+        }
+
+        li {
+            padding-top: 30px;
+        }
+
+        .blog-content img {
+            width: 80%;
+            height: 88%;
+        }
+
+		.ttp-comment-input .login-mask button {
+			border: none;
+			font-size: 16px;
+			line-height: 22px;
+			font-weight: 500;
+			color: #f04142;
+			background: transparent;
+		}
+
+		.ttp-comment-input .login-mask {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: #f8f8f8;
+			cursor: pointer;
+		}
+        .time{
+            padding-top: 10px;
+            color: #999;
+            font-size: small;
+        }
+    </style>
+</head>
+<body>
+<!-- 导航栏 -->
+<div class="nav">
+
+    <a href="index.html" style="margin-left: 126px;">返回首页</a>
+</div>
+<!-- 版心 -->
+<div class="container">
+    <!-- 左侧个人信息 -->
+    <div class="container-left">
+        <div class="card">
+            <img class="avtar" alt="">
+            <div>作者：<h3 style="display: inline-block;font-family: 'Lucida Calligraphy', cursive, serif, sans-serif;"></h3></div>
+
+        </div>
+
+    </div>
+    <!-- 右侧内容详情 -->
+    <div class="container-right">
+
+        <div class="blog-content">
+            <!-- 文章标题 -->
+            <h3></h3>
+            <div class="date"></div>
+            <!-- 文章正文 -->
+            <div class="content">
+                <img />
+                <p>
+
+                </p>
+
+            </div>
+        </div>
+        <!--评论区域-->
+        <div id="comment-area">
+            <div class="main-input">
+                <div class="ttp-avatar">
+                    <img src="resource/assets/img/notLoggedInAvatar.png">
+                </div>
+                <div class="ttp-comment-input">
+
+
+                    <textarea class="comment-textarea" placeholder="说点什么把...."></textarea>
+                    <div class="action">
+                        <button type="button" class="submit-btn">评论</button>
+                    </div>
+                </div>
+            </div>
+            <ul class="comment-list">
+                <hr/>
+                <li>
+                    <div class="ttp-comment-item">
+                        <div class="ttp-avatar">
+                            <img src="resource/assets/img/longingBg2.jpg"/>
+                        </div>
+                        <div class="user-name">
+                            <span class="name">付云佳</span>
+                        </div>
+                        <div class="comment-info">
+                            <div class="body">
+                                <div class="comment-content">
+											<span class="conment">这篇文章好棒的呀hj yr关注Stella_sss，一起学编程！Lorem ipsum dolor sit amet consectetur, adipisicing elit. Debitis modi vitae
+						culpa, ipsam in neque perspiciatis eos similique repellendus! Quae, quasi placeat eaque adipisci
+						totam fuga impedit facilis unde. Odio?jryj yjyhjhyjjhjhhjgsht tyyt</span>
+                                </div>
+                            </div>
+                            <p class="time">2032-3-23</p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="ttp-comment-item">
+                        <div class="ttp-avatar">
+                            <img src="resource/assets/img/longingBg2.jpg"/>
+                        </div>
+                        <div class="user-name">
+                            <span class="name">付云佳</span>
+                        </div>
+                        <div class="comment-info">
+                            <div class="body">
+                                <div class="comment-content">
+											<span class="conment">这篇文章好棒的呀hj yr关注Stella_sss，一起学编程！Lorem ipsum dolor sit amet consectetur, adipisicing elit. Debitis modi vitae
+						culpa, ipsam in neque perspiciatis eos similique repellendus! Quae, quasi placeat eaque adipisci
+						totam fuga impedit facilis unde. Odio?jryj yjyhjhyjjhjhhjgsht tyyt</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+    $(document).ready(function () {
+        let URL = window.location.href;
+        let articleId = getUrlParams(URL).articleId;
+        let article = getArticleById(articleId);
+        buildArticle(article);
+        buildAuthor(article.articleUserId);
+		VerifyLoginStatus();
+		console.log(getCommentlist())
+
+    });
+
+    // 通过articleId获取文章对象
+    function getArticleById(articleId) {
+        var article
+        $.ajax({
+            async: false,
+            url: "article?method=getArticleByArticleId&articleId=" + articleId,
+            type: "post",
+            dataType: "json",
+            success: function (result) {
+
+                article = result.extend.article
+
+            }
+        });
+        return article;
+    }
+
+    // 获取URL参数
+    function getUrlParams(url) {
+        let urlStr = url.split('?')[1]
+        const urlSearchParams = new URLSearchParams(urlStr)
+        const result = Object.fromEntries(urlSearchParams.entries())
+        return result
+    }
+
+    // 构建文章
+    function buildArticle(article) {
+        $(".content img").attr("src", article.articleThumbnail);
+        $(".content p").text(article.articleContent);
+        $(".date").text(getFormatDate(article.articleCreateTime));
+		$(".blog-content h3").text(article.articleTitle);
+    }
+
+    // 格式化时间
+    function getFormatDate(milliseconds) {
+        var date = new Date(milliseconds);
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        return [year, '-', month, '-', day].join('');
+    }
+
+    // 构建作者
+    function buildAuthor(authorId) {
+        $.ajax({
+            url: "userServlet?method=getAuthorById&authorId=" + authorId,
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
+                $(".card img").attr("src",result.extend.author.userAvatar);
+                $(".card h3").text(result.extend.author.userName);
+            }
+        });
+
+
+    }
+
+    // 校验登录状态，同时构建当前登录人信息。
+	function VerifyLoginStatus(){
+		$.ajax({
+			url : "userServlet?method=getUser",
+			type : "POST",
+			dataType : "json",
+			success : function (result) {
+				if (result.extend.user == "no"){
+					var loginMask = $("<div></div>").addClass("login-mask");
+					var p = $("<p></p>").text("请先 ");
+					var button = $("<button></button>").text("登录");
+					p.append(button);
+					p.append(" 后发表评论~~");
+					loginMask.append(p);
+					$(".ttp-comment-input").append(loginMask);
+				}else{
+				    $(".login-mask").remove();
+				    $(".main-input .ttp-avatar img").attr("src",result.extend.user.userAvatar);
 				}
-			.ttp-avatar img {
-			    border-radius: 50%;
-			    width: 100%;
-			    height: 100%;
-			    -o-object-fit: cover;
-			    object-fit: cover;
 			}
-			.ttp-comment-input {
-			    width: 600px;
-			        display: inline-block;
-			        position: relative;
-			        overflow: hidden;
-			        border-radius: 8px;
-			        padding: 16px;
-			        background: #f8f8f8;
-			}
-			.ttp-comment-input .submit-btn {
-			    border: none;
-			    border-radius: 4px;
-			    padding: 6px 18px;
-			    font-size: 14px;
-			    font-weight: 500;
-			    line-height: 20px;
-			    color: #fff;
-			    background: #505050b0;
-			    cursor: pointer;
-				float: right;
-			}
-			/* 展示用户信息的卡片 */
-			.card {
-			    background-color: rgba(255, 255, 255, 0.8);
-			    border-radius: 10px;
-			    padding: 30px;
-			}
-			
-			/* 用户头像 */
-			.card img {
-			    width: 140px;
-			    height: 140px;
-			    border-radius: 50%;
-			}
-			
-			/* 用户名 */
-			.card h3 {
-			    text-align: center;
-			    padding: 10px;
-			}
-			
-			/* 用户gitee连接 */
-			.card a {
-			    display: block;
-			    text-align: center;
-			    color: #999;
-			    text-decoration: none;
-			    padding: 10px;
-			}
-			
-			/* 展示文章数目的面板 */
-			.card .counter {
-			    padding: 5px;
-			    display: flex;
-			    justify-content: space-around;
-			}
-
-			.ttp-comment-input .comment-textarea {
-			    display: block;
-			    border: 0;
-			    padding: 0;
-			    -webkit-box-sizing: border-box;
-			    -moz-box-sizing: border-box;
-			    box-sizing: border-box;
-			    max-height: 72px;
-			    width: 100%;
-			    height: 24px;
-			    font-size: 16px;
-			    line-height: 24px;
-			    color: #222;
-			    outline: none;
-			    resize: none;
-			    background: #f8f8f8;
-			    -webkit-transition: height .3s ease-in-out;
-			    -moz-transition: height .3s ease-in-out;
-			    transition: height .3s ease-in-out;
-			}
-			.user-name {
-				    position: relative;
-				    bottom: 9px;
-				    display: inline-block;
-				    font-size: 16px;
-				    font-weight: 500;
-				    line-height: 24px;
-				    color: #222;
-			}
-			dl, dt, fieldset, figure, form, h1, h2, h3, h4, h5, h6, hr, html, input, legend, li, menu, ol, p, pre, table, td, textarea, th, ul {
-			    margin: 0;
-			    padding: 0;
-			}
-			.comment-list{
-				padding-top: 40px;
-			}
-			.comment-info{
-			padding-left: 40px;
-			}
-				
-			.ttp-comment-item{
-				position: relative;
-				    top: 20px;
-				
-			}
-			li{
-				    padding-top: 30px;
-			}
-			.blog-content img{
-				width: 80%;
-				height: 88%;
-			}
-			
-		</style>
-	</head>
-	<body>
-		<!-- 导航栏 -->
-		<div class="nav">
-			
-			<a href="index.html" style="margin-left: 126px;">返回首页</a>
-		</div>
-		<!-- 版心 -->
-		<div class="container">
-			<!-- 左侧个人信息 -->
-			<div class="container-left">
-				<div class="card">
-				                <img src="resource/assets/img/longingBg2.jpg" class="avtar" alt="">
-				                <h3>作者：付锦芝</h3>
-				           
-				            </div>
-				
-			</div>
-			<!-- 右侧内容详情 -->
-			<div class="container-right">
-				<!-- 博客正文 -->
-				<div class="blog-content">
-					<!-- 博客标题 -->
-					<h3>我的第一篇博客</h3>
-					<div class="date">2022-06-23</div>
-					<!-- 博客正文 -->
-					<div class="content">
-						<img src="resource/assets/img/longingBg2.jpg" />
-						<p>
-							关注Stella_sss，一起学编程！Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat quidem nam
-							reiciendis aliquam a fugiat deserunt! Exercitationem illo, similique, odio nobis, porro tenetur
-							quis obcaecati inventore rem minus nisi deserunt?
-							关注Stella_sss，一起学编程！Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat quidem nam
-							reiciendis aliquam a fugiat deserunt! Exercitationem illo, similique, odio nobis, porro tenetur
-							quis obcaecati inventore rem minus nisi deserunt?
-							关注Stella_sss，一起学编程！Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat quidem nam
-							reiciendis aliquam a fugiat deserunt! Exercitationem illo, similique, odio nobis, porro tenetur
-							quis obcaecati inventore rem minus nisi deserunt?
-							关注Stella_sss，一起学编程！Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat quidem nam
-							reiciendis aliquam a fugiat deserunt! Exercitationem illo, similique, odio nobis, porro tenetur
-							quis obcaecati inventore rem minus nisi deserunt?
-							关注Stella_sss，一起学编程！Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat quidem nam
-							reiciendis aliquam a fugiat deserunt! Exercitationem illo, similique, odio nobis, porro tenetur
-							quis obcaecati inventore rem minus nisi deserunt?
-						</p>
-
-					</div>
-				</div>
-				<!--评论区域-->
-				<div id="comment-area">
-					<div class="main-input">
-						<div class="ttp-avatar">
-							<img src="resource/assets/img/longingBg2.jpg">
-						</div>
-						<div class="ttp-comment-input">
-							<textarea class="comment-textarea" placeholder="说点什么把...."></textarea>
-							<div class="action">
-								<button type="button" class="submit-btn">评论</button>
-							</div>
-						</div>
-					</div>
-					<ul class="comment-list">
-						<hr />
-						<li>
-							<div class="ttp-comment-item">
-								<div class="ttp-avatar">
-									<img src="resource/assets/img/longingBg2.jpg"/>
-								</div>
-								<div class="user-name">
-									<span class="name">付云佳</span>
-								</div>
-								<div class="comment-info">
-									<div class="body">
-										<div class="comment-content">
-											<span class="conment">这篇文章好棒的呀hj yr关注Stella_sss，一起学编程！Lorem ipsum dolor sit amet consectetur, adipisicing elit. Debitis modi vitae
-						culpa, ipsam in neque perspiciatis eos similique repellendus! Quae, quasi placeat eaque adipisci
-						totam fuga impedit facilis unde. Odio?jryj yjyhjhyjjhjhhjgsht tyyt</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="ttp-comment-item">
-								<div class="ttp-avatar">
-									<img src="resource/assets/img/longingBg2.jpg"/>
-								</div>
-								<div class="user-name">
-									<span class="name">付云佳</span>
-								</div>
-								<div class="comment-info">
-									<div class="body">
-										<div class="comment-content">
-											<span class="conment">这篇文章好棒的呀hj yr关注Stella_sss，一起学编程！Lorem ipsum dolor sit amet consectetur, adipisicing elit. Debitis modi vitae
-						culpa, ipsam in neque perspiciatis eos similique repellendus! Quae, quasi placeat eaque adipisci
-						totam fuga impedit facilis unde. Odio?jryj yjyhjhyjjhjhhjgsht tyyt</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-					
-					</ul>
-				</div>
-			</div>
-		</div>
-
-	<script>
-
-
-		$(document).ready(function () {
-			let URL = window.location.href;
-            let  articleId = getUrlParams(URL).articleId;
-            let a = getArticle(articleId);
-			console.log(a);
-
 		});
+	}
 
-		// 通过articleId获取文章对象
-		function getArticle(articleId) {
-			var article
-			$.ajax({
-				async:false,
-				url : "article?method=getArticleByArticleId&articleId="+articleId,
-				type : "post",
-				dataType : "json",
-				success : function (result) {
+	// 获取当前登录的用户信息
+    function getCurrentUser(){
+        var user=null;
+        $.ajax({
+            async: false,
+            url : "userServlet?method=getUser",
+            type : "POST",
+            dataType : "json",
+            success : function (result) {
+                user = result.extend.user;
+            }
+        });
+        return user;
+    }
 
-					article = result.extend.article
 
-				}
-			});
-			return article;
-		}
+	// 点击登录
+    $(document).on("click",".login-mask",function () {
+        window.location.href = "login.html";
+    });
 
-		// 获取URL参数
-		function getUrlParams(url) {
-			let urlStr = url.split('?')[1]
-			const urlSearchParams = new URLSearchParams(urlStr)
-			const result = Object.fromEntries(urlSearchParams.entries())
-			return result
-		}
-		// 构建文章
-		function buildArticle(article) {
+    // 提交评论
+    $(".ttp-comment-input .action button").click(function () {
+        let URL = window.location.href;
+        let commentArticleId = getUrlParams(URL).articleId;
+        let currentUser = getCurrentUser();
+        let commentAuthorName = currentUser.userName;
+        let commentAuthorAvatar = currentUser.userAvatar;
+        let commentContent = $(".comment-textarea").val();
+        var comment = {
+            "commentArticleId":commentArticleId,
+            "commentAuthorName" : commentAuthorName,
+            "commentAuthorAvatar" : commentAuthorAvatar,
+            "commentContent" : commentContent
+        }
 
-		}
-	</script>
+        $.ajax({
+            url : "comment?method=commentInsert",
+            type : "POST",
+            dataType : "json",
+            data : comment,
+            success : function (result) {
 
-	</body>
+            }
+        });
+
+
+    });
+
+    // 构建评论list
+    function buildCommentList() {
+
+    }
+
+    // 获取当前文章的所有评论并并返回
+    function getCommentlist() {
+        let URL = window.location.href;
+        let currentArticleId = getUrlParams(URL).articleId;
+        var commentList;
+        $.ajax({
+            async: false,
+            url: "comment?method=getCommentListByArticleId&articleId=" + currentArticleId,
+            type: "post",
+            dataType: "json",
+            success: function (result) {
+
+
+                commentList = result.extend.comments;
+
+            }
+        });
+        return commentList;
+    }
+
+
+
+</script>
+
+</body>
 </html>

@@ -68,7 +68,7 @@ public class UserDao {
 
     }
 
-    public User getUser(int userId) {
+    public User getUserByUserId(int userId) {
 
         User user = null;
         Connection connection = null;
@@ -115,5 +115,31 @@ public class UserDao {
         }
 
     return rows;
+    }
+
+    public User getAuthorById(int authorId) {
+        User user = null;
+        Connection connection = null;
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "select user_id AS userId,user_name AS userName,user_phone_number AS userPhoneNumber,user_pass AS userPass,user_role AS userRole,user_avatar AS userAvatar FROM as_user WHERE user_id= ?";
+
+            BeanHandler<User> userBeanHandler = new BeanHandler<>(User.class);
+
+            user = queryRunner.query(connection, sql, userBeanHandler, authorId);
+        } catch (SQLException throwables) {
+
+            throwables.printStackTrace();
+        }finally {
+            if(connection != null){
+                JDBCUtils.releaseConnection(connection);
+            }
+        }
+
+
+        return user;
+
+
+
     }
 }

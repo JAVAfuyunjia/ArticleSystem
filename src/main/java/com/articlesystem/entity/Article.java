@@ -1,5 +1,7 @@
 package com.articlesystem.entity;
 
+import com.alibaba.fastjson.JSON;
+
 import java.awt.print.PrinterAbortException;
 import java.util.Date;
 
@@ -116,6 +118,10 @@ public class Article {
     public void setCategoryId(int categoryId) {
 
         this.categoryId = categoryId;
+    }
+
+    public String toString(){
+        return JSON.toJSONString(this);
     }
 
 

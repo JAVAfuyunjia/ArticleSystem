@@ -219,7 +219,7 @@
                 <div class="form-group">
                     <div class="col-xs-6 link">
                         <p class="text-center remove-margin">
-                            <small></small>
+                            <small><a href="index.html"><button type="button" class="btn btn-primary">去首页</button></a></small>
                         </p>
                     </div>
                     <div class="col-xs-6 link">
@@ -309,7 +309,7 @@
                 console.log(result.code);
                 if (result.code == 200){
                     layer.msg("登录成功！")
-                    window.location.href = "manager?method=managerHome";
+                    window.history.go(-1);
                 }else if (result.code == 100){
                     layer.msg("用户名或密码错误！")
                 }

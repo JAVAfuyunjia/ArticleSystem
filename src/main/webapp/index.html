@@ -78,6 +78,24 @@
             width: 20%;
 
         }
+        .user-avatar img {
+            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+            -o-object-fit: cover;
+            object-fit: cover;
+        }
+        .user-avatar {
+            position: relative;
+            display: inline-block;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            background-size: contain;
+        }
 
     </style>
 
@@ -100,10 +118,7 @@
             <li class="layui-nav-item as-categoryId" categoryId="100000014"><a href="">国际</a></li>
 
 
-            <li class="layui-nav-item" style="float: right;"><a href="login.html">
-                <button type="button" class="layui-btn layui-btn-radius" id="registerUser">登录写文章
-                </button>
-            </a></li>
+            <li class="layui-nav-item" style="float: right;" id="userInfo"></li>
         </ul>
     </div>
 </div>
@@ -271,11 +286,49 @@
                 // 初始化导航栏
                 initPagination(pageInfo.totalNum, pageInfo.pageSize, pageInfo.currentPage)
 
+                // 校验登录状态
+                VerifyLoginStatus();
             }
         });
 
 
     });
+
+    // 校验登录状态
+    function VerifyLoginStatus(){
+        $.ajax({
+            url : "userServlet?method=getUser",
+            type : "POST",
+            dataType : "json",
+            success : function (result) {
+                console.log(result);
+                if (result.extend.user == "no"){
+                    var a =  $("<a></a>").attr("href","login.html");
+                    var button = $("<button></button>").addClass("layui-btn").addClass("layui-btn-radius").text("登录");
+                    a.append(button);
+                    $("#userInfo").append(a);
+                }else{
+                    $("#userInfo").text("");
+                   var a =  $("<a></a>").attr("href","manager?method=managerProfile");
+                   var div = $("<div></div>").addClass("user-avatar");
+                   var src;
+                   if (result.extend.user.userAvatar == ""){
+                       src = "resource/assets/img/defaultAvatar2.jpeg"
+                   }else{
+                       src = result.extend.user.userAvatar;
+                   }
+
+
+                   var img = $("<img>").attr("src",src);
+                   div.append(img);
+                   a.append(div);
+
+                   $("#userInfo").append(a);
+                }
+            }
+        });
+    }
+
 
     var categoryId;
     var keyword="";
@@ -298,10 +351,7 @@
                     buildArticles(pageInfo.list);
 
                     initPaginationForCategory(pageInfo.totalNum, pageInfo.pageSize, pageInfo.currentPage);
-
                 }
-
-
             }
         });
 
@@ -451,15 +501,13 @@
 
     // 构建文章
     function buildArticles(list) {
+        console.log(list);
         // 清理内容
         $("#main").text("");
 
         for (var i = 0; i < list.length; i++) {
 
             var article = $("<article></article>").addClass("post type-post");
-
-            //var hr = $("<hr/>").css("color", "#d6d6d6");
-            //article.append(hr);
 
 
             var figure = $("<figure></figure>").addClass("thumbnail");
@@ -511,7 +559,7 @@
 
     // 格式化时间
     function getFormatDate(milliseconds) {
-        var date = new Date();
+        var date = new Date(milliseconds);
         var year = date.getFullYear();
         var month = date.getMonth() + 1;
         var day = date.getDate();

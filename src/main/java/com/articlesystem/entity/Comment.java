@@ -1,19 +1,15 @@
 package com.articlesystem.entity;
 
+import com.alibaba.fastjson.JSON;
+
 import java.util.Date;
 
 public class Comment {
     private Integer commentId;
 
-    private Integer commentPid;
-
-    private String commentPname;
-
     private Integer commentArticleId;
 
     private String commentAuthorName;
-
-    private String commentAuthorUrl;
 
     private String commentAuthorAvatar;
 
@@ -21,26 +17,11 @@ public class Comment {
 
     private Date commentCreateTime;
 
-    private Integer commentRole;
-
-    private Integer commentUserId;
 
     public Comment() {
     }
 
-    public Comment(Integer commentId, Integer commentPid, String commentPname, Integer commentArticleId, String commentAuthorName, String commentAuthorUrl, String commentAuthorAvatar, String commentContent, Date commentCreateTime, Integer commentRole, Integer commentUserId) {
-        this.commentId = commentId;
-        this.commentPid = commentPid;
-        this.commentPname = commentPname;
-        this.commentArticleId = commentArticleId;
-        this.commentAuthorName = commentAuthorName;
-        this.commentAuthorUrl = commentAuthorUrl;
-        this.commentAuthorAvatar = commentAuthorAvatar;
-        this.commentContent = commentContent;
-        this.commentCreateTime = commentCreateTime;
-        this.commentRole = commentRole;
-        this.commentUserId = commentUserId;
-    }
+
 
     public Integer getCommentId() {
         return commentId;
@@ -50,21 +31,6 @@ public class Comment {
         this.commentId = commentId;
     }
 
-    public Integer getCommentPid() {
-        return commentPid;
-    }
-
-    public void setCommentPid(Integer commentPid) {
-        this.commentPid = commentPid;
-    }
-
-    public String getCommentPname() {
-        return commentPname;
-    }
-
-    public void setCommentPname(String commentPname) {
-        this.commentPname = commentPname == null ? null : commentPname.trim();
-    }
 
     public Integer getCommentArticleId() {
         return commentArticleId;
@@ -80,14 +46,6 @@ public class Comment {
 
     public void setCommentAuthorName(String commentAuthorName) {
         this.commentAuthorName = commentAuthorName == null ? null : commentAuthorName.trim();
-    }
-
-    public String getCommentAuthorUrl() {
-        return commentAuthorUrl;
-    }
-
-    public void setCommentAuthorUrl(String commentAuthorUrl) {
-        this.commentAuthorUrl = commentAuthorUrl == null ? null : commentAuthorUrl.trim();
     }
 
     public String getCommentAuthorAvatar() {
@@ -114,19 +72,7 @@ public class Comment {
         this.commentCreateTime = commentCreateTime;
     }
 
-    public Integer getCommentRole() {
-        return commentRole;
-    }
-
-    public void setCommentRole(Integer commentRole) {
-        this.commentRole = commentRole;
-    }
-
-    public Integer getCommentUserId() {
-        return commentUserId;
-    }
-
-    public void setCommentUserId(Integer commentUserId) {
-        this.commentUserId = commentUserId;
+    public String toString(){
+        return JSON.toJSONString(this);
     }
 }

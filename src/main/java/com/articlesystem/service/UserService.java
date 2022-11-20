@@ -13,7 +13,9 @@ public interface UserService {
 
     User getUserByUserName(String username);
 
-    User getUser(int userId);
+    User getUserByUserId(int userId);
 
     boolean update(User user);
+
+
 }

@@ -134,7 +134,7 @@ public class UserServlet extends HttpServlet {
         Msg msg;
         boolean isCan = false;
 
-        String userPass = userService.getUser(userId).getUserPass();
+        String userPass = userService.getUserByUserId(userId).getUserPass();
         User user = new User(userId, userName, newUserPassToMd5, userPhone, null, userAvatar);
 
         // 密码校验
@@ -158,7 +158,7 @@ public class UserServlet extends HttpServlet {
     }
 
     /**
-     * 获取用户信息。
+     * 获取当前登录user用户信息。
      *
      * @param request
      * @param response
@@ -166,11 +166,38 @@ public class UserServlet extends HttpServlet {
      */
 
     public void getUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        int userId = ((User) request.getSession().getAttribute("user")).getUserId();
+        int userId;
+        Msg msg ;
+        User user ;
+        try {
+            userId = ((User) request.getSession().getAttribute("user")).getUserId();
+            user = userService.getUserByUserId(userId);
+            msg = Msg.success().add("user", user);
+        } catch (NullPointerException e) {
+            msg = Msg.success().add("user", "no");
+            e.printStackTrace();
+        }
 
-        User user = userService.getUser(userId);
 
-        Msg msg = Msg.success().add("user", user);
+        // 返回数据给前端。
+        MyUtils.JsonResultToWrite(msg, response.getWriter());
+    }
+
+
+    /**
+     * 通过Id获取user用户信息
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     */
+    public void getAuthorById(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+        int authorId = Integer.parseInt(request.getParameter("authorId"));
+
+        User user = userService.getUserByUserId(authorId);
+
+        Msg msg = Msg.success().add("author", user);
 
         // 返回数据给前端。
         MyUtils.JsonResultToWrite(msg, response.getWriter());
@@ -178,3 +205,5 @@ public class UserServlet extends HttpServlet {
 
 
 }
+
+
