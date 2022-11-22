@@ -250,29 +250,39 @@
             height: 88%;
         }
 
-		.ttp-comment-input .login-mask button {
-			border: none;
-			font-size: 16px;
-			line-height: 22px;
-			font-weight: 500;
-			color: #f04142;
-			background: transparent;
-		}
+        .ttp-comment-input .login-mask button {
+            border: none;
+            font-size: 16px;
+            line-height: 22px;
+            font-weight: 500;
+            color: #f04142;
+            background: transparent;
+        }
 
-		.ttp-comment-input .login-mask {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background: #f8f8f8;
-			cursor: pointer;
-		}
-        .time{
+        .ttp-comment-input .login-mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f8f8f8;
+            cursor: pointer;
+        }
+
+        .time {
             padding-top: 10px;
             color: #999;
             font-size: small;
+            display: inline-block;
+
         }
+
+        .comment-delete {
+            display: inline-block;
+            color: #999;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
@@ -287,7 +297,9 @@
     <div class="container-left">
         <div class="card">
             <img class="avtar" alt="">
-            <div>作者：<h3 style="display: inline-block;font-family: 'Lucida Calligraphy', cursive, serif, sans-serif;"></h3></div>
+            <div>作者：<h3
+                    style="display: inline-block;font-family: 'Lucida Calligraphy', cursive, serif, sans-serif;"></h3>
+            </div>
 
         </div>
 
@@ -297,11 +309,11 @@
 
         <div class="blog-content">
             <!-- 文章标题 -->
-            <h3></h3>
+            <h2></h2>
             <div class="date"></div>
             <!-- 文章正文 -->
             <div class="content">
-                <img />
+                <img/>
                 <p>
 
                 </p>
@@ -325,46 +337,6 @@
             </div>
             <ul class="comment-list">
                 <hr/>
-                <li>
-                    <div class="ttp-comment-item">
-                        <div class="ttp-avatar">
-                            <img src="resource/assets/img/longingBg2.jpg"/>
-                        </div>
-                        <div class="user-name">
-                            <span class="name">付云佳</span>
-                        </div>
-                        <div class="comment-info">
-                            <div class="body">
-                                <div class="comment-content">
-											<span class="conment">这篇文章好棒的呀hj yr关注Stella_sss，一起学编程！Lorem ipsum dolor sit amet consectetur, adipisicing elit. Debitis modi vitae
-						culpa, ipsam in neque perspiciatis eos similique repellendus! Quae, quasi placeat eaque adipisci
-						totam fuga impedit facilis unde. Odio?jryj yjyhjhyjjhjhhjgsht tyyt</span>
-                                </div>
-                            </div>
-                            <p class="time">2032-3-23</p>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="ttp-comment-item">
-                        <div class="ttp-avatar">
-                            <img src="resource/assets/img/longingBg2.jpg"/>
-                        </div>
-                        <div class="user-name">
-                            <span class="name">付云佳</span>
-                        </div>
-                        <div class="comment-info">
-                            <div class="body">
-                                <div class="comment-content">
-											<span class="conment">这篇文章好棒的呀hj yr关注Stella_sss，一起学编程！Lorem ipsum dolor sit amet consectetur, adipisicing elit. Debitis modi vitae
-						culpa, ipsam in neque perspiciatis eos similique repellendus! Quae, quasi placeat eaque adipisci
-						totam fuga impedit facilis unde. Odio?jryj yjyhjhyjjhjhhjgsht tyyt</span>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </li>
 
             </ul>
         </div>
@@ -380,8 +352,12 @@
         let article = getArticleById(articleId);
         buildArticle(article);
         buildAuthor(article.articleUserId);
-		VerifyLoginStatus();
-		console.log(getCommentlist())
+        // 校验登录状态，同时构建当前评论人信息。
+        VerifyLoginStatus();
+        // 构建评论list
+        var comments = getCommentlist();
+        buildCommentList(comments)
+
 
     });
 
@@ -413,18 +389,24 @@
     // 构建文章
     function buildArticle(article) {
         $(".content img").attr("src", article.articleThumbnail);
-        $(".content p").text(article.articleContent);
+        $(".content p").html(article.articleContent);
         $(".date").text(getFormatDate(article.articleCreateTime));
-		$(".blog-content h3").text(article.articleTitle);
+        $(".blog-content h2").text(article.articleTitle);
     }
 
     // 格式化时间
     function getFormatDate(milliseconds) {
-        var date = new Date(milliseconds);
-        var year = date.getFullYear();
-        var month = date.getMonth() + 1;
-        var day = date.getDate();
-        return [year, '-', month, '-', day].join('');
+        var dat = new Date(milliseconds);
+        //获取年月日，时间
+        var year = dat.getFullYear();
+        var mon = (dat.getMonth()+1) < 10 ? "0"+(dat.getMonth()+1) : dat.getMonth()+1;
+        var data = dat.getDate()  < 10 ? "0"+(dat.getDate()) : dat.getDate();
+        var hour = dat.getHours()  < 10 ? "0"+(dat.getHours()) : dat.getHours();
+        var min =  dat.getMinutes()  < 10 ? "0"+(dat.getMinutes()) : dat.getMinutes();
+        var seon = dat.getSeconds() < 10 ? "0"+(dat.getSeconds()) : dat.getSeconds();
+
+        var newDate = year +"-"+ mon +"-"+ data +" "+ hour +":"+ min +":"+ seon;
+        return newDate;
     }
 
     // 构建作者
@@ -434,55 +416,52 @@
             type: "POST",
             dataType: "json",
             success: function (result) {
-                $(".card img").attr("src",result.extend.author.userAvatar);
+                $(".card img").attr("src", result.extend.author.userAvatar);
                 $(".card h3").text(result.extend.author.userName);
             }
         });
-
-
     }
 
-    // 校验登录状态，同时构建当前登录人信息。
-	function VerifyLoginStatus(){
-		$.ajax({
-			url : "userServlet?method=getUser",
-			type : "POST",
-			dataType : "json",
-			success : function (result) {
-				if (result.extend.user == "no"){
-					var loginMask = $("<div></div>").addClass("login-mask");
-					var p = $("<p></p>").text("请先 ");
-					var button = $("<button></button>").text("登录");
-					p.append(button);
-					p.append(" 后发表评论~~");
-					loginMask.append(p);
-					$(".ttp-comment-input").append(loginMask);
-				}else{
-				    $(".login-mask").remove();
-				    $(".main-input .ttp-avatar img").attr("src",result.extend.user.userAvatar);
-				}
-			}
-		});
-	}
+    // 校验登录状态，同时构建当前评论人信息。
+    function VerifyLoginStatus() {
+        $.ajax({
+            url: "userServlet?method=getUser",
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
+                if (result.extend.user == "no") {
+                    var loginMask = $("<div></div>").addClass("login-mask");
+                    var p = $("<p></p>").text("请先 ");
+                    var button = $("<button></button>").text("登录");
+                    p.append(button);
+                    p.append(" 后发表评论~~");
+                    loginMask.append(p);
+                    $(".ttp-comment-input").append(loginMask);
+                } else {
+                    $(".login-mask").remove();
+                    $(".main-input .ttp-avatar img").attr("src", result.extend.user.userAvatar);
+                }
+            }
+        });
+    }
 
-	// 获取当前登录的用户信息
-    function getCurrentUser(){
-        var user=null;
+    // 获取当前登录的用户信息
+    function getCurrentUser() {
+        var user = null;
         $.ajax({
             async: false,
-            url : "userServlet?method=getUser",
-            type : "POST",
-            dataType : "json",
-            success : function (result) {
+            url: "userServlet?method=getUser",
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
                 user = result.extend.user;
             }
         });
         return user;
     }
 
-
-	// 点击登录
-    $(document).on("click",".login-mask",function () {
+    // 点击登录
+    $(document).on("click", ".login-mask", function () {
         window.location.href = "login.html";
     });
 
@@ -495,28 +474,66 @@
         let commentAuthorAvatar = currentUser.userAvatar;
         let commentContent = $(".comment-textarea").val();
         var comment = {
-            "commentArticleId":commentArticleId,
-            "commentAuthorName" : commentAuthorName,
-            "commentAuthorAvatar" : commentAuthorAvatar,
-            "commentContent" : commentContent
+            "commentArticleId": commentArticleId,
+            "commentAuthorName": commentAuthorName,
+            "commentAuthorAvatar": commentAuthorAvatar,
+            "commentContent": commentContent
         }
 
         $.ajax({
-            url : "comment?method=commentInsert",
-            type : "POST",
-            dataType : "json",
-            data : comment,
-            success : function (result) {
+            async: false,
+            url: "comment?method=commentInsert",
+            type: "POST",
+            dataType: "json",
+            data: comment,
+            success: function (result) {
 
             }
         });
-
+        window.location.reload();
 
     });
 
     // 构建评论list
-    function buildCommentList() {
+    function buildCommentList(comments) {
+        for (let i = 0; i < comments.length; i++) {
+            // 如果作者和当前登录的是否为同一个
+            var falg = verifyCurrentAndloggedInAuthor();
 
+            var li = $("<li></li>");
+            var ttp_comment_item = $("<div></div>").addClass("ttp-comment-item");
+            var ttp_avatar = $("<div></div>").addClass("ttp-avatar");
+            var img = $("<img/>").attr("src", comments[i].commentAuthorAvatar);
+            ttp_avatar.append(img);
+            ttp_comment_item.append(ttp_avatar);
+
+            var user_name = $("<div></div>").addClass("user-name");
+            var name = $("<span></span>").addClass("name").text(comments[i].commentAuthorName);
+            user_name.append(name);
+            ttp_comment_item.append(user_name);
+
+            var comment_info = $("<div></div>").addClass("comment-info");
+            var body = $("<div></div>").addClass("body");
+            var comment_content = $("<div></div>").addClass("comment-content");
+            var comment = $("<span></span>").addClass("comment").text(comments[i].commentContent);
+            var time = $("<p></p>").addClass("time").text(getFormatDate(comments[i].commentCreateTime));
+            comment_content.append(comment);
+            body.append(comment_content);
+            comment_info.append(body);
+            comment_info.append(time);
+
+            // 如果作者和当前登录的是否为同一个，yes则生成删除按钮.
+
+            if (falg) {
+                var comment_delete = $("<div></div>").addClass("comment-delete").html("&nbsp;删除").attr("commentId", comments[i].commentId);
+                comment_info.append(comment_delete);
+            }
+
+            ttp_comment_item.append(comment_info);
+
+            li.append(ttp_comment_item);
+            $(".comment-list").append(li);
+        }
     }
 
     // 获取当前文章的所有评论并并返回
@@ -539,6 +556,49 @@
         return commentList;
     }
 
+    // 验证作者和当前登录的是否为同一个
+    function verifyCurrentAndloggedInAuthor() {
+        let currentUserId;
+        $.ajax({
+            async: false,
+            url: "userServlet?method=getUser",
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
+                currentUserId = result.extend.user.userId;
+            }
+        });
+
+        let URL = window.location.href;
+        let articleId = getUrlParams(URL).articleId;
+        let article = getArticleById(articleId);
+        let authorId = article.articleUserId;
+
+        if (authorId == currentUserId) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    // 单击删除评论按钮
+    $(document).on("click", ".comment-delete", function () {
+        var commentId = $(this).attr("commentId");
+        $.ajax({
+            async: false,
+            url: "comment?method=deleteCommentByCommentId&commentId="+commentId,
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
+                if(result.code == 200){
+                    //window.location.reload();
+                }
+            }
+        });
+
+        $(this).parents("li").remove();
+    });
 
 
 </script>

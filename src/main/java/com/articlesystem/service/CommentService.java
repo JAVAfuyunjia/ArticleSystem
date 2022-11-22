@@ -13,4 +13,6 @@ public interface CommentService {
     void commentInsert(Comment comment);
 
     List<Comment> getCommentListByArticleId(int articleId);
+
+    void deleteCommentByCommentId(int commentId);
 }

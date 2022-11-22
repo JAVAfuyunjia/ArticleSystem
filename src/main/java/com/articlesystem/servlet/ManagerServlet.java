@@ -80,6 +80,11 @@ public class ManagerServlet extends HttpServlet {
         response.sendRedirect("index.html");
     }
 
+    public void managerToEdit(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
+        request.getRequestDispatcher("/WEB-INF/view/managerArticleEdit.html").forward(request,response);
+
+    }
+
 
 
 

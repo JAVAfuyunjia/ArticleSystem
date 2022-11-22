@@ -6,7 +6,7 @@ import java.awt.print.PrinterAbortException;
 import java.util.Date;
 
 public class Article {
-    private String name;
+
     private int articleId;
 
     private Integer articleUserId;
@@ -27,6 +27,16 @@ public class Article {
 
     private int categoryId;
 
+    private String authorName;
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
     public int getArticleId() {
         return articleId;
     }
@@ -46,10 +56,6 @@ public class Article {
 
 
     public Article() {
-    }
-
-    public long getArticle_id() {
-        return articleId;
     }
 
 

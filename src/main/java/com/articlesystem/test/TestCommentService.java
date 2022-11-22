@@ -23,4 +23,9 @@ public class TestCommentService {
         }
 
     }
+
+    @Test
+    public void testDeleteCommentByCommentId(){
+        commentDao.deleteCommentByCommentId(3);
+    }
 }

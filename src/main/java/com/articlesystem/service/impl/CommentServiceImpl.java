@@ -24,4 +24,9 @@ public class CommentServiceImpl implements CommentService {
     public List<Comment> getCommentListByArticleId(int articleId) {
         return commentDao.getCommentListByArticleId(articleId);
     }
+
+    @Override
+    public void deleteCommentByCommentId(int commentId) {
+        commentDao.deleteCommentByCommentId(commentId);
+    }
 }

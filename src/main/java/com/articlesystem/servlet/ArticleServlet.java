@@ -6,6 +6,7 @@ import com.articlesystem.Utils.PageUtils;
 import com.articlesystem.entity.Article;
 import com.articlesystem.entity.Msg;
 import com.articlesystem.entity.User;
+import com.articlesystem.enums.UserRole;
 import com.articlesystem.service.ArticleService;
 import com.articlesystem.service.UserService;
 import com.articlesystem.service.impl.ArticleServiceImpl;
@@ -78,7 +79,7 @@ public class ArticleServlet extends HttpServlet {
 
         articleService.insertArticle(article);
 
-        MyUtils.JsonResultToWrite(Msg.success(),response.getWriter());
+        response.sendRedirect("index.html");
     }
 
     /**
@@ -93,7 +94,6 @@ public class ArticleServlet extends HttpServlet {
         int pageSize = ArticleSystemConstant.PAGE_SIZE;
 
         PageUtils<Article> pageInfo = articleService.getArticlePageInfo(keyword, currentPage, pageSize);
-        //System.out.print(pageInfo.toString());
         MyUtils.JsonResultToWrite(pageInfo.toString(),response.getWriter());
 
     }
@@ -143,10 +143,87 @@ public class ArticleServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/view/ArticleView.html").forward(request,response);
     }
 
+    /**
+     * 通过当前登录的角色查询文章
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    public void getArticlesByRole(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        int currentPage = (request.getParameter("currentPage") == null) ? 1 : Integer.parseInt(request.getParameter("currentPage"));
+        String keyword = (request.getParameter("keyword") == null) ? "" : (request.getParameter("keyword"));
+        int pageSize = ArticleSystemConstant.PAGE_SIZE;
+        User user = (User)request.getSession().getAttribute("user");
+        Integer userId = user.getUserId();
+        PageUtils<Article> pageInfo;
+        // 判断角色admin查询所有文章,普通用户查询自己写的文章
+        if(UserRole.ADMIN.getValue().equals(user.getUserRole())){
+            pageInfo= articleService.getArticlePageInfo(keyword, currentPage, pageSize);
+        }else{
+            pageInfo= articleService.getArticlePageInfoByUserId(currentPage, pageSize,userId);
+        }
+
+        MyUtils.JsonResultToWrite(pageInfo.toString(),response.getWriter());
+
+    }
+
+    /**
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     */
+    public void deleteArticleByArticleId(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
+        int articleId = Integer.parseInt(request.getParameter("articleId"));
+
+        articleService.deleteArticleByArticleId(articleId);
+        request.getRequestDispatcher("/WEB-INF/view/managerArticles.html").forward(request,response);
+    }
+
+    /**
+     * 获取categoryIdByArticleId
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     */
+    public void getCategoryIdByArticleId(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
+        int articleId = Integer.parseInt(request.getParameter("articleId"));
+
+       int categoryId = articleService.getCategoryIdByArticleId(articleId);
+        Msg msg = Msg.success().add("categoryId",categoryId);
+        MyUtils.JsonResultToWrite(msg,response.getWriter());
+    }
+
+    /**
+     * 修改文章
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     */
+    public void articleUpdate(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        String articleTitle = request.getParameter("articleTitle");
+        String articleContent = request.getParameter("articleContent");
+        String articleThumbnail = request.getParameter("articleThumbnail");
+        String articleCategoryId = request.getParameter("articleCategoryId");
+        String userId = request.getParameter("userId");
+        int articleId = Integer.parseInt(request.getParameter("articleId"));
+
+        Article article = new Article();
+        article.setArticleTitle(articleTitle);
+        article.setArticleContent(articleContent);
+        article.setArticleThumbnail(articleThumbnail);
+        article.setCategoryId(Integer.parseInt(articleCategoryId));
+        article.setArticleUserId(Integer.parseInt(userId));
+        article.setArticleId(articleId);
 
 
+        articleService.articleUpdate(article);
 
-
+        response.sendRedirect("manager?method=managerArticles");
+    }
 
 
 }

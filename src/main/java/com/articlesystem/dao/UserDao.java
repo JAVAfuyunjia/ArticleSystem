@@ -96,7 +96,6 @@ public class UserDao {
      * @param user
      */
     public int update(User user) {
-
         Connection connection = null;
         int rows =0;
         try {
@@ -115,6 +114,29 @@ public class UserDao {
         }
 
     return rows;
+    }
+
+
+    /**
+     * 更新用户信息不重新设置密码
+     * @param user
+     */
+    public int updateNoNewPassword(User user) {
+        Connection connection = null;
+        int rows =0;
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "UPDATE  as_user SET user_name=?," +
+                    " user_phone_number=?" +
+                    ",user_avatar=? " +
+                    " WHERE user_id = ?;";
+            rows = queryRunner.update(connection, sql, user.getUserName(), user.getUserPhoneNumber(), user.getUserAvatar(), user.getUserId());
+        } catch (SQLException throwables) {
+
+            throwables.printStackTrace();
+        }
+
+        return rows;
     }
 
     public User getAuthorById(int authorId) {

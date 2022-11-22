@@ -52,4 +52,14 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    @Override
+    public boolean updateNoNewPassword(User user) {
+
+        int rows = userDao.updateNoNewPassword(user);
+        if(rows == 0){
+            return false;
+        }
+        return true;
+    }
+
 }

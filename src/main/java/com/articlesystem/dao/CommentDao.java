@@ -89,9 +89,49 @@ public class CommentDao {
 
             }
         }
-
-
-
         return comments;
+    }
+
+    /**
+     * 通过id删除评论
+     * @param commentId
+     */
+    public void deleteCommentByCommentId(int commentId) {
+
+        Connection connection =null;
+
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "DELETE FROM `as_comment` WHERE comment_id = ?;";
+            int row = queryRunner.update(connection, sql, commentId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            if(connection != null){
+                JDBCUtils.releaseConnection(connection);
+            }
+        }
+    }
+
+
+    /**
+     * 通过文章id删除该文章下的所有评论
+     * @param articleId
+     */
+    public void deleteCommentByArticleId(int articleId) {
+
+        Connection connection =null;
+
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "DELETE FROM `as_comment` WHERE comment_article_id = ?;";
+            int row = queryRunner.update(connection, sql, articleId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            if(connection != null){
+                JDBCUtils.releaseConnection(connection);
+            }
+        }
     }
 }

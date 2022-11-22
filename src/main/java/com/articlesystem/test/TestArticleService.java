@@ -63,6 +63,22 @@ public class TestArticleService {
         Article articleByArticleId = articleService.getArticleByArticleId(140);
         System.out.print(articleByArticleId);
     }
+    @Test
+    public void getArticlePageInfoByUserId(){
+        PageUtils<Article> articlePageInfoByUserId = articleService.getArticlePageInfoByUserId(1, 10, 9);
+        System.out.print(articlePageInfoByUserId);
+    }
+
+    @Test
+    public void deleteArticleByArticleId(){
+        articleService.deleteArticleByArticleId(540);
+    }
+
+    @Test
+    public void getCategoryIdByArticleId(){
+        int categoryIdByArticleId = articleService.getCategoryIdByArticleId(560);
+        System.out.println(categoryIdByArticleId);
+    }
 
 
 

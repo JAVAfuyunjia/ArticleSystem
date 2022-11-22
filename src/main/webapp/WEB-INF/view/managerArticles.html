@@ -3,18 +3,27 @@
 <head>
     <meta charset="utf-8">
     <title>管理页面</title>
-    <script src="resource/assets/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="resource/assets/layui/layui.all.js" type="text/javascript" charset="utf-8"></script>
     <script src="resource/assets/js/jquery-1.12.4.min.js" type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" type="text/css" href="resource/assets/layui/css/layui.css"/>
     <link rel="stylesheet" type="text/css" href="resource/assets/plugin/font-awesome/css/font-awesome.css"/>
+    <script src="resource/assets/pagination/jquery.pagination.js" type="text/javascript" charset="UTF-8"></script>
+    <link rel="stylesheet" type="text/css" href="resource/assets/pagination/pagination.css"/>
     <style type="text/css">
+        /*覆盖 layui*/
+        .layui-input {
+            display: inline-block;
+            width: 33.333% !important;
+        }
 
+        .layui-input-block {
+            margin: 0px 10px;
+        }
     </style>
 </head>
 <body>
 
 <div class="layui-layout-admin">
-    // 头部导航栏
     <div class="layui-header">
         <div class="layui-logo"><a href="/admin" style="color:#009688;">
             付云佳文章管理后台
@@ -31,7 +40,7 @@
             <li class="layui-nav-item">
                 <a href="manager?method=managerProfile">
                     <img id="ImgDasplay" src="resource/assets/img/defaultAvatar2.jpeg" class="layui-nav-img">
-                    <span id="nameDisplay"></span><span class="layui-nav-more"></span>
+                    <span id="nameDisplay"></span>
                 </a>
             </li>
             <li class="layui-nav-item">
@@ -51,11 +60,8 @@
                             <div id="articleInsert"><a href="manager?method=managerArticleInsert">写文章</a></div>
                         </dd>
                         <dd>
-                            <div><a href="manager?method=managerArticles">全部文章</a></div>
+                            <div><a href="manager?method=managerArticles">我的文章</a></div>
                         </dd>
-
-
-
                     </dl>
                 </li>
 
@@ -63,39 +69,223 @@
         </div>
 
     </div>
-    //内容主体
+
     <div class="layui-body">
         <div id="layui-container" style="padding: 15px;">
-            所有文章
+            <blockquote class="layui-elem-quote">
+        <span class="layui-breadcrumb" lay-separator="/">
+          <a href="#">首页</a>
+          <a><cite>文章列表</cite></a>
+        </span>
+            </blockquote>
+
+
+            <div class="layui-tab layui-tab-card">
+                    <input type="hidden" name="currentUrl" id="currentUrl" value="">
+                    <table class="layui-table">
+                        <colgroup>
+                            <col width="100">
+                            <col width="200">
+                            <col width="80">
+                            <col width="150">
+                            <col width="200">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>作者</th>
+                            <th>标题</th>
+                            <th>所属分类</th>
+                            <th>发布时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <p id="tishi" style="text-align: center">你还没有文章哦！</p>
+                        </tbody>
+                    </table>
+                <div id="Pagination" class="pagination">
+                    <!-- 这里显示分页 -->
+                </div>
+            </div>
         </div>
-
-
     </div>
 
 </div>
 <script>
 
-    $(document).ready(function(){
-        // 回显用户表单内容。
+    $(document).ready(function () {
+        // 回显用户头像。
+        buildUser();
+        // 文章列表
+        getArticlesPageInfoAndBuildlist();
+
+    });
+    // 回显用户头像。
+    function buildUser() {
+        // 回显用户头像。
         $.ajax({
-            url : "userServlet?method=getUser",
-            type : "POST",
-            dataType : "json",
-            success : function (result) {
+            url: "userServlet?method=getUser",
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
                 // 回显菜单栏名字和头像
                 $("#nameDisplay").text(result.extend.user.userName);
 
-                $("#ImgDasplay").attr('src',result.extend.user.userAvatar);
+                $("#ImgDasplay").attr('src', result.extend.user.userAvatar);
+            }
+        });
+    }
+
+
+    function getArticlesPageInfoAndBuildlist() {
+        $.ajax({
+            url: "article?method=getArticlesByRole",
+            type: "POST",
+            dataType: "json",
+            success: function (pageInfo) {
+                //console.log(pageInfo);
+                buildArticlelsit(pageInfo.list)
+                // 初始化导航栏
+                initPagination(pageInfo.totalNum, pageInfo.pageSize, pageInfo.currentPage)
 
             }
+        });
+    }
 
+    // 构建文章表格
+    function buildArticlelsit(articles) {
+        $("#tishi").attr("hidden","true");
+        $("tbody").text("");
+        for (let i = 0; i < articles.length; i++) {
+            var tr = $("<tr></tr>");
+
+            var authorTd = $("<td></td>");
+
+            var user = authorInfo(articles[i].articleUserId);
+            var nameSp = $("<span></span>").text(user.userName);
+
+            authorTd.append(nameSp);
+            tr.append(authorTd);
+
+            var titleTd = $("<td></td>");
+            var titleSp = $("<span></span>").text(articles[i].articleTitle);
+
+            titleTd.append(titleSp);
+            tr.append(titleTd);
+
+            var categoryTd = $("<td></td>").text(articles[i].categoryName);
+            tr.append(categoryTd);
+
+            var timeTd = $("<td></td>").text(getFormatDate(articles[i].articleCreateTime));
+            tr.append(timeTd);
+
+            var oprationTd = $("<td></td>");
+            var span_a = $("<a style='padding-right: 10px'></a>").attr("href", "article?method=toArticleView&articleId=" + articles[i].articleId)
+            var viewBtn = $("<button></button>").addClass("layui-btn").addClass("layui-btn-sm").attr("type","button").text("查看");
+            span_a.append(viewBtn);
+
+            var edit_a = $("<a style='padding-right: 10px'></a>").attr("href", "manager?method=managerToEdit&articleId=" + articles[i].articleId)
+            var editBtn = $("<button></button>").addClass("layui-btn").addClass("layui-btn-sm").addClass("editBtn").html("编辑").attr("articleId",articles[i].articleId);
+            edit_a.append(editBtn);
+            var deleteBtn = $("<button></button>").addClass("layui-btn").addClass("layui-btn-sm").addClass("layui-btn-danger").addClass("deleteBtn").text("删除").attr("articleId",articles[i].articleId);
+
+            oprationTd.append(span_a);
+            oprationTd.append(edit_a);
+            oprationTd.append(deleteBtn);
+            tr.append(oprationTd);
+
+
+            $("tbody").append(tr);
+        }
+
+    }
+
+    // 通过Id获取用户对象
+    function authorInfo(authorId) {
+        var author;
+        $.ajax({
+            async : false,
+            url: "userServlet?method=getAuthorById&authorId=" + authorId,
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
+                author = result.extend.author;
+            }
+        });
+        return author;
+    }
+
+    // 格式化时间
+    function getFormatDate(milliseconds) {
+        var dat = new Date(milliseconds);
+        //获取年月日，时间
+        var year = dat.getFullYear();
+        var mon = (dat.getMonth()+1) < 10 ? "0"+(dat.getMonth()+1) : dat.getMonth()+1;
+        var data = dat.getDate()  < 10 ? "0"+(dat.getDate()) : dat.getDate();
+        var hour = dat.getHours()  < 10 ? "0"+(dat.getHours()) : dat.getHours();
+        var min =  dat.getMinutes()  < 10 ? "0"+(dat.getMinutes()) : dat.getMinutes();
+        var seon = dat.getSeconds() < 10 ? "0"+(dat.getSeconds()) : dat.getSeconds();
+
+        var newDate = year +"-"+ mon +"-"+ data +" "+ hour +":"+ min +":"+ seon;
+        return newDate;
+    }
+
+    // 生成页码导航条的函数
+    function initPagination(totalNum, pageSize, currentPage) {
+        // 获取总记录数。
+        var totalRecord = totalNum;
+        // 声明一个JSON对象储存Pagination要设置的属性。
+        var properties = {
+            num_edge_entries: 2,                                // 边缘页数
+            num_display_entries: 3,                             // 主体页数
+            items_per_page: pageSize,  // 每一页要显示数量
+            current_page: (currentPage - 1), // Pagination内部使用PageIndex来管理页码，PageIndex索引从0开始,pageNum从1开始
+            callback: pageSelectCallback,
+            prev_text: "上一页",
+            next_text: "下一页"
+        };
+
+        // 生成页码导航条
+        $("#Pagination").pagination(totalRecord, properties);
+    }
+
+    // 回调函数，声明出来不是给自己调用，而是给框架或系统调用。
+    // 用户点击“上一页”、“下一页”、1、2、3、4这样调用这个函数跳转。
+    // pageIndex是pagination传入的从0开始的页码
+    function pageSelectCallback(pageIndex, jQuery) {
+        // 根据pageIndex计算得到pageNum
+        var currentPage = pageIndex + 1;
+        // 发送ajax请求重新构建页面
+
+        $.ajax({
+            url: "article?method=getArticlesByRole&currentPage=" + currentPage,
+            type: "POST",
+            dataType: "json",
+            success: function (pageInfo) {
+                //console.log(pageInfo);
+                buildArticlelsit(pageInfo.list)
+                // 初始化导航栏
+                initPagination(pageInfo.totalNum, pageInfo.pageSize, pageInfo.currentPage)
+
+            }
         });
 
 
+        // 由于页码的每个按钮都是超链接，所以在函数的最后取消超链接的默认行为。
+        return false;
+    }
 
+    // 删除文章
+    $(document).on("click",".deleteBtn",function () {
+        var articleId = $(this).attr("articleId");
+        layer.confirm("请问是否确定删除，删除后不可恢复？", {
+            btn: ["确定","取消"] //按钮
+        }, function(){
+            window.location.href = "article?method=deleteArticleByArticleId&articleId="+articleId;
+        }, function(){
+            layer.msg("已撤销");
+        });
     });
-
-
 </script>
 
 

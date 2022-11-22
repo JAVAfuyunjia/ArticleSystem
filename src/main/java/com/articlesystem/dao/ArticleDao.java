@@ -3,6 +3,7 @@ package com.articlesystem.dao;
 import com.articlesystem.Utils.JDBCUtils;
 import com.articlesystem.Utils.PageUtils;
 import com.articlesystem.entity.Article;
+import com.articlesystem.entity.Category;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -22,42 +23,6 @@ import java.util.List;
 public class ArticleDao {
     QueryRunner queryRunner = new QueryRunner();
 
-    /**
-     * 获取所有文章
-     *
-     * @param userId
-     * @param limit
-     * @return
-     */
-    public ArrayList<Article> listArticleByLimit(Integer userId, int limit) {
-        List<Article> articles = null;
-        BeanListHandler<Article> articleBeanListHandler = new BeanListHandler<>(Article.class);
-        Connection connection =null;
-
-        try {
-            connection = JDBCUtils.getConnection();
-            if(userId == null){
-                String sql = "";
-                articles = queryRunner.query(connection, sql, articleBeanListHandler, limit);
-
-            }else {
-                String sql = "";
-                 articles = queryRunner.query(connection, sql, articleBeanListHandler, userId, limit);
-
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }finally {
-            if(connection != null){
-            JDBCUtils.releaseConnection(connection);
-
-            }
-        }
-
-
-
-        return (ArrayList<Article>) articles;
-    }
 
     /**
      * 添加文章到数据库
@@ -94,19 +59,13 @@ public class ArticleDao {
             primaryKey = rs.getInt(1);
 
             }
-
-
-
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }finally {
             if(connection != null){
                 JDBCUtils.releaseConnection(connection);
-
             }
         }
-
         return primaryKey;
     }
 
@@ -136,6 +95,13 @@ public class ArticleDao {
         }
     }
 
+    /**
+     * 获取所有文章，带关键字
+     * @param keyword
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
     public PageUtils<Article> getArticlePageInfo(String keyword, int currentPage, int pageSize) {
         Connection connection = null;
         int startIndex = (currentPage-1)*pageSize;
@@ -246,5 +212,158 @@ public class ArticleDao {
             }
         }
         return article;
+    }
+
+    /**
+     * 通过用户Id查询用户的所有文章
+     * @param currentPage
+     * @param pageSize
+     * @param userId
+     * @return
+     */
+    public PageUtils<Article> getArticlePageInfoByUserId(int currentPage, int pageSize, Integer userId) {
+        Connection connection = null;
+        int startIndex = (currentPage-1)*pageSize;
+        PageUtils<Article> articlesPageInfo = null;
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "SELECT a.article_id AS articleId,article_user_id AS articleUserId,article_title AS articleTitle,article_is_comment AS articleIsComment,article_create_time AS articleCreateTime,article_summary AS articleSummary,article_thumbnail AS articleThumbnail,category_name AS categoryName " +
+                    "FROM as_article a JOIN as_article_category_ref ac ON a.article_id = ac.article_id JOIN as_category c ON ac.category_id = c.category_id " +
+                    "WHERE a.article_user_id = ?" +" ORDER BY a.article_create_time desc "+
+                    "LIMIT ?,?;";
+            Object[] param = {userId,startIndex,pageSize};
+            BeanListHandler<Article> articleBeanListHandler = new BeanListHandler<>(Article.class);
+            List<Article> articleList = queryRunner.query(connection, sql, articleBeanListHandler, param);
+
+            String countSql = "SELECT COUNT(*) FROM as_article a WHERE a.article_user_id = "+userId+";";
+            ScalarHandler<Object> scalarHandler = new ScalarHandler<>();
+            Long totalNum = (long) queryRunner.query(connection, countSql, scalarHandler);
+
+
+            articlesPageInfo = new PageUtils<Article>();
+            articlesPageInfo.setList(articleList);
+            articlesPageInfo.setCurrentPage(currentPage);
+            articlesPageInfo.setPageSize(pageSize);
+            articlesPageInfo.setTotalNum(Integer.parseInt(totalNum.toString()));
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            if(connection != null){
+                JDBCUtils.releaseConnection(connection);
+
+            }
+        }
+
+
+        return articlesPageInfo;
+    }
+
+    /**
+     * 通过id删除文章
+     * @param articleId
+     */
+    public void deleteArticleByArticleId(int articleId) {
+        Connection connection = null;
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "DELETE FROM `as_article` WHERE article_id = ?;";
+
+            int row = queryRunner.update(connection, sql, articleId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            if(connection != null){
+                JDBCUtils.releaseConnection(connection);
+            }
+        }
+    }
+
+    /**
+     * 通过文章id删除文章与分类的关系
+     * @param articleId
+     */
+    public void deleteArticleRefCategory(int articleId) {
+        Connection connection = null;
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "DELETE FROM `as_article_category_ref` WHERE article_id = ?;";
+
+            int row = queryRunner.update(connection, sql, articleId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            if(connection != null){
+                JDBCUtils.releaseConnection(connection);
+            }
+        }
+    }
+
+
+    /**
+     * 通过ArticleId获取categoryId
+     * @param articleId
+     * @return
+     */
+    public int getCategoryIdByArticleId(int articleId) {
+        int categoryId =-1;
+        Connection connection = null;
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "SELECT category_id FROM as_article_category_ref WHERE article_id =?;";
+            ScalarHandler<Object> scalarHandler = new ScalarHandler<>();
+            categoryId = (int) queryRunner.query(connection, sql, scalarHandler,articleId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            if(connection != null){
+                JDBCUtils.releaseConnection(connection);
+
+            }
+        }
+        return categoryId;
+
+    }
+
+    /**
+     * 更新文章
+     * @param article
+     */
+    public void articleUpdate(Article article) {
+        Connection connection = null;
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "UPDATE `as_article` SET  article_title=?,article_content=?,article_thumbnail=?,article_summary=? WHERE article_id =?;";
+            Object[] param = {article.getArticleTitle(),article.getArticleContent(),article.getArticleThumbnail(),article.getArticleSummary(),article.getArticleId()};
+
+            int row = queryRunner.update(connection, sql, param);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            if(connection != null){
+                JDBCUtils.releaseConnection(connection);
+            }
+        }
+    }
+
+    /**
+     * 更新关系表
+     * @param
+     */
+    public void articleRefCategoryUpdate(int categoryId,int articleId) {
+        Connection connection = null;
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "UPDATE `as_article_category_ref` SET  category_id=? WHERE article_id =? ;";
+
+            int row = queryRunner.update(connection, sql,categoryId,articleId );
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            if(connection != null){
+                JDBCUtils.releaseConnection(connection);
+            }
+        }
     }
 }

@@ -72,11 +72,31 @@ public class CommentServlet extends HttpServlet {
         commentService.commentInsert(comment);
     }
 
+    /**
+     * 通过文章Id获取该文章所有的评论
+     * @param request
+     * @param response
+     * @throws IOException
+     */
     public void getCommentListByArticleId(HttpServletRequest request,HttpServletResponse response) throws IOException {
         int articleId = Integer.parseInt(request.getParameter("articleId"));
         List<Comment> comments = commentService.getCommentListByArticleId(articleId);
 
         Msg msg = Msg.success().add("comments",comments);
+        MyUtils.JsonResultToWrite(msg,response.getWriter());
+    }
+
+    /**
+     * 删除指定的评论
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    public void deleteCommentByCommentId(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        int commentId = Integer.parseInt(request.getParameter("commentId"));
+        commentService.deleteCommentByCommentId(commentId);
+
+        Msg msg = Msg.success();
         MyUtils.JsonResultToWrite(msg,response.getWriter());
     }
 

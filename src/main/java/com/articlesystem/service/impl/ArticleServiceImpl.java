@@ -1,7 +1,9 @@
 package com.articlesystem.service.impl;
 
+import com.articlesystem.Utils.MyUtils;
 import com.articlesystem.Utils.PageUtils;
 import com.articlesystem.dao.ArticleDao;
+import com.articlesystem.dao.CommentDao;
 import com.articlesystem.entity.Article;
 import com.articlesystem.entity.User;
 import com.articlesystem.service.ArticleService;
@@ -16,12 +18,7 @@ import java.util.Date;
  */
 public class ArticleServiceImpl implements ArticleService {
     ArticleDao articleDao =  new ArticleDao();
-    @Override
-    public ArrayList<Article> recentArticles(Integer userId, int limit) {
-
-        ArrayList<Article> articles = articleDao.listArticleByLimit(userId,limit);
-        return articles;
-    }
+    CommentDao commentDao =  new CommentDao();
 
     /**
      * 插入文章和对应关系
@@ -33,7 +30,7 @@ public class ArticleServiceImpl implements ArticleService {
         article.setArticleCreateTime(new Date());
         //文章摘要
         int summaryLength = 150;
-        String summaryText = article.getArticleContent();
+        String summaryText = MyUtils.cleanHtmlTag(article.getArticleContent());
         if (summaryText.length() > summaryLength) {
             String summary = summaryText.substring(0, summaryLength);
             article.setArticleSummary(summary);
@@ -81,5 +78,42 @@ public class ArticleServiceImpl implements ArticleService {
         return article;
     }
 
+    @Override
+    public PageUtils<Article> getArticlePageInfoByUserId(int currentPage, int pageSize, Integer userId) {
+        return articleDao.getArticlePageInfoByUserId(currentPage,pageSize,userId);
+    }
 
+    @Override
+    public void deleteArticleByArticleId(int articleId) {
+        articleDao.deleteArticleByArticleId(articleId);
+        // 删除文章分类关系
+        articleDao.deleteArticleRefCategory(articleId);
+        // 删除文章下的评论
+        commentDao.deleteCommentByArticleId(articleId);
+    }
+
+    @Override
+    public int getCategoryIdByArticleId(int articleId) {
+
+        return articleDao.getCategoryIdByArticleId(articleId);
+    }
+
+    @Override
+    public void articleUpdate(Article article) {
+
+        //文章摘要
+        int summaryLength = 150;
+        String summaryText = MyUtils.cleanHtmlTag(article.getArticleContent());
+        if (summaryText.length() > summaryLength) {
+            String summary = summaryText.substring(0, summaryLength);
+            article.setArticleSummary(summary);
+        } else {
+            article.setArticleSummary(summaryText);
+        }
+        articleDao.articleUpdate(article);
+
+        // 更新分类关系
+        articleDao.articleRefCategoryUpdate(article.getCategoryId(),article.getArticleId());
+
+    }
 }

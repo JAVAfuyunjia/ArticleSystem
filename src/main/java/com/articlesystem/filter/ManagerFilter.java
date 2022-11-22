@@ -2,6 +2,7 @@ package com.articlesystem.filter;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
@@ -19,10 +20,10 @@ public class ManagerFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        HttpServletResponse httpServletResponse =(HttpServletResponse)response;
         HttpSession session = httpServletRequest.getSession();
         if(session.getAttribute("user") == null){
-            RequestDispatcher requestDispatcher = httpServletRequest.getRequestDispatcher("login");
-            requestDispatcher.forward(request,response);
+            httpServletResponse.sendRedirect("login.html");
 
         }else {
             filterChain.doFilter(request,response);

@@ -91,6 +91,7 @@ public class UserServlet extends HttpServlet {
      */
 
     public void checkLogin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
         String username = request.getParameter("logname");
         String password = request.getParameter("logpassword");
 
@@ -124,25 +125,31 @@ public class UserServlet extends HttpServlet {
         String userAvatar = request.getParameter("userAvatar");
         Integer userId = Integer.parseInt(request.getParameter("userId"));
         String originalUserPass = request.getParameter("originalUserPass");
+
         String newUserPass = request.getParameter("newUserPass");
-
-        // 加密新旧密码
-        String originalUserPassToMd5 = MyUtils.strToMd5(originalUserPass);
-        String newUserPassToMd5 = MyUtils.strToMd5(newUserPass);
-
 
         Msg msg;
         boolean isCan = false;
 
         String userPass = userService.getUserByUserId(userId).getUserPass();
-        User user = new User(userId, userName, newUserPassToMd5, userPhone, null, userAvatar);
+        String originalUserPassToMd5 = MyUtils.strToMd5(originalUserPass);
+        // 新密码为空则不修改密码
+        if(newUserPass != ""){
+            // 加密新密码
+            String newUserPassToMd5 = MyUtils.strToMd5(newUserPass);
 
-        // 密码校验
-        if (user != null && originalUserPassToMd5.equals(userPass)) {
+            // 密码校验
+            if (originalUserPassToMd5.equals(userPass)) {
+                User user = new User(userId, userName, newUserPassToMd5, userPhone, null, userAvatar);
+                isCan = userService.update(user);
+            }
+        }else{
+            // 密码校验
+            if (originalUserPassToMd5.equals(userPass)) {
 
-
-            isCan = userService.update(user);
-
+                User user = new User(userId, userName, "", userPhone, null, userAvatar);
+                isCan = userService.updateNoNewPassword(user);
+            }
         }
 
         if (isCan) {
@@ -175,7 +182,7 @@ public class UserServlet extends HttpServlet {
             msg = Msg.success().add("user", user);
         } catch (NullPointerException e) {
             msg = Msg.success().add("user", "no");
-            e.printStackTrace();
+
         }
 
 
@@ -202,8 +209,6 @@ public class UserServlet extends HttpServlet {
         // 返回数据给前端。
         MyUtils.JsonResultToWrite(msg, response.getWriter());
     }
-
-
 }
 
 

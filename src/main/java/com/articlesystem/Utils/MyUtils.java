@@ -15,6 +15,15 @@ import java.security.NoSuchAlgorithmException;
  * @只管耕耘，莫问收获。
  */
 public class MyUtils {
+
+    /**
+     * 清除标签
+     * @param content
+     * @return
+     */
+    public static String cleanHtmlTag(String content) {
+        return content.replaceAll("(<[^<]*?>)|(<[\\s]*?/[^<]*?>)|(<[^<]*?/[\\s]*?>)", "");
+    }
     /**
      * 获得Md5加密
      *

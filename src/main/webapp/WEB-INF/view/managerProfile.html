@@ -3,8 +3,9 @@
 <head>
     <meta charset="utf-8">
     <title>管理页面</title>
-    <script src="resource/assets/layui/layui.js" type="text/javascript" charset="utf-8"></script>
     <script src="resource/assets/js/jquery-1.12.4.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="resource/assets/layui/layui.all.js" type="text/javascript" charset="utf-8"></script>
+    <script src="resource/assets/layui/layui.js" type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" type="text/css" href="resource/assets/layui/css/layui.css"/>
     <link rel="stylesheet" type="text/css" href="resource/assets/plugin/font-awesome/css/font-awesome.css"/>
     <style type="text/css">
@@ -14,7 +15,6 @@
 <body>
 
 <div class="layui-layout-admin">
-    // 头部导航栏
     <div class="layui-header">
         <div class="layui-logo"><a href="/admin" style="color:#009688;">
             付云佳文章管理后台
@@ -31,7 +31,7 @@
             <li class="layui-nav-item">
                 <a href="manager?method=managerProfile">
                     <img id="ImgDasplay" src="resource/assets/img/defaultAvatar2.jpeg" class="layui-nav-img">
-                    <span id="nameDisplay"></span><span class="layui-nav-more"></span>
+                    <span id="nameDisplay"></span>
                 </a>
             </li>
             <li class="layui-nav-item">
@@ -51,7 +51,7 @@
                             <div id="articleInsert"><a href="manager?method=managerArticleInsert">写文章</a></div>
                         </dd>
                         <dd>
-                            <div><a href="manager?method=managerArticles">全部文章</a></div>
+                            <div><a href="manager?method=managerArticles">我的文章</a></div>
                         </dd>
 
                     </dl>
@@ -81,7 +81,7 @@
                             <div class="layui-upload-list" style="">
                                 <img class="layui-upload-img" src="resource/assets/img/defaultAvatar2.jpeg" id="demo1" width="110"
                                      height="110" style="border-radius: 50%">
-                                <p id="demoText"></p>
+                                <p id="demoText"></p><span id="imgInfo"></span>
                             </div>
                             <button type="button" class="layui-btn" id="test1">换头像</button>
                             <input type="hidden" name="userAvatar" id="userAvatar" value="">
@@ -104,6 +104,7 @@
                         <input type="text" value="" name="userPhone" id="userPhoneNum" required
                                lay-verify="userPhone"
                                autocomplete="off" class="layui-input">
+                        <span id="promptinfo"></span>
                     </div>
                     <div class="layui-form-mid layui-word-aux" id=""></div>
                 </div>
@@ -116,9 +117,9 @@
                     <div class="layui-form-mid layui-word-aux"></div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">新密码 <span style="color: #FF5722; ">*</span></label>
+                    <label class="layui-form-label">新密码 </label>
                     <div class="layui-input-inline">
-                        <input type="password" name="newUserPass" value="" id="NewuserPass" required
+                        <input type="password" name="newUserPass" value="" id="NewuserPass"
                                autocomplete="off" class="layui-input" min="3" max="20">
                     </div>
                     <div  class="layui-form-mid layui-word-aux"></div>
@@ -126,7 +127,7 @@
 
                 <div class="layui-form-item">
                     <div class="layui-input-block">
-                        <button class="layui-btn" id="as-update-btn">保存</button>
+                        <button class="layui-btn" type="button" id="as-update-btn">保存</button>
                     </div>
                 </div>
             </form>
@@ -155,6 +156,8 @@
                     return layer.msg('上传失败');
                 }
                 layer.msg("图片上传成功");
+
+
             },
             error: function () {
                 var demoText = $('#demoText');
@@ -211,16 +214,19 @@
         var flag = patt.test(register_PhoneNum);
 
         if (!flag) {
-            layer.msg("电话号码不可用");
+            $("#promptinfo").text("电话号不可用").css("color","red");
+            $("#as-update-btn").attr('disabled',"true");
+        }else{
+            $("#promptinfo").text("电话号可用").css("color","green");
+            $("#as-update-btn").removeAttr("disabled");
         }
     });
     
     
     
     $("#as-update-btn").click(function () {
-        // layer.msg("点到我了");
         // 更改用户信息。
-        if($("#NewuserPass").val() != "" && $("#OriginaluUerPass").val() != "" && $("#userPhoneNum").val() != "" && $("#userName").val() != ""){
+        if($("#OriginaluUerPass").val() != "" && $("#userPhoneNum").val() != "" && $("#userName").val() != ""){
             $.ajax({
                 url : "userServlet?method=userUpdate",
                 type : "POST",
@@ -229,15 +235,13 @@
                 success : function (result) {
                     console.log(result);
                     if (result.code == 200){
-                    layer.msg(result.extend.mesage);
+                    layer.msg(result.extend.mesage+"请您重新登录吧!");
 
-                    window.location.href="manager?method=logout";
-
-
+                        setTimeout(function(){
+                            window.location.href="manager?method=logout";
+                        },4000)
                     }else if (result.code == 100){
-                        layer.msg(result.extend.mesage);
-
-                        window.location.href="manager?method=managerProfile";
+                        layer.msg(result.extend.mesage+"请您输入正确的密码哦!");
                     }
                 }
             });

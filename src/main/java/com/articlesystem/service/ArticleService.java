@@ -12,7 +12,6 @@ import java.util.ArrayList;
  * @只管耕耘，莫问收获。
  */
 public interface ArticleService {
-    ArrayList<Article> recentArticles(Integer userId, int limit);
 
     void insertArticle(Article article);
 
@@ -21,4 +20,13 @@ public interface ArticleService {
     PageUtils<Article> getArticlePageInfoByCategoryId(int categoryId, int currentPage, int pageSize);
 
     Article getArticleByArticleId(int articleId);
+
+    PageUtils<Article> getArticlePageInfoByUserId(int currentPage, int pageSize, Integer userId);
+
+    void deleteArticleByArticleId(int articleId);
+
+
+    int getCategoryIdByArticleId(int articleId);
+
+    void articleUpdate(Article article);
 }

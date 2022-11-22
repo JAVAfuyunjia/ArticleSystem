@@ -66,11 +66,12 @@
             <blockquote class="layui-elem-quote">
 						<span class="layui-breadcrumb" lay-separator="/" style="visibility: visible;">
                              <a href="#">首页</a>
-                            <a href="#">写文章</a>
+                            <a href="#">编辑文章</a>
 						</span>
             </blockquote>
-            <form class="layui-form"  action="article?method=articleInsert" method="post" id="myForm">
+            <form class="layui-form"  action="article?method=articleUpdate" method="post" id="myForm">
                 <input type="hidden" name="userId" id="userId">
+                <input type="hidden" name="articleId" id="articleId">
                 <div class="layui-form-item">
                     <label class="layui-form-label">标题 <span style="color: #FF5722; ">*</span></label>
                     <div class="layui-input-block">
@@ -119,8 +120,8 @@
 
                 <div class="layui-form-item">
                     <div class="layui-input-block">
-                        <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
-                        <button type="reset" class="layui-btn">重置</button>
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1">立即修改</button>
+                        <button type="button"  class="layui-btn layui-btn-danger" id="cancel">取消</button>
                     </div>
                 </div>
 
@@ -165,8 +166,59 @@
 <script>
 
 
-    // 回显用户表单内容。
+
     $(document).ready(function () {
+        // 回显用户表单内容。
+        echoUserInfo()
+
+        // 回显文章内容
+        echoArticleInfo();
+
+
+    });
+
+    function echoArticleInfo() {
+        let URL = window.location.href;
+        let articleId = getUrlParams(URL).articleId;
+        var  article= getArticleById(articleId);
+        var categoryValue = getCategoryIdByArticleId(articleId);
+        // 回显文章信息
+        echoArticle(article,categoryValue);
+
+
+    }
+    // 回显文章信息
+    function echoArticle(article,categoryValue) {
+        $("#title").val(article.articleTitle);
+        $("#content").text(article.articleContent);
+        $("#demo1").attr("src",article.articleThumbnail);
+        $("#articleThumbnail").val(article.articleThumbnail);
+        var pt = "option[value="+categoryValue+"]";
+        $("#articleCategoryId").find(pt).attr("selected",'selected');
+        $("#userId").val(article.articleUserId);
+        $("#articleId").val(article.articleId);
+
+    }
+
+    // 通过articleId获取文章对象
+    function getArticleById(articleId) {
+        var article
+        $.ajax({
+            async: false,
+            url: "article?method=getArticleByArticleId&articleId=" + articleId,
+            type: "post",
+            dataType: "json",
+            success: function (result) {
+
+                article = result.extend.article
+
+            }
+        });
+        return article;
+    }
+
+    // 回显用户信息
+    function echoUserInfo() {
         $.ajax({
             url: "userServlet?method=getUser",
             type: "POST",
@@ -180,9 +232,37 @@
                 $("#userId").val(result.extend.user.userId);
             }
         });
+    }
+
+    // 通过文章Id获取分类id
+    function getCategoryIdByArticleId(articleId) {
+        var categoryId;
+        $.ajax({
+            async: false,
+            url: "article?method=getCategoryIdByArticleId&articleId=" + articleId,
+            type: "post",
+            dataType: "json",
+            success: function (result) {
+
+                console.log(result);
+                categoryId = result.extend.categoryId;
+
+            }
+        });
+        return categoryId;
+    }
+
+    // 获取URL参数
+    function getUrlParams(url) {
+        let urlStr = url.split('?')[1]
+        const urlSearchParams = new URLSearchParams(urlStr)
+        const result = Object.fromEntries(urlSearchParams.entries())
+        return result
+    }
+
+    $("#cancel").click(function () {
+        window.history.go(-1);
     });
-
-
 </script>
 
 <script>
@@ -243,24 +323,6 @@
 
     });
 
-    // $("#as-submit").click(function () {
-    //     var articleThumbnail = $("#articleThumbnail").val();
-    //     var content = $("#content").val()
-    //     var title = $("#title").val();
-    //     var articleinfo = $("#myForm").serialize();
-    //     if ($("#articleThumbnail").val() != "" && $("#content").val() != "" && $("#title").val() != "") {
-    //         $.ajax({
-    //             url: "article?method=articleInsert",
-    //             type: "POST",
-    //             dataType: "json",
-    //             data: $("#myForm").serialize(),
-    //             success: function (result) {
-    //                 console.log(result)
-    //
-    //             },
-    //         });
-    //     }
-    // });
 </script>
 </body>
 
