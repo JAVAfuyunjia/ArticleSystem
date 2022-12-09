@@ -5,6 +5,7 @@ import com.articlesystem.entity.Article;
 import com.articlesystem.entity.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author 云佳
@@ -25,8 +26,11 @@ public interface ArticleService {
 
     void deleteArticleByArticleId(int articleId);
 
-
     int getCategoryIdByArticleId(int articleId);
 
     void articleUpdate(Article article);
+
+    List<Integer> getArticleIdsByUserId(int userId);
+
+    List<Article> getTenArticleRandom();
 }

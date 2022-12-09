@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>管理页面</title>
+    <script src="resource/assets/layui/layui.all.js" type="text/javascript" charset="utf-8"></script>
+    <script src="resource/assets/js/jquery-1.12.4.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="resource/assets/layui/layer.js"></script>
+    <link rel="stylesheet" type="text/css" href="resource/assets/layui/css/layui.css"/>
+    <style type="text/css">
+        /* 登录弹框 */
+        .popur {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(0,0,0,.5);
+            z-index: 999;
+        }
+        .popur .ttp-modal{
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 400px;
+            height: 200px;
+            background-color: #f2f2f2;
+            transform:translate(-50%,-50%);
+            border-radius: 8px;
+        }
+        #roleSelect{
+            height: 33px;
+            width: 92px;
+            display: block;
+            margin-top: 44px;
+            font-size: 20px;
+            transition: 0.5s;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="layui-layout-admin">
+    <!--头部导航栏-->
+    <div class="layui-header">
+        <div class="layui-logo"><a style="color:#009688;">
+            付云佳文章管理后台
+        </a>
+        </div>
+
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item" style=""><a href="manager?method=toHome" target="_blank">去首页</a></li>
+
+            <span class="layui-nav-bar" style="left: 54px; top: 55px; width: 0px; opacity: 0;"></span>
+        </ul>
+
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="manager?method=managerProfile">
+                    <img id="ImgDasplay" src="resource/assets/img/defaultAvatar2.jpeg" class="layui-nav-img">
+                    <span id="nameDisplay"></span><span class="layui-nav-more"></span>
+                </a>
+            </li>
+
+            <span class="layui-nav-bar"></span>
+        </ul>
+    </div>
+    <!--侧边导航栏-->
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree" style="background-color: #282828;">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">文章<span class="layui-nav-more"></span></a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <div id="articleInsert"><a href="manager?method=managerArticleInsert">写文章</a></div>
+                        </dd>
+                        <dd>
+                            <div><a href="manager?method=managerArticles">我的文章</a></div>
+                        </dd>
+                    </dl>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+    //内容主体
+    <div class="layui-body">
+        <div id="layui-container" style="padding: 15px;">
+            <blockquote class="layui-elem-quote">
+						<span class="layui-breadcrumb" lay-separator="/" style="visibility: visible;">
+                             <a href="#">首页</a>
+                            <a href="#">用户管理</a>
+						</span>
+            </blockquote>
+
+
+            <div class="layui-tab layui-tab-card">
+                <input type="hidden" name="currentUrl" id="currentUrl" value="">
+                <table class="layui-table">
+                    <colgroup>
+                        <col width="100">
+                        <col width="100">
+                        <col width="100">
+                        <col width="100">
+                        <col width="200">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>用户ID</th>
+                        <th>用户名</th>
+                        <th>电话号码</th>
+                        <th>角色</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+
+                    </tbody>
+                </table>
+                <div id="Pagination" class="pagination">
+                    <!-- 这里显示分页 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="popur">
+        <div class="ttp-modal">
+            <form class="layui-form" action="userServlet?method=updateRole" method="post" id="myForm">
+                <input type="hidden" name="userId" id="userId">
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">选择角色 <span style="color: #FF5722; ">*</span> </label>
+
+                        <select name="role" style="display: block" id="roleSelect">
+                            <option value="user">user</option>
+                            <option value="admin">admin</option>
+                        </select>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1" id="submitRole">立即修改</button>
+                        <button type="button" class="layui-btn layui-btn-danger" id="cancel">取消</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+</div>
+<script>
+
+    $(document).ready(function () {
+        // 回显当前用户内容。
+        $.ajax({
+            url: "userServlet?method=getUser",
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
+                // 回显菜单栏名字和头像
+                $("#nameDisplay").text(result.extend.user.userName);
+
+                $("#ImgDasplay").attr('src', result.extend.user.userAvatar);
+            }
+        });
+        // 判断当前用户是否为管理员，是则生成用户管理菜单项
+        CurrentLoggedUserIsAdmin();
+
+        // 构建用户表格
+        var users = getAllUsers();
+        buildUserList(users)
+
+
+    });
+
+
+    // 修改用户角色
+    $(document).on("click",".editBtn",function () {
+        $(".popur").show();
+        var userId = $(this).attr("userId")
+        $(".ttp-modal #userId").val(userId);
+
+
+    });
+
+
+    // 关闭模态框
+    $("#cancel").click(function () {
+        $(".popur").css("display","none");
+    });
+    // 点击修改按钮
+    $("#submitRole").click(function () {
+
+        layer.msg("修改成功")
+
+    });
+
+    // 判断当前用户是否为管理员，是则生成用户管理菜单项
+    function CurrentLoggedUserIsAdmin() {
+        $.ajax({
+            url: "userServlet?method=getUser",
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
+                if (result.extend.user != "no") {
+                    if (result.extend.user.userRole == "admin") {
+                        var a = $("<a></a>").attr("href", "userManage").text("用户管理");
+                        var div = $("<div></div>").append(a);
+                        var d = $("<dd></dd>").append(div);
+                        $(".layui-nav-child").append(d);
+                    }
+                }
+            }
+        });
+    }
+
+    // 构建用户表格
+    function getAllUsers() {
+        var users;
+        $.ajax({
+            async : false,
+            url: "userServlet?method=getUsers",
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
+                users =result.extend.users;
+            }
+        });
+        return users;
+    }
+    // 构建用户表格
+    function buildUserList(users) {
+        $("tbody").text("");
+        for (let i = 0; i < users.length; i++) {
+          var tr = $("<tr></tr>");
+          var idTd = $("<td></td>").text(users[i].userId);
+            tr.append(idTd);
+
+            var nameTd = $("<td></td>").text(users[i].userName);
+            tr.append(nameTd);
+
+            var userPhoneNumberTd = $("<td></td>").text(users[i].userPhoneNumber);
+            tr.append(userPhoneNumberTd);
+
+            var roleTd = $("<td></td>").text(users[i].userRole);
+            tr.append(roleTd);
+
+            var operationTd = $("<td></td>");
+            var editBtn = $("<button></button>").addClass("layui-btn").addClass("layui-btn-sm").addClass("editBtn").attr("userId",users[i].userId).text("修改角色");
+            var deletetBtn = $("<button></button>").addClass("layui-btn").addClass("layui-btn-sm").addClass("layui-btn-danger").addClass("deleteBtn").attr("userId",users[i].userId).attr("userName",users[i].userName).text("删除");
+            operationTd.append(editBtn).append(deletetBtn);
+            tr.append(operationTd);
+
+            $("tbody").append(tr);
+        }
+    }
+
+    // 删除用户
+    $(document).on("click",".deleteBtn",function () {
+        var userId = $(this).attr("userId");
+        var userName = $(this).attr("userName");
+        layer.confirm("请问是否确定删除用户 "+userName+" 删除后不可恢复？", {
+            btn: ["确定","取消"] //按钮
+        }, function(){
+            $.ajax({
+                async : false,
+                url: "userServlet?method=deleteUserByUserId&userId="+userId,
+                type: "POST",
+                dataType: "json",
+                success: function (result) {
+
+                }
+            });
+            window.location.reload(true);
+
+
+        }, function(){
+            layer.msg("已撤销");
+        });
+    });
+</script>
+</body>
+
+</html>

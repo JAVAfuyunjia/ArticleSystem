@@ -15,4 +15,6 @@ public interface CommentService {
     List<Comment> getCommentListByArticleId(int articleId);
 
     void deleteCommentByCommentId(int commentId);
+
+    void deleteCommentByUserName(String userName);
 }

@@ -1,15 +1,11 @@
 package com.articlesystem.dao;
 
 import com.articlesystem.Utils.JDBCUtils;
-import com.articlesystem.entity.Article;
 import com.articlesystem.entity.Comment;
 import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.ResultSetHandler;
-import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -133,5 +129,22 @@ public class CommentDao {
                 JDBCUtils.releaseConnection(connection);
             }
         }
+    }
+
+    public void deleteCommentByUserName(String userName) {
+        Connection connection =null;
+
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "DELETE FROM `as_comment` WHERE comment_author_name = ?;";
+            int row = queryRunner.update(connection, sql, userName);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            if(connection != null){
+                JDBCUtils.releaseConnection(connection);
+            }
+        }
+
     }
 }

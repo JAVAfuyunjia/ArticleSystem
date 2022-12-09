@@ -1,3 +1,5 @@
+-- noinspection SqlDialectInspectionForFile
+
 /*
  Navicat Premium Data Transfer
 

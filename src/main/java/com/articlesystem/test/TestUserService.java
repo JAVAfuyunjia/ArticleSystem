@@ -5,6 +5,8 @@ import com.articlesystem.service.UserService;
 import com.articlesystem.service.impl.UserServiceImpl;
 import org.junit.Test;
 
+import java.util.List;
+
 /**
  * @author 云佳
  * @create 2022-10-25 19:57
@@ -19,19 +21,35 @@ public class TestUserService {
     }
     @Test
     public void testGetUserByUserName(){
-        User user = userService.getUserByUserName("付锦");
+        User user = userService.getUserByUserName("付锦芝");
+        System.out.println(user);
 
     }
 
     @Test
     public void testGetUserByUserId(){
-        User user = userService.getUserByUserId(10);
+        User user = userService.getUserByUserId(13);
         System.out.println(user);
     }
     @Test
     public void testUpdateUser(){
         User user = new User(8, "刘晓丽11", "7777777777", "15020586666", null,"localhost:8888");
         boolean rows = userService.update(user);
+    }
+    @Test
+    public void testGetAllUser(){
+        List<User> users = userService.getUsers();
+    }
+
+    @Test
+    public void deleteUserByUserId(){
+        userService.deleteUserByUserId(12);
+    }
+
+
+    @Test
+    public void updateUserRole(){
+        userService.updateRole(7,"user");
     }
 
 

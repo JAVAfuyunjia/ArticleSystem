@@ -10,6 +10,7 @@ import com.articlesystem.service.ArticleService;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 云佳
@@ -94,7 +95,6 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public int getCategoryIdByArticleId(int articleId) {
-
         return articleDao.getCategoryIdByArticleId(articleId);
     }
 
@@ -115,5 +115,15 @@ public class ArticleServiceImpl implements ArticleService {
         // 更新分类关系
         articleDao.articleRefCategoryUpdate(article.getCategoryId(),article.getArticleId());
 
+    }
+
+    @Override
+    public List<Integer> getArticleIdsByUserId(int userId) {
+        return articleDao.getArticleIdsByUserId(userId);
+    }
+
+    @Override
+    public List<Article> getTenArticleRandom() {
+        return articleDao.getTenArticleRandom();
     }
 }

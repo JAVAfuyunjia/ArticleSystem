@@ -5,9 +5,11 @@ import com.articlesystem.Utils.JDBCUtils;
 import com.articlesystem.entity.User;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @author 云佳
@@ -162,6 +164,66 @@ public class UserDao {
         return user;
 
 
+
+    }
+
+    // 获取所有用户信息
+    public List<User> getAllUser() {
+
+        List<User> users = null;
+        Connection connection = null;
+        BeanListHandler<User> userBeanListHandler = new BeanListHandler<>(User.class);
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "select user_id AS userId,user_name AS userName,user_phone_number AS userPhoneNumber,user_pass AS userPass,user_role AS userRole,user_avatar AS userAvatar FROM as_user;";
+
+
+            users = queryRunner.query(connection, sql, userBeanListHandler);
+        } catch (SQLException throwables) {
+
+            throwables.printStackTrace();
+        }finally {
+            if(connection != null){
+                JDBCUtils.releaseConnection(connection);
+            }
+        }
+        return users;
+    }
+
+    public void deleteUserByUserId(int userId) {
+        Connection connection = null;
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "DELETE FROM `as_user` WHERE user_id = ?;";
+
+            int row = queryRunner.update(connection, sql, userId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            if(connection != null){
+                JDBCUtils.releaseConnection(connection);
+            }
+        }
+
+    }
+
+    public void updateRole(int userId, String userRole) {
+
+        Connection connection = null;
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "UPDATE `as_user` SET user_role=? WHERE user_id=?;";
+
+
+
+            int row = queryRunner.update(connection, sql, userRole,userId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            if(connection != null){
+                JDBCUtils.releaseConnection(connection);
+            }
+        }
 
     }
 }

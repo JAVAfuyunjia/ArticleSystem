@@ -496,9 +496,10 @@
 
     // 构建评论list
     function buildCommentList(comments) {
+        var falg = verifyCurrentAndloggedInAuthor();
         for (let i = 0; i < comments.length; i++) {
             // 如果作者和当前登录的是否为同一个
-            var falg = verifyCurrentAndloggedInAuthor();
+
 
             var li = $("<li></li>");
             var ttp_comment_item = $("<div></div>").addClass("ttp-comment-item");
@@ -522,7 +523,7 @@
             comment_info.append(body);
             comment_info.append(time);
 
-            // 如果作者和当前登录的是否为同一个，yes则生成删除按钮.
+            // 如果作者和当前登录的是否为同一个或者是否为管理员，yes则生成删除按钮.
 
             if (falg) {
                 var comment_delete = $("<div></div>").addClass("comment-delete").html("&nbsp;删除").attr("commentId", comments[i].commentId);
@@ -556,9 +557,10 @@
         return commentList;
     }
 
-    // 验证作者和当前登录的是否为同一个
+    // 验证作者和当前登录的是否为同一个，或者是否为管理员
     function verifyCurrentAndloggedInAuthor() {
         let currentUserId;
+        let role;
         $.ajax({
             async: false,
             url: "userServlet?method=getUser",
@@ -566,6 +568,7 @@
             dataType: "json",
             success: function (result) {
                 currentUserId = result.extend.user.userId;
+                role = result.extend.user.userRole;
             }
         });
 
@@ -574,7 +577,7 @@
         let article = getArticleById(articleId);
         let authorId = article.articleUserId;
 
-        if (authorId == currentUserId) {
+        if (authorId == currentUserId || role=="admin") {
             return true;
         } else {
             return false;

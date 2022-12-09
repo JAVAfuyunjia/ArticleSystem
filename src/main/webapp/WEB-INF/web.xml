@@ -27,6 +27,16 @@
         <url-pattern>/manager</url-pattern>
     </filter-mapping>
 
+    <filter>
+        <filter-name>userManage</filter-name>
+        <filter-class>com.articlesystem.filter.UserManagerFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>userManage</filter-name>
+        <url-pattern>/userManage</url-pattern>
+    </filter-mapping>
+
+
 
 
 

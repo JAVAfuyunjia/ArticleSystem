@@ -1,19 +1,14 @@
 package com.articlesystem.test;
 
-import com.articlesystem.Utils.MyUtils;
 import com.articlesystem.Utils.PageUtils;
 import com.articlesystem.dao.ArticleDao;
-import com.articlesystem.dao.UserDao;
 import com.articlesystem.entity.Article;
-import com.articlesystem.entity.Msg;
-import com.articlesystem.entity.User;
 import com.articlesystem.service.ArticleService;
-import com.articlesystem.service.UserService;
 import com.articlesystem.service.impl.ArticleServiceImpl;
-import com.articlesystem.service.impl.UserServiceImpl;
 import org.junit.Test;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 云佳
@@ -27,7 +22,7 @@ public class TestArticleService {
    @Test
    public void testInertArticle(){
        Article article = new Article();
-       article.setArticleUserId(7);
+       article.setArticleUserId(11);
        article.setArticleCreateTime(new Date());
        article.setArticleThumbnail("http://localhost:8080/ArticleSystem/ArticleSystemImg/166844064628251271.jpg");
        //article.setArticleTitle("中华航展，重磅出击，歼击机20，运20");
@@ -40,9 +35,9 @@ public class TestArticleService {
                "美国在研制五代机的时候，也曾计划研发双座机。然而，五代机同四代机相比，最大的优点就是隐身，而为了隐身，战斗机的所有外挂就要求藏在机身内部，以减少对雷达波的散射。所以，五代机机身内部非常紧凑，如果还要设计双座型，成本将大幅增加。再加上专用教练机和飞行模拟器的发展，使得美俄在研发五代机时，都没有同步研发双座教练型。");
        article.setCategoryId(100000011);
 
-       for (int i = 0; i < 150; i++) {
+       for (int i = 0; i < 50; i++) {
            article.setArticleTitle(i+"中华航展，重磅出击，歼击机20，运20");
-       articleService.insertArticle(article);
+           articleService.insertArticle(article);
        }
 
 
@@ -80,6 +75,14 @@ public class TestArticleService {
         System.out.println(categoryIdByArticleId);
     }
 
+    @Test
+    public void getArticleIdsByUserId(){
+        List<Integer> articleIdsByUserId = articleService.getArticleIdsByUserId(11);
+    }
 
-
+    @Test
+    public void getTenArticle(){
+        List<Article> tenArticleRandom = articleService.getTenArticleRandom();
+        System.out.println(tenArticleRandom);
+    }
 }

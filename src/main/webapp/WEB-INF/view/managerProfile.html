@@ -16,13 +16,13 @@
 
 <div class="layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo"><a href="/admin" style="color:#009688;">
+        <div class="layui-logo"><a style="color:#009688;">
             付云佳文章管理后台
         </a>
         </div>
 
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item" style=""><a href="manager?method=toHome" target="_blank">去前台</a></li>
+            <li class="layui-nav-item" style=""><a href="manager?method=toHome" target="_blank">去首页</a></li>
 
             <span class="layui-nav-bar" style="left: 54px; top: 55px; width: 0px; opacity: 0;"></span>
         </ul>
@@ -65,11 +65,10 @@
     <div class="layui-body">
         <div id="layui-container" style="padding: 15px;">
             <blockquote class="layui-elem-quote">
-         <span class="layui-breadcrumb" lay-separator="/">
-              <a href="#">首页</a>
-              <a href="#">用户列表</a>
-              <a href="#"><cite>编辑用户</cite></a>
-        </span>
+						<span class="layui-breadcrumb" lay-separator="/" style="visibility: visible;">
+                             <a href="#">首页</a>
+                            <a href="#">个人信息</a>
+						</span>
             </blockquote>
             <br><br>
             <form class="layui-form" id="userForm">
@@ -203,8 +202,29 @@
                 $("#userId").val(result.extend.user.userId);
             }
         });
+
+        // 判断当前用户是否为管理员，是则生成用户管理菜单项
+        CurrentLoggedUserIsAdmin();
     });
 
+    // 判断当前用户是否为管理员，是则生成用户管理菜单项
+    function CurrentLoggedUserIsAdmin() {
+        $.ajax({
+            url: "userServlet?method=getUser",
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
+                if(result.extend.user != "no"){
+                    if(result.extend.user.userRole == "admin"){
+                        var a = $("<a></a>").attr("href","userManage").text("用户管理");
+                        var div = $("<div></div>").append(a);
+                        var d = $("<dd></dd>").append(div);
+                        $(".layui-nav-child").append(d);
+                    }
+                }
+            }
+        });
+    }
 
 
     // 校验电话号码是否合法。

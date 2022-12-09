@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * @author 云佳
@@ -225,5 +226,10 @@ public class ArticleServlet extends HttpServlet {
         response.sendRedirect("manager?method=managerArticles");
     }
 
+    public void getTenArticleRandom(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        List<Article> tenArticleRandom = articleService.getTenArticleRandom();
+        Msg msg = Msg.success().add("articles",tenArticleRandom);
+        MyUtils.JsonResultToWrite(msg,response.getWriter());
+    }
 
 }

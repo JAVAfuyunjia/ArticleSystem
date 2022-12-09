@@ -14,13 +14,13 @@
 
 <div class="layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo"><a href="/admin" style="color:#009688;">
+        <div class="layui-logo"><a style="color:#009688;">
             付云佳文章管理后台
         </a>
         </div>
 
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item" style=""><a href="manager?method=toHome" target="_blank">去前台</a></li>
+            <li class="layui-nav-item" style=""><a href="manager?method=toHome" target="_blank">去首页</a></li>
 
             <span class="layui-nav-bar" style="left: 54px; top: 55px; width: 0px; opacity: 0;"></span>
         </ul>
@@ -51,7 +51,6 @@
                         <dd>
                             <div><a href="manager?method=managerArticles">我的文章</a></div>
                         </dd>
-
 
                     </dl>
                 </li>
@@ -173,9 +172,30 @@
 
         // 回显文章内容
         echoArticleInfo();
-
+        // 判断当前用户是否为管理员，是则生成用户管理菜单项
+        CurrentLoggedUserIsAdmin();
 
     });
+
+    // 判断当前用户是否为管理员，是则生成用户管理菜单项
+    function CurrentLoggedUserIsAdmin() {
+        $.ajax({
+            url: "userServlet?method=getUser",
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
+                if(result.extend.user != "no"){
+                    if(result.extend.user.userRole == "admin"){
+                        var a = $("<a></a>").attr("href","userManage").text("用户管理");
+                        var div = $("<div></div>").append(a);
+                        var d = $("<dd></dd>").append(div);
+                        $(".layui-nav-child").append(d);
+                    }
+                }
+            }
+        });
+    }
+
 
     function echoArticleInfo() {
         let URL = window.location.href;
@@ -276,7 +296,7 @@
         //上传图片,必须放在 创建一个编辑器前面
         layedit.set({
             uploadImage: {
-                url: '/admin/upload/img' //接口url
+                url: 'layui/upload/img' //接口url
                 ,type: 'post' //默认post
             }
         });
@@ -311,8 +331,10 @@
                 ,'left' //左对齐
                 ,'center' //居中对齐
                 ,'right' //右对齐
+                ,'link' //超链接
                 ,'unlink' //清除链接
                 ,'face' //表情
+                ,'image' //插入图片
                 ,'code'
             ]
         });

@@ -3,6 +3,7 @@ package com.articlesystem.servlet;
 import com.articlesystem.Utils.MyUtils;
 import com.articlesystem.entity.Msg;
 import com.articlesystem.entity.User;
+import com.articlesystem.enums.UserRole;
 import com.articlesystem.service.UserService;
 import com.articlesystem.service.impl.UserServiceImpl;
 
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * @author 云佳
@@ -180,12 +182,10 @@ public class UserServlet extends HttpServlet {
             userId = ((User) request.getSession().getAttribute("user")).getUserId();
             user = userService.getUserByUserId(userId);
             msg = Msg.success().add("user", user);
+
         } catch (NullPointerException e) {
             msg = Msg.success().add("user", "no");
-
         }
-
-
         // 返回数据给前端。
         MyUtils.JsonResultToWrite(msg, response.getWriter());
     }
@@ -209,6 +209,71 @@ public class UserServlet extends HttpServlet {
         // 返回数据给前端。
         MyUtils.JsonResultToWrite(msg, response.getWriter());
     }
-}
 
+    /**
+     * 验证用户名是否重复
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     */
+    public void verifyUserName(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String userName = request.getParameter("userName");
+        Msg msg ;
+
+
+        User user = userService.getUserByUserName(userName);
+        if(user == null){
+            msg = Msg.success().add("userName", "noRepeat");
+        }else{
+            msg = Msg.success().add("userName", "Repeat");
+        }
+
+        // 返回数据给前端。
+        MyUtils.JsonResultToWrite(msg, response.getWriter());
+    }
+
+    /**
+     * 获取所有user用户信息。
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+
+    public void getUsers(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        Msg msg ;
+        List<User> users;
+        try {
+            users = userService.getUsers();
+            msg = Msg.success().add("users", users);
+
+        } catch (Exception e) {
+            msg = Msg.success().add("users", "no");
+        }
+        // 返回数据给前端。
+        MyUtils.JsonResultToWrite(msg, response.getWriter());
+    }
+
+    /**
+     * 通过用户Id 删除用户
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     */
+    public void deleteUserByUserId(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        int userId = Integer.parseInt(request.getParameter("userId"));
+
+        userService.deleteUserByUserId(userId);
+    }
+
+    public void updateRole(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        String userRole = request.getParameter("role");
+
+        userService.updateRole(userId,userRole);
+        request.getRequestDispatcher("/WEB-INF/view/userManage.html").forward(request,response);
+    }
+}
 

@@ -4,6 +4,7 @@
     <meta charset="utf-8"/>
     <title>文件管理系统首页</title>
 
+
     <script src="resource/assets/layui/layui.js" type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" type="text/css" href="resource/assets/css/style.css"/>
 
@@ -17,6 +18,7 @@
 
     <style type="text/css">
         .mydynamic {
+            background-color: #1a1a1a;
             font-family: "楷体";
             width: 185px;
             font-size: 25px;
@@ -32,11 +34,33 @@
         }
 
         #qq-and-wechat {
+            background-color: transparent;
             padding-top: 20px;
-            background-color: white;
             width: auto;
-            height: 50px;
             border-radius: 10px;
+            position: absolute;
+            top: -13px;
+            right: 27px;
+        }
+
+        #qq-and-wechat img {
+            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+        }
+
+        #qq-and-wechat a {
+            width: 36px;
+            height: 36px;
+            margin-left: 30px;
+            display: inline-block;
+            transition: 0.5s;
+            margin-bottom: 3px;
+        }
+
+
+        #qq-and-wechat a:hover {
+            transform: translateY(-8px);
         }
 
         input {
@@ -49,7 +73,7 @@
 
         }
 
-        #div-parent{
+        #div-parent {
             width: 60%;
             height: 39px;
             margin: auto;
@@ -58,7 +82,7 @@
 
         }
 
-        #div-parent img{
+        #div-parent img {
             padding-right: 24px;
             padding-top: 5px;
             height: 32px;
@@ -66,10 +90,12 @@
             float: right;
 
         }
-        #div-parent a{
+
+        #div-parent a {
             width: 20%;
 
         }
+
         .user-avatar img {
             border-radius: 50%;
             width: 100%;
@@ -77,6 +103,7 @@
             -o-object-fit: cover;
             object-fit: cover;
         }
+
         .user-avatar {
             position: relative;
             display: inline-block;
@@ -89,6 +116,122 @@
             background-size: contain;
         }
 
+
+        .layui-row ul li:nth-child(1) > div {
+            display: inline-block;
+        }
+
+        .layui-row ul li:nth-child(1) {
+            display: inline-block;
+        }
+
+        .mydynamic img {
+            margin-top: 10px;
+
+            width: 60px;
+            height: 60px;
+            margin-left: 66px;
+        }
+
+        /*热榜*/
+        .ttp-hot-board {
+            width: 318px;
+        }
+
+        .ttp-hot-board .title-bar img {
+            width: 35px;
+            height: 35px;
+            margin-left: 34px;
+        }
+
+        .ttp-hot-board .title-bar .title {
+            display: inline-block;
+            margin-left: 10px;
+            font-size: 25px;
+            color: white;
+        }
+
+        ol {
+            display: block;
+            list-style-type: decimal;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            padding-inline-start: 40px;
+        }
+
+        li {
+            display: list-item;
+            text-align: -webkit-match-parent;
+        }
+
+        .ttp-hot-board .article-item {
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: flex;
+            -moz-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            padding: 12px 0;
+            cursor: pointer;
+        }
+
+
+        .ttp-hot-board .news-title {
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 16px;
+            line-height: 20px;
+            color: #ffffff;
+            text-overflow: ellipsis;
+        }
+
+        .ttp-hot-board .news-index.num-1 {
+            color: #a82e2e;
+        }
+        .ttp-hot-board .news-index.num-2 {
+            color: #f8070f;
+        }
+        .ttp-hot-board .news-index.num-3 {
+            color: #f8a807;
+        }
+
+        .ttp-hot-board .news-index {
+            margin-right: 8px;
+            width: 24px;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 24px;
+            font-family: ByteNumber-center;
+            color: #999;
+            text-align: center;
+        }
+        /* 二维码*/
+        #qqBinary{
+            display: none;
+            position: absolute;
+            top: -68px;
+            right: 73px;
+            width: 100px;
+            height: 120px
+
+
+        }
+        #weixinBinary{
+            display: none;
+            position: absolute;
+            top: -68px;
+            right: 152px;
+            width: 100px;
+            height: 120px
+        }
+        .news-title{
+            transition: 0.5s;
+        }
+        .news-title:hover{
+            color: red;
+        }
     </style>
 
 
@@ -97,9 +240,9 @@
 <!--头部导航栏--->
 <div class="layui-row">
     <div class="layui-col-md12" id="topbar">
-        <ul class="layui-nav layui-bg-molv" lay-bar="disabled" style="background-color: #282828;">
-            <li class="layui-nav-item" >
-                <div class="mydynamic"><i class="layui-icon layui-icon-read" style="font-size: 30px;"></i>文章管理系统</div>
+        <ul class="layui-nav layui-bg-molv" lay-bar="disabled" style="background-color: #28282800;">
+            <li>
+                <div class="mydynamic"><img src="resource/assets/img/book7.png"/></div>
             </li>
             <li class="layui-nav-item "><a href="">首页</a></li>
             <li class="layui-nav-item as-categoryId" categoryId="100000009"><a href="">计算机</a></li>
@@ -118,7 +261,7 @@
     <div class="layui-row" style="height: 40px;">
         <div id="div-parent">
             <a href="#" id="search-butt"><img src="resource/assets/img/search.png"></a>
-            <input type="text" size="16" id="search-value"  value="" placeholder="搜索看得文章">
+            <input type="text" size="16" id="search-value" value="" placeholder="搜索看得文章">
 
         </div>
     </div>
@@ -139,14 +282,49 @@
         <div id="sidebar" class="widget-area all-sidebar"
              style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
 
-            <div id="qq-and-wechat">
+            <div class="ttp-hot-board">
+                <div class="title-bar"><img src="resource/assets/img/hot.png">
+                    <h2 class="title">热榜文章</h2>
+                </div>
+                <ol>
+                    <li><a class="article-item">
+                        <span class="news-index num-1">1</span>
+                        <p class="news-title"></p>
+                        </a>
+                    </li>
+                    <li><a class="article-item"><span class="news-index num-2">2</span>
+                        <p class="news-title"></p></a></li>
+                    <li><a class="article-item"><span class="news-index num-3">3</span>
+                        <p class="news-title"></p></a></li>
+                    <li><a class="article-item"><span class="news-index num-10">4</span>
+                        <p class="news-title"></p></a></li>
+                    <li><a class="article-item"><span class="news-index num-10">5</span>
+                        <p class="news-title"></p></a></li>
+                    <li><a class="article-item"><span class="news-index num-10">6</span>
+                        <p class="news-title"></p></a></li>
+                    <li><a class="article-item"><span class="news-index num-10">7</span>
+                        <p class="news-title"></p></a></li>
+                    <li><a class="article-item"><span class="news-index num-10">8</span>
+                        <p class="news-title"></p></a></li>
+                    <li><a class="article-item"><span class="news-index num-10">9</span>
+                        <p class="news-title"></p></a></li>
+                    <li><a class="article-item"><span class="news-index num-10">10</span>
+                        <p class="news-title"></p></a></li>
+                </ol>
             </div>
+
         </div>
     </div>
     <div class="layui-row">
 
-
     </div>
+    <div id="qq-and-wechat">
+        <a href="#"><img src="resource/assets/img/weixin1.png" id="weixin"/></a>
+        <a href="#"><img src="resource/assets/img/QQ1.png" id="qq"/></a>
+    </div>
+    <img src="resource/assets/img/weixinBinaryCode.jpg" id="weixinBinary">
+    <img src="resource/assets/img/qqBinaryCode.jpg" id="qqBinary">
+
 </div>
 <script type="text/javascript">
     <!--导航 依赖element模-->
@@ -176,40 +354,91 @@
 
                 // 校验登录状态
                 VerifyLoginStatus();
+
+                // 构建十篇文章
+                buildHotArticle();
             }
         });
 
 
     });
 
-    // 校验登录状态,构建用户头像
-    function VerifyLoginStatus(){
+    // 显示和隐藏二维码
+    $("#weixin").mouseenter(function () {
+        $("#weixinBinary").show()
+    });
+
+    $("#weixin").mouseleave(function () {
+        $("#weixinBinary").hide()
+    });
+
+    $("#qq").mouseenter(function () {
+        $("#qqBinary").show()
+    });
+    $("#qq").mouseleave(function () {
+        $("#qqBinary").hide()
+    });
+    
+    // 构建热门文章
+
+    function buildHotArticle() {
         $.ajax({
-            url : "userServlet?method=getUser",
-            type : "POST",
-            dataType : "json",
-            success : function (result) {
-                if (result.extend.user == "no"){
-                    var a =  $("<a></a>").attr("href","login.html");
+            async : false,
+            url: "article?method=getTenArticleRandom",
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
+                //console.log(result.extend.articles);
+                var articles = result.extend.articles;
+                var article_items = $(".article-item")
+                var news_titles = $(".news-title")
+                for (let i = 0; i < articles.length; i++) {
+
+                    $(article_items[i]).attr("href","article?method=toArticleView&articleId="+articles[i].articleId)
+                    $(news_titles[i]).html(splitArticle(articles[i].articleSummary));
+                }
+            }
+        });
+
+
+    }
+
+    // 截取文章简介
+    function splitArticle(articleSummary){
+        var articleSummaryRe = articleSummary.replaceAll("&nbsp;","").trim()
+        var length = 16;
+        return articleSummaryRe.substring(0,length)+"..."
+
+    }
+
+    // 校验登录状态,构建用户头像
+    function VerifyLoginStatus() {
+        $.ajax({
+            url: "userServlet?method=getUser",
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
+                if (result.extend.user == "no") {
+                    var a = $("<a></a>").attr("href", "login.html");
                     var button = $("<button></button>").addClass("layui-btn").addClass("layui-btn-radius").text("登录");
                     a.append(button);
                     $("#userInfo").append(a);
-                }else{
+                } else {
                     $("#userInfo").text("");
-                   var a =  $("<a></a>").attr("href","manager?method=managerProfile");
-                   var div = $("<div></div>").addClass("user-avatar");
-                   var src;
-                   if (result.extend.user.userAvatar == undefined){
-                       src = "resource/assets/img/defaultAvatar2.jpeg"
-                   }else{
-                       src = result.extend.user.userAvatar;
-                   }
+                    var a = $("<a></a>").attr("href", "manager?method=managerProfile");
+                    var div = $("<div></div>").addClass("user-avatar");
+                    var src;
+                    if (result.extend.user.userAvatar == undefined) {
+                        src = "resource/assets/img/defaultAvatar2.jpeg"
+                    } else {
+                        src = result.extend.user.userAvatar;
+                    }
 
-                   var img = $("<img>").attr("src",src).attr("alt","个人中心");
-                   div.append(img);
-                   a.append(div);
+                    var img = $("<img>").attr("src", src).attr("alt", "个人中心");
+                    div.append(img);
+                    a.append(div);
 
-                   $("#userInfo").append(a);
+                    $("#userInfo").append(a);
                 }
             }
         });
@@ -217,7 +446,7 @@
 
 
     var categoryId;
-    var keyword="";
+    var keyword = "";
     // 分类获取文章
     $(".as-categoryId").click(function () {
         categoryId = $(this).attr("categoryId");
@@ -301,9 +530,9 @@
         keyword = searchValue;
 
         var url;
-        if(keyword !=""){
-            url = "article?method=getArticles&keyword="+keyword;
-        }else{
+        if (keyword != "") {
+            url = "article?method=getArticles&keyword=" + keyword;
+        } else {
             url = "article?method=getArticles";
 
         }
@@ -319,7 +548,7 @@
                     $("#main").append(h1);
                     $("#Pagination").text("");
 
-                }else{
+                } else {
                     buildArticles(pageInfo.list);
 
                     // 初始化导航栏
@@ -328,7 +557,7 @@
             }
         });
 
-        return  false;
+        return false;
     });
 
 
@@ -359,10 +588,10 @@
         var currentPage = pageIndex + 1;
         // 发送ajax请求重新构建页面
         var url;
-        if(keyword !=""){
-        url = "article?method=getArticles&currentPage=" + currentPage+"&keyword="+keyword;
-        }else{
-        url = "article?method=getArticles&currentPage=" + currentPage;
+        if (keyword != "") {
+            url = "article?method=getArticles&currentPage=" + currentPage + "&keyword=" + keyword;
+        } else {
+            url = "article?method=getArticles&currentPage=" + currentPage;
         }
 
         $.ajax({

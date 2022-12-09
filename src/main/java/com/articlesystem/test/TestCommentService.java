@@ -28,4 +28,11 @@ public class TestCommentService {
     public void testDeleteCommentByCommentId(){
         commentDao.deleteCommentByCommentId(3);
     }
+
+    @Test
+    public void testDeleteCommentByUserName(){
+        commentDao.deleteCommentByUserName("付云佳");
+
+    }
+
 }
