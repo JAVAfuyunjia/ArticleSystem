@@ -3,13 +3,12 @@ package com.articlesystem.servlet;
 import com.articlesystem.Utils.MyUtils;
 import com.articlesystem.entity.Msg;
 import com.articlesystem.entity.User;
-import com.articlesystem.enums.UserRole;
 import com.articlesystem.service.UserService;
 import com.articlesystem.service.impl.UserServiceImpl;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,9 +25,6 @@ import java.util.List;
 public class UserServlet extends HttpServlet {
     UserService userService = new UserServiceImpl();
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
 
     @Override
@@ -49,6 +45,35 @@ public class UserServlet extends HttpServlet {
             e.printStackTrace();
             throw new RuntimeException();
         }
+
+    }
+
+    /**
+     * 自动登录
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     */
+
+    public void autoLogin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+        String username = request.getParameter("logname");
+        String password = request.getParameter("logpassword");
+
+        String passwordToMd5 = MyUtils.strToMd5(password);
+
+        Msg msg;
+        User user = userService.getUserByUserName(username);
+        if (user != null && passwordToMd5.equals(user.getUserPass())) {
+            msg = Msg.success();
+            request.getSession().setAttribute("user", user);
+        } else {
+            msg = Msg.fail();
+        }
+
+        // 返回数据给前端。
+        MyUtils.JsonResultToWrite(msg, response.getWriter());
 
     }
 
@@ -96,6 +121,7 @@ public class UserServlet extends HttpServlet {
 
         String username = request.getParameter("logname");
         String password = request.getParameter("logpassword");
+        String rememberme = request.getParameter("rememberme");
 
         String passwordToMd5 = MyUtils.strToMd5(password);
 
@@ -104,6 +130,17 @@ public class UserServlet extends HttpServlet {
         if (user != null && passwordToMd5.equals(user.getUserPass())) {
             msg = Msg.success();
             request.getSession().setAttribute("user", user);
+
+            if (rememberme != null) {
+                //创建两个Cookie对象
+                Cookie nameCookie = new Cookie("username", username);
+                //设置Cookie的有效期为3天
+                nameCookie.setMaxAge(60 * 60 * 24 * 3);
+                Cookie pwdCookie = new Cookie("password", password);
+                pwdCookie.setMaxAge(60 * 60 * 24 * 3);
+                response.addCookie(nameCookie);
+                response.addCookie(pwdCookie);
+            }
         } else {
             msg = Msg.fail();
         }
@@ -220,8 +257,6 @@ public class UserServlet extends HttpServlet {
     public void verifyUserName(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String userName = request.getParameter("userName");
         Msg msg ;
-
-
         User user = userService.getUserByUserName(userName);
         if(user == null){
             msg = Msg.success().add("userName", "noRepeat");

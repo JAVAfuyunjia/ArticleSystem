@@ -2,7 +2,6 @@ package com.articlesystem.entity;
 
 import com.alibaba.fastjson.JSON;
 
-import java.awt.print.PrinterAbortException;
 import java.util.Date;
 
 public class Article {
@@ -28,6 +27,16 @@ public class Article {
     private int categoryId;
 
     private String authorName;
+
+    private String attachmentFilePath;
+
+    public void setAttachmentFilePath(String attachmentFilePath) {
+        this.attachmentFilePath = attachmentFilePath;
+    }
+
+    public String getAttachmentFilePath() {
+        return attachmentFilePath;
+    }
 
     public void setAuthorName(String authorName) {
         this.authorName = authorName;

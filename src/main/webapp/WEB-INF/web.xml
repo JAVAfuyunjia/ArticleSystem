@@ -36,8 +36,4 @@
         <url-pattern>/userManage</url-pattern>
     </filter-mapping>
 
-
-
-
-
 </web-app>

@@ -357,11 +357,58 @@
 
                 // 构建十篇文章
                 buildHotArticle();
+
             }
         });
 
-
+    //
+        AutomaticLoginOrNot()
     });
+
+
+    // 检查Cookie是否有信息，用Cookie保存的用户名密码自动登录
+    function AutomaticLoginOrNot (){
+        let logname;
+        let logpassword;
+
+        let cookieStr = document.cookie;
+        let arr = cookieStr.split(";");
+        for(let cookie of arr){
+            let cookieArr = cookie.split("=");
+            let c_username = cookieArr[0];
+            let c_value = cookieArr[1];
+            if(c_username.trim()=="username"){
+                logname=c_value;
+            }
+            if(c_username.trim()=="password"){
+                logpassword=c_value;
+
+            }
+        }
+
+        let data = {"logpassword":logpassword,"logname":logname};
+
+        // 发送自动登录请求
+        if((logpassword != null && logpassword!="" && logpassword!=undefined)
+        &&(logname != null && logname!="" && logname!=undefined)
+        ){
+            $.ajax({
+                type:"POST",
+                url:"userServlet?method=autoLogin",
+                data:data,
+                success(result){
+                    VerifyLoginStatus();
+                },
+                error(){
+
+                }
+            });
+        }
+
+
+
+
+    }
 
     // 显示和隐藏二维码
     $("#weixin").mouseenter(function () {
@@ -561,7 +608,7 @@
     });
 
 
-    // 生成页码导航条的函数
+ // 生成页码导航条的函数
     function initPagination(totalNum, pageSize, currentPage) {
         // 获取总记录数。
         var totalRecord = totalNum;

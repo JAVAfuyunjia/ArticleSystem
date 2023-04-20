@@ -118,6 +118,14 @@
                 </div>
 
                 <div class="layui-form-item">
+                    <label class="layui-form-label">上传附件 <span style="color: #FF5722; ">*</span> </label>
+                    <div class="layui-input-inline">
+                        <input type="file" id="attachment" aria-placeholder="选择上传的文件"/><button type="button" id="attachmentUpload">点击上传</button>
+                        <input name="attachmentPath" id="attachmentPath" style="display: none"/>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
                     <div class="layui-input-block">
                         <button class="layui-btn" lay-submit="" lay-filter="demo1">立即修改</button>
                         <button type="button"  class="layui-btn layui-btn-danger" id="cancel">取消</button>
@@ -217,8 +225,33 @@
         $("#articleCategoryId").find(pt).attr("selected",'selected');
         $("#userId").val(article.articleUserId);
         $("#articleId").val(article.articleId);
+        $("#attachmentPath").val(article.attachmentFilePath);
 
     }
+
+    // 附件上传
+    $("#attachmentUpload").click(function () {
+        var file=document.getElementById("attachment").files[0];
+        var fordate=new FormData();
+        fordate.append("file",file);//封装为表单数据
+        $.ajax({
+            url:"manager/attachmentUpload",
+            type: "POST",
+            data:fordate,
+            dataType: 'json',
+            processData : false,
+            contentType : false,
+            success:function (data) {
+                // console.log(data.extend.filePath)
+                var filePath = data.extend.filePath;
+                if( filePath != null && filePath != "" && filePath != undefined) {
+                    $("#attachmentPath").val(filePath);
+                    layer.msg("上传成功");
+                }
+
+            }
+        })
+    });
 
     // 通过articleId获取文章对象
     function getArticleById(articleId) {

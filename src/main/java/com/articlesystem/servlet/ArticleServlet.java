@@ -8,9 +8,7 @@ import com.articlesystem.entity.Msg;
 import com.articlesystem.entity.User;
 import com.articlesystem.enums.UserRole;
 import com.articlesystem.service.ArticleService;
-import com.articlesystem.service.UserService;
 import com.articlesystem.service.impl.ArticleServiceImpl;
-import com.articlesystem.service.impl.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -69,6 +67,7 @@ public class ArticleServlet extends HttpServlet {
         String articleThumbnail = request.getParameter("articleThumbnail");
         String articleCategoryId = request.getParameter("articleCategoryId");
         String userId = request.getParameter("userId");
+        String attachmentFilePath = request.getParameter("attachmentPath");
 
         Article article = new Article();
         article.setArticleTitle(articleTitle);
@@ -76,6 +75,7 @@ public class ArticleServlet extends HttpServlet {
         article.setArticleThumbnail(articleThumbnail);
         article.setCategoryId(Integer.parseInt(articleCategoryId));
         article.setArticleUserId(Integer.parseInt(userId));
+        article.setAttachmentFilePath(attachmentFilePath);
 
 
         articleService.insertArticle(article);
@@ -210,6 +210,7 @@ public class ArticleServlet extends HttpServlet {
         String articleThumbnail = request.getParameter("articleThumbnail");
         String articleCategoryId = request.getParameter("articleCategoryId");
         String userId = request.getParameter("userId");
+        String attachmentPath = request.getParameter("attachmentPath");
         int articleId = Integer.parseInt(request.getParameter("articleId"));
 
         Article article = new Article();
@@ -219,6 +220,7 @@ public class ArticleServlet extends HttpServlet {
         article.setCategoryId(Integer.parseInt(articleCategoryId));
         article.setArticleUserId(Integer.parseInt(userId));
         article.setArticleId(articleId);
+        article.setAttachmentFilePath(attachmentPath);
 
 
         articleService.articleUpdate(article);

@@ -66,7 +66,11 @@ public class TestArticleService {
 
     @Test
     public void deleteArticleByArticleId(){
-        articleService.deleteArticleByArticleId(540);
+
+       for(int i=710;i<734;i++){
+           articleService.deleteArticleByArticleId(i);
+       }
+
     }
 
     @Test

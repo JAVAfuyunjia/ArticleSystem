@@ -40,8 +40,8 @@ public class ArticleDao {
         try {
             connection = JDBCUtils.getConnection();
             String sql = "INSERT INTO " +
-                    "`as_article`(article_user_id,article_title,article_content,article_create_time,article_thumbnail,article_summary) " +
-                    "VALUES(?,?,?,?,?,?);";
+                    "`as_article`(article_user_id,article_title,article_content,article_create_time,article_thumbnail,article_summary,article_attachment_path) " +
+                    "VALUES(?,?,?,?,?,?,?);";
             ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
             ps.setInt(1,article.getArticleUserId());
@@ -50,6 +50,7 @@ public class ArticleDao {
             ps.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
             ps.setString(5,article.getArticleThumbnail());
             ps.setString(6,article.getArticleSummary());
+            ps.setString(7,article.getAttachmentFilePath());
 
             ps.execute();
 
@@ -198,7 +199,7 @@ public class ArticleDao {
         Article article = null;
         try {
             connection = JDBCUtils.getConnection();
-            String sql = "SELECT article_id AS articleId,article_user_id AS articleUserId,article_title AS articleTitle,article_is_comment AS articleIsComment,article_create_time AS articleCreateTime,article_summary AS articleSummary,article_thumbnail AS articleThumbnail,article_content AS articleContent" +
+            String sql = "SELECT article_id AS articleId,article_user_id AS articleUserId,article_title AS articleTitle,article_is_comment AS articleIsComment,article_create_time AS articleCreateTime,article_summary AS articleSummary,article_thumbnail AS articleThumbnail,article_content AS articleContent,article_attachment_path AS attachmentFilePath" +
                     " FROM as_article a " +
                     "WHERE  article_id= ? ";
             article = queryRunner.query(connection, sql, articleBeanHandler, articleId);
@@ -334,8 +335,8 @@ public class ArticleDao {
         Connection connection = null;
         try {
             connection = JDBCUtils.getConnection();
-            String sql = "UPDATE `as_article` SET  article_title=?,article_content=?,article_thumbnail=?,article_summary=? WHERE article_id =?;";
-            Object[] param = {article.getArticleTitle(),article.getArticleContent(),article.getArticleThumbnail(),article.getArticleSummary(),article.getArticleId()};
+            String sql = "UPDATE `as_article` SET  article_title=?,article_content=?,article_thumbnail=?,article_summary=?,article_attachment_path=? WHERE article_id =?;";
+            Object[] param = {article.getArticleTitle(),article.getArticleContent(),article.getArticleThumbnail(),article.getArticleSummary(),article.getAttachmentFilePath(),article.getArticleId()};
 
             int row = queryRunner.update(connection, sql, param);
         } catch (SQLException throwables) {

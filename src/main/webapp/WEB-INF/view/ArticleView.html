@@ -319,6 +319,10 @@
                 </p>
 
             </div>
+            <div id="attachment" style="margin-top: 30px" >
+                <hr>
+               附件文件名：&nbsp <span style="color: red"></span><a style="float: right">下载附件</a>
+            </div>
         </div>
         <!--评论区域-->
         <div id="comment-area">
@@ -386,13 +390,42 @@
         return result
     }
 
+    //
+
     // 构建文章
     function buildArticle(article) {
         $(".content img").attr("src", article.articleThumbnail);
         $(".content p").html(article.articleContent);
         $(".date").text(getFormatDate(article.articleCreateTime));
         $(".blog-content h2").text(article.articleTitle);
+        var attachmentPath = article.attachmentFilePath;
+        if(attachmentPath == null || attachmentPath == "" || attachmentPath == undefined){
+            $("#attachment").hide();
+        }else{
+            var strFileName = article.attachmentFilePath.substring(article.attachmentFilePath.lastIndexOf("\\")+1);
+            $("#attachment span").text(strFileName);
+            $("#attachment a").attr("attachmentFilePath",article.attachmentFilePath);
+            $("#attachment a").attr("href","manager/attachmentDownload?attachmentPath="+strFileName);
+
+        }
     }
+
+    // // 点击下载附件
+    // $("#attachment a").click(function () {
+    //     var attachmentPath = $(this).attr("attachmentFilePath");
+    //     $.ajax({
+    //         async: false,
+    //         url: "manager/attachmentDownload",
+    //         type: "post",
+    //         data : {"attachmentPath":attachmentPath},
+    //         dataType: "json",
+    //         success: function (result) {
+    //
+    //
+    //
+    //         }
+    //     });
+    // });
 
     // 格式化时间
     function getFormatDate(milliseconds) {
@@ -499,8 +532,6 @@
         var falg = verifyCurrentAndloggedInAuthor();
         for (let i = 0; i < comments.length; i++) {
             // 如果作者和当前登录的是否为同一个
-
-
             var li = $("<li></li>");
             var ttp_comment_item = $("<div></div>").addClass("ttp-comment-item");
             var ttp_avatar = $("<div></div>").addClass("ttp-avatar");

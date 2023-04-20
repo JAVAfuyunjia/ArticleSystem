@@ -4,7 +4,6 @@ import com.articlesystem.entity.User;
 import com.articlesystem.enums.UserRole;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,7 +27,6 @@ public class UserManagerFilter implements Filter {
 
         HttpSession session = httpServletRequest.getSession();
         User user = (User)session.getAttribute("user");
-
 
         if(user != null){
             if(UserRole.ADMIN.getValue().equals(user.getUserRole())){

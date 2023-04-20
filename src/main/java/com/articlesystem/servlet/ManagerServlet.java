@@ -1,21 +1,13 @@
 package com.articlesystem.servlet;
 
-import com.articlesystem.entity.Article;
-import com.articlesystem.entity.User;
-import com.articlesystem.enums.UserRole;
-import com.articlesystem.service.ArticleService;
-import com.articlesystem.service.impl.ArticleServiceImpl;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -68,8 +60,24 @@ public class ManagerServlet extends HttpServlet {
 
     }
 
+    public void articleReview(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
+        request.getRequestDispatcher("/WEB-INF/view/articleReview.html").forward(request,response);
+
+    }
+
+
+
     public void logout(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
+        request.getSession().removeAttribute("user");
         request.getSession().invalidate();
+
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie:
+             cookies) {
+            cookie.setMaxAge(0);
+            response.addCookie(cookie);
+        }
+
 
         response.sendRedirect("login.html");
     }
