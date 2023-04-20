@@ -310,5 +310,6 @@ public class UserServlet extends HttpServlet {
         userService.updateRole(userId,userRole);
         request.getRequestDispatcher("/WEB-INF/view/userManage.html").forward(request,response);
     }
+
 }
 
