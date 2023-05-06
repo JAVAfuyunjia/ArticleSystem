@@ -1,20 +1,26 @@
 package com.articlesystem.servlet;
 
 import com.articlesystem.Utils.MyUtils;
+import com.articlesystem.entity.Attachment;
 import com.articlesystem.entity.Msg;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-
+import com.articlesystem.service.ArticleService;
+import com.articlesystem.service.impl.ArticleServiceImpl;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.List;
+import java.util.Random;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.util.List;
-import java.util.Random;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  * @author 云佳
@@ -23,6 +29,9 @@ import java.util.Random;
  */
 @WebServlet(urlPatterns = "/manager/attachmentUpload")
 public class AttachmentUploadServlet extends HttpServlet {
+
+    ArticleService articleService  = new ArticleServiceImpl();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
@@ -56,9 +65,12 @@ public class AttachmentUploadServlet extends HttpServlet {
                     int len = 0;
 
                     String filePath = "D:\\files\\" + fileName;
-                    System.out.println(filePath);
 
-                    msg = Msg.success().add("filePath",filePath);
+                    // 将附件信息插入附件表,获取主键。
+                    Attachment attachment = new Attachment(null, item.getName(), filePath);
+                    Integer primaryKey = articleService.addAttachment(attachment);
+
+                    msg = Msg.success().add("attachmentId",primaryKey);
                     OutputStream out = new FileOutputStream(filePath);
 
                     while ((len = in.read(buffer)) != -1) {

@@ -121,7 +121,30 @@
                     <label class="layui-form-label">上传附件 <span style="color: #FF5722; ">*</span> </label>
                     <div class="layui-input-inline">
                         <input type="file" id="attachment" aria-placeholder="选择上传的文件"/><button type="button" id="attachmentUpload">点击上传</button>
-                        <input name="attachmentPath" id="attachmentPath" style="display: none"/>
+                        <input name="attachmentId" id="attachmentId" style="display: none"/>
+                    </div>
+
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">已经上传的附件 <span style="color: #FF5722; ">*</span> </label>
+                    <div class="layui-input-inline">
+                        <table class="layui-table">
+                            <colgroup>
+                                <col width="200">
+                                <col width="50">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>附件名</th>
+                                <th>操作</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <p id="tishi" style="text-align: center">你还没有文章哦！</p>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -182,8 +205,50 @@
         echoArticleInfo();
         // 判断当前用户是否为管理员，是则生成用户管理菜单项
         CurrentLoggedUserIsAdmin();
+        // 获取附件列表
+        attachments = getAttachmentsByArticleId()
+        // 构建附件表格
+        if(attachments != null && attachments != "" && attachments!=undefined) {
+            buildaTtachments(attachments);
+        }
 
     });
+
+    // 构建附件表格
+    function buildaTtachments(attachments) {
+        $("#tishi").attr("hidden","true");
+        $("tbody").text("");
+        for (let i = 0; i < attachments.length; i++) {
+            var tr = $("<tr></tr>");
+
+            var fileName = $("<td></td>");
+            var attachmentName = $("<span></span>").text(attachments[i].attachmentName);
+
+            fileName.append(attachmentName);
+            tr.append(fileName);
+
+            var deleteBtn = $("<button></button>").addClass("layui-btn").addClass("layui-btn-sm").addClass("layui-btn-danger").addClass("deleteBtn").text("删除").attr("attachmentId",attachments[i].attachmentId).attr("type","button");
+            var oprationTd = $("<td></td>");
+            oprationTd.append(deleteBtn)
+            tr.append(oprationTd)
+            $("tbody").append(tr);
+        }
+
+    }
+
+
+    $(document).on("click",".deleteBtn",function () {
+        var attachmentId = $(this).attr("attachmentId");
+        layer.confirm("请问是否确定删除，删除后不可恢复？", {
+            btn: ["确定","取消"] //按钮
+        }, function(){
+             window.location.href = "article?method=deleteAttachmentByAttachmentId&AttachmentId="+attachmentId;indow.location.href = "article?method=deleteAttachment&AttachmentId="+attachmentId;
+        }, function(){
+            layer.msg("已撤销");
+        });
+    });
+
+
 
     // 判断当前用户是否为管理员，是则生成用户管理菜单项
     function CurrentLoggedUserIsAdmin() {
@@ -215,6 +280,25 @@
 
 
     }
+
+    // 通过文章ID获取所有附件
+    function getAttachmentsByArticleId(){
+        let URL = window.location.href;
+        let articleId = getUrlParams(URL).articleId;
+        var attachments;
+        $.ajax({
+            async: false,
+            url: "article?method=getAttachmentsByArticleId&articleId=" + articleId,
+            type: "post",
+            dataType: "json",
+            success: function (result) {
+
+                attachments = result.extend.attachments;
+
+            }
+        });
+        return attachments;
+    }
     // 回显文章信息
     function echoArticle(article,categoryValue) {
         $("#title").val(article.articleTitle);
@@ -243,9 +327,9 @@
             contentType : false,
             success:function (data) {
                 // console.log(data.extend.filePath)
-                var filePath = data.extend.filePath;
-                if( filePath != null && filePath != "" && filePath != undefined) {
-                    $("#attachmentPath").val(filePath);
+                var attachmentId = data.extend.attachmentId;
+                if( attachmentId != null && attachmentId != "" && attachmentId != undefined) {
+                    $("#attachmentId").val(attachmentId);
                     layer.msg("上传成功");
                 }
 

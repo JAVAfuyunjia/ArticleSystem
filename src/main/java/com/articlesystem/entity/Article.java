@@ -28,14 +28,14 @@ public class Article {
 
     private String authorName;
 
-    private String attachmentFilePath;
+    private Integer fileId;
 
-    public void setAttachmentFilePath(String attachmentFilePath) {
-        this.attachmentFilePath = attachmentFilePath;
+    public Integer getFileId() {
+        return fileId;
     }
 
-    public String getAttachmentFilePath() {
-        return attachmentFilePath;
+    public void setFileId(Integer fileId) {
+        this.fileId = fileId;
     }
 
     public void setAuthorName(String authorName) {

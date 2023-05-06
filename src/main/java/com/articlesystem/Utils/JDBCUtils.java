@@ -39,6 +39,21 @@ public class JDBCUtils {
     }
 
     /**
+     * 释放连接。
+     * @param ps
+     */
+    public static void releaseConnection(PreparedStatement ps){
+        if(ps != null){
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    /**
      * 获取数据库连接。
      * @return
      * @throws SQLException
@@ -73,4 +88,17 @@ public class JDBCUtils {
         }
     }
 
+    /**
+     * 释放连接。
+     * @param rs
+     */
+    public static void releaseConnection(ResultSet rs){
+        if(rs != null){
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

@@ -3,6 +3,7 @@ package com.articlesystem.dao;
 import com.articlesystem.Utils.JDBCUtils;
 import com.articlesystem.Utils.PageUtils;
 import com.articlesystem.entity.Article;
+import com.articlesystem.entity.Attachment;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -32,7 +33,7 @@ public class ArticleDao {
 
     public Integer insert(Article article) {
         Integer primaryKey = null;
-         Connection connection = null;
+        Connection connection = null;
         PreparedStatement ps =null;
         ResultSet rs = null;
         ResultSetHandler<Object> beanHandler = new BeanHandler<Object>(Object.class);
@@ -40,8 +41,8 @@ public class ArticleDao {
         try {
             connection = JDBCUtils.getConnection();
             String sql = "INSERT INTO " +
-                    "`as_article`(article_user_id,article_title,article_content,article_create_time,article_thumbnail,article_summary,article_attachment_path) " +
-                    "VALUES(?,?,?,?,?,?,?);";
+                "`as_article`(article_user_id,article_title,article_content,article_create_time,article_thumbnail,article_summary,article_attachment_id) " +
+                "VALUES(?,?,?,?,?,?,?);";
             ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
             ps.setInt(1,article.getArticleUserId());
@@ -50,14 +51,14 @@ public class ArticleDao {
             ps.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
             ps.setString(5,article.getArticleThumbnail());
             ps.setString(6,article.getArticleSummary());
-            ps.setString(7,article.getAttachmentFilePath());
+            ps.setInt(7,article.getFileId());
 
             ps.execute();
 
             rs = ps.getGeneratedKeys();
 
             if(rs.next()){
-            primaryKey = rs.getInt(1);
+                primaryKey = rs.getInt(1);
 
             }
         } catch (SQLException throwables) {
@@ -199,7 +200,7 @@ public class ArticleDao {
         Article article = null;
         try {
             connection = JDBCUtils.getConnection();
-            String sql = "SELECT article_id AS articleId,article_user_id AS articleUserId,article_title AS articleTitle,article_is_comment AS articleIsComment,article_create_time AS articleCreateTime,article_summary AS articleSummary,article_thumbnail AS articleThumbnail,article_content AS articleContent,article_attachment_path AS attachmentFilePath" +
+            String sql = "SELECT article_id AS articleId,article_user_id AS articleUserId,article_title AS articleTitle,article_is_comment AS articleIsComment,article_create_time AS articleCreateTime,article_summary AS articleSummary,article_thumbnail AS articleThumbnail,article_content AS articleContent" +
                     " FROM as_article a " +
                     "WHERE  article_id= ? ";
             article = queryRunner.query(connection, sql, articleBeanHandler, articleId);
@@ -335,8 +336,8 @@ public class ArticleDao {
         Connection connection = null;
         try {
             connection = JDBCUtils.getConnection();
-            String sql = "UPDATE `as_article` SET  article_title=?,article_content=?,article_thumbnail=?,article_summary=?,article_attachment_path=? WHERE article_id =?;";
-            Object[] param = {article.getArticleTitle(),article.getArticleContent(),article.getArticleThumbnail(),article.getArticleSummary(),article.getAttachmentFilePath(),article.getArticleId()};
+            String sql = "UPDATE `as_article` SET  article_title=?,article_content=?,article_thumbnail=?,article_summary=?,article_attachment_id=? WHERE article_id =?;";
+            Object[] param = {article.getArticleTitle(),article.getArticleContent(),article.getArticleThumbnail(),article.getArticleSummary(),article.getFileId(),article.getArticleId()};
 
             int row = queryRunner.update(connection, sql, param);
         } catch (SQLException throwables) {
@@ -430,6 +431,135 @@ public class ArticleDao {
         }
         return articles;
 
+
+    }
+
+    /**
+     * 向附件表中插入附件内容
+     * @param attachment
+     * @return 附件ID
+     */
+    public int addAttachment(Attachment attachment) {
+        Integer primaryKey = null;
+        Connection connection = null;
+        PreparedStatement ps =null;
+        ResultSet rs = null;
+        ResultSetHandler<Object> beanHandler = new BeanHandler<Object>(Object.class);
+
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "INSERT INTO `as_attachment`(attachment_name,attachment_path) VALUES(?,?);";
+            ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+
+            ps.setString(1,attachment.getAttachmentName());
+            ps.setString(2,attachment.getGetAttachmentPath());
+
+            ps.execute();
+
+            rs = ps.getGeneratedKeys();
+
+            if(rs.next()){
+                primaryKey = rs.getInt(1);
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            if(connection != null){if(ps != null){
+                JDBCUtils.releaseConnection(ps);
+            }
+
+                if(rs != null){
+                    JDBCUtils.releaseConnection(rs);
+                }
+                JDBCUtils.releaseConnection(connection);
+            }
+
+        }
+        return primaryKey;
+    }
+
+    /**
+     * 插入文章与附件的关系
+     * @param fileId
+     * @param articleId
+     */
+    public void insertArticleRefAttachment(int fileId, Integer articleId) {
+
+        Connection connection = null;
+
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "INSERT INTO `as_article_attachment_ref`(article_id,attachment_id) VALUES(?,?);";
+
+            Object[] params = {articleId,fileId};
+
+            queryRunner.update(connection, sql, params);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            if(connection != null){
+                JDBCUtils.releaseConnection(connection);
+
+            }
+        }
+
+    }
+
+
+    public List<Attachment> getAttachmentsByArticleId(int articleId) {
+        Connection connection = null;
+        List<Attachment> attachments = null;
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "SELECT id AS attachmentId,attachment_name AS attachmentName,attachment_path AS getAttachmentPath FROM as_article_attachment_ref aaar JOIN as_attachment aa "
+                + "ON aaar.attachment_id = aa.id "
+                + "WHERE aaar.article_id = ?;";
+            BeanListHandler<Attachment> attachmentBeanListHandler = new BeanListHandler<>(Attachment.class);
+            attachments = queryRunner.query(connection, sql, attachmentBeanListHandler, articleId);
+
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            if(connection != null){
+                JDBCUtils.releaseConnection(connection);
+
+            }
+        }
+
+        return attachments;
+    }
+
+    public void deleteAttachmentByAttachmentId(int AttachmentId) {
+        Connection connection = null;
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "DELETE FROM `as_article_attachment_ref` WHERE attachment_id = ?;";
+
+            int row = queryRunner.update(connection, sql, AttachmentId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            if(connection != null){
+                JDBCUtils.releaseConnection(connection);
+            }
+        }
+
+        try {
+            connection = JDBCUtils.getConnection();
+            String sql = "DELETE FROM `as_attachment` WHERE attachment_id = ?;";
+
+            int row = queryRunner.update(connection, sql, AttachmentId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            if(connection != null){
+                JDBCUtils.releaseConnection(connection);
+            }
+        }
 
     }
 }

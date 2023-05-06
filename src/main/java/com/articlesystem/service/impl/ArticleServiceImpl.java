@@ -5,10 +5,8 @@ import com.articlesystem.Utils.PageUtils;
 import com.articlesystem.dao.ArticleDao;
 import com.articlesystem.dao.CommentDao;
 import com.articlesystem.entity.Article;
-import com.articlesystem.entity.User;
+import com.articlesystem.entity.Attachment;
 import com.articlesystem.service.ArticleService;
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -43,7 +41,10 @@ public class ArticleServiceImpl implements ArticleService {
 
         // 添加文章与分类的关系
         articleDao.insertArticleRefCategory(article.getCategoryId(),articleId);
-
+        // 添加文章与附件的关系
+        if(article.getFileId() != -1){
+            articleDao.insertArticleRefAttachment(article.getFileId(),articleId);
+        }
     }
 
     /**
@@ -114,6 +115,10 @@ public class ArticleServiceImpl implements ArticleService {
 
         // 更新分类关系
         articleDao.articleRefCategoryUpdate(article.getCategoryId(),article.getArticleId());
+        // 如果附件Id不为空，再次添加附件
+        if(article.getFileId() != -1){
+            articleDao.insertArticleRefAttachment(article.getFileId(),article.getArticleId());
+        }
 
     }
 
@@ -125,5 +130,25 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<Article> getTenArticleRandom() {
         return articleDao.getTenArticleRandom();
+    }
+
+    @Override
+    public int addAttachment(Attachment attachment) {
+        return articleDao.addAttachment(attachment);
+    }
+
+    /**
+     * 通过文章Id获取所有附件
+     * @param articleId
+     * @return
+     */
+    @Override
+    public List<Attachment> getAttachmentsByArticleId(int articleId) {
+        return articleDao.getAttachmentsByArticleId(articleId);
+    }
+
+    @Override
+    public void deleteAttachmentByAttachmentId(int AttachmentId) {
+       articleDao.deleteAttachmentByAttachmentId(AttachmentId);
     }
 }

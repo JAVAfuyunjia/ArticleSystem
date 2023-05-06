@@ -4,6 +4,7 @@ import com.articlesystem.Utils.ArticleSystemConstant;
 import com.articlesystem.Utils.MyUtils;
 import com.articlesystem.Utils.PageUtils;
 import com.articlesystem.entity.Article;
+import com.articlesystem.entity.Attachment;
 import com.articlesystem.entity.Msg;
 import com.articlesystem.entity.User;
 import com.articlesystem.enums.UserRole;
@@ -67,7 +68,13 @@ public class ArticleServlet extends HttpServlet {
         String articleThumbnail = request.getParameter("articleThumbnail");
         String articleCategoryId = request.getParameter("articleCategoryId");
         String userId = request.getParameter("userId");
-        String attachmentFilePath = request.getParameter("attachmentPath");
+        Integer attachmentId ;
+        if(request.getParameter("attachmentId") == "" || request.getParameter("attachmentId") == null){
+            attachmentId = -1;
+        }else{
+            attachmentId = Integer.parseInt(request.getParameter("attachmentId"));
+        }
+
 
         Article article = new Article();
         article.setArticleTitle(articleTitle);
@@ -75,7 +82,7 @@ public class ArticleServlet extends HttpServlet {
         article.setArticleThumbnail(articleThumbnail);
         article.setCategoryId(Integer.parseInt(articleCategoryId));
         article.setArticleUserId(Integer.parseInt(userId));
-        article.setAttachmentFilePath(attachmentFilePath);
+        article.setFileId(attachmentId);
 
 
         articleService.insertArticle(article);
@@ -109,6 +116,20 @@ public class ArticleServlet extends HttpServlet {
         int articleId = Integer.parseInt(request.getParameter("articleId"));
         Article article = articleService.getArticleByArticleId(articleId);
         Msg msg = Msg.success().add("article",article);
+        MyUtils.JsonResultToWrite(msg,response.getWriter());
+    }
+
+    /**
+     * 通过文章ID获取文章对象
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    public void getAttachmentsByArticleId(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        int articleId = Integer.parseInt(request.getParameter("articleId"));
+
+        List<Attachment> attachments = articleService.getAttachmentsByArticleId(articleId);
+        Msg msg = Msg.success().add("attachments",attachments);
         MyUtils.JsonResultToWrite(msg,response.getWriter());
     }
 
@@ -182,6 +203,23 @@ public class ArticleServlet extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/view/managerArticles.html").forward(request,response);
     }
 
+
+
+    /**
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     */
+    public void deleteAttachmentByAttachmentId(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
+        int articleId = Integer.parseInt(request.getParameter("AttachmentId"));
+
+        articleService.deleteAttachmentByAttachmentId(articleId);
+
+        request.getRequestDispatcher("/WEB-INF/view/managerArticles.html").forward(request,response);
+    }
+
     /**
      * 获取categoryIdByArticleId
      * @param request
@@ -210,7 +248,12 @@ public class ArticleServlet extends HttpServlet {
         String articleThumbnail = request.getParameter("articleThumbnail");
         String articleCategoryId = request.getParameter("articleCategoryId");
         String userId = request.getParameter("userId");
-        String attachmentPath = request.getParameter("attachmentPath");
+        Integer attachmentId ;
+        if(request.getParameter("attachmentId") == "" || request.getParameter("attachmentId") == null){
+            attachmentId = -1;
+        }else{
+            attachmentId = Integer.parseInt(request.getParameter("attachmentId"));
+        }
         int articleId = Integer.parseInt(request.getParameter("articleId"));
 
         Article article = new Article();
@@ -220,7 +263,9 @@ public class ArticleServlet extends HttpServlet {
         article.setCategoryId(Integer.parseInt(articleCategoryId));
         article.setArticleUserId(Integer.parseInt(userId));
         article.setArticleId(articleId);
-        article.setAttachmentFilePath(attachmentPath);
+        article.setFileId(attachmentId);
+
+
 
 
         articleService.articleUpdate(article);

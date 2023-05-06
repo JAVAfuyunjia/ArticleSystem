@@ -120,7 +120,7 @@
                     <label class="layui-form-label">上传附件 <span style="color: #FF5722; ">*</span> </label>
                     <div class="layui-input-inline">
                         <input type="file" id="attachment" aria-placeholder="选择上传的文件"/><button type="button" id="attachmentUpload">点击上传</button>
-                        <input name="attachmentPath" id="attachmentPath" style="display: none"/>
+                        <input name="attachmentId" id="attachmentId" style="display: none"/>
                     </div>
                 </div>
 
@@ -151,9 +151,9 @@
             contentType : false,
             success:function (data) {
                 // console.log(data.extend.filePath)
-                var filePath = data.extend.filePath;
-                if( filePath != null && filePath != "" && filePath != undefined) {
-                    $("#attachmentPath").val(filePath);
+                var attachmentId = data.extend.attachmentId;
+                if( attachmentId != null && attachmentId != "" && attachmentId != undefined) {
+                    $("#attachmentId").val(attachmentId);
                     layer.msg("上传成功");
                 }
 

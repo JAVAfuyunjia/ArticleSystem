@@ -2,9 +2,7 @@ package com.articlesystem.service;
 
 import com.articlesystem.Utils.PageUtils;
 import com.articlesystem.entity.Article;
-import com.articlesystem.entity.User;
-
-import java.util.ArrayList;
+import com.articlesystem.entity.Attachment;
 import java.util.List;
 
 /**
@@ -33,4 +31,11 @@ public interface ArticleService {
     List<Integer> getArticleIdsByUserId(int userId);
 
     List<Article> getTenArticleRandom();
+
+    int addAttachment(Attachment attachment);
+
+
+    List<Attachment> getAttachmentsByArticleId(int articleId);
+
+    void deleteAttachmentByAttachmentId(int AttachmentId);
 }

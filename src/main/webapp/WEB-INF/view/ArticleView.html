@@ -320,9 +320,9 @@
 
             </div>
             <div id="attachment" style="margin-top: 30px" >
-                <hr>
-               附件文件名：&nbsp <span style="color: red"></span><a style="float: right">下载附件</a>
+
             </div>
+            <hr>
         </div>
         <!--评论区域-->
         <div id="comment-area">
@@ -354,7 +354,8 @@
         let URL = window.location.href;
         let articleId = getUrlParams(URL).articleId;
         let article = getArticleById(articleId);
-        buildArticle(article);
+        let attachments = getAttachmentsByArticleId(articleId);
+        buildArticle(article,attachments);
         buildAuthor(article.articleUserId);
         // 校验登录状态，同时构建当前评论人信息。
         VerifyLoginStatus();
@@ -364,6 +365,23 @@
 
 
     });
+
+    // 通过文章ID获取所有附件
+    function getAttachmentsByArticleId(articleId){
+        var attachments;
+        $.ajax({
+            async: false,
+            url: "article?method=getAttachmentsByArticleId&articleId=" + articleId,
+            type: "post",
+            dataType: "json",
+            success: function (result) {
+
+                attachments = result.extend.attachments;
+
+            }
+        });
+        return attachments;
+    }
 
     // 通过articleId获取文章对象
     function getArticleById(articleId) {
@@ -393,40 +411,29 @@
     //
 
     // 构建文章
-    function buildArticle(article) {
+    function buildArticle(article,attachments) {
         $(".content img").attr("src", article.articleThumbnail);
         $(".content p").html(article.articleContent);
         $(".date").text(getFormatDate(article.articleCreateTime));
         $(".blog-content h2").text(article.articleTitle);
-        var attachmentPath = article.attachmentFilePath;
-        if(attachmentPath == null || attachmentPath == "" || attachmentPath == undefined){
+
+        if(attachments == null || attachments == "" || attachments == undefined){
             $("#attachment").hide();
         }else{
-            var strFileName = article.attachmentFilePath.substring(article.attachmentFilePath.lastIndexOf("\\")+1);
-            $("#attachment span").text(strFileName);
-            $("#attachment a").attr("attachmentFilePath",article.attachmentFilePath);
-            $("#attachment a").attr("href","manager/attachmentDownload?attachmentPath="+strFileName);
+            // 遍历所有附件
+            for(let i = 0;i<attachments.length;i++){
+                var strFileName = attachments[i].getAttachmentPath.substring(attachments[i].getAttachmentPath.lastIndexOf("\\")+1);
 
+                var hr = $("<hr>");
+                var span = $("<span></span>").text(strFileName);
+                var a = $("<a></a>").attr("attachmentFilePath",attachments[i].getAttachmentPath).attr("href","manager/attachmentDownload?attachmentPath="+strFileName).text("            下载附件");
+
+                var div = $("#attachment");
+                div.append(hr).append(span).append(a);
+
+            }
         }
     }
-
-    // // 点击下载附件
-    // $("#attachment a").click(function () {
-    //     var attachmentPath = $(this).attr("attachmentFilePath");
-    //     $.ajax({
-    //         async: false,
-    //         url: "manager/attachmentDownload",
-    //         type: "post",
-    //         data : {"attachmentPath":attachmentPath},
-    //         dataType: "json",
-    //         success: function (result) {
-    //
-    //
-    //
-    //         }
-    //     });
-    // });
-
     // 格式化时间
     function getFormatDate(milliseconds) {
         var dat = new Date(milliseconds);
