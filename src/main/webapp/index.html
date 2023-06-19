@@ -253,6 +253,7 @@
             <li class="layui-nav-item as-categoryId" categoryId="100000014"><a href="">国际</a></li>
 
 
+            <li class="layui-nav-item " id="addArticle" style="float: right;"><a href="manager?method=managerArticleInsert">写文章</a></li>
             <li class="layui-nav-item" style="float: right;" id="userInfo"></li>
         </ul>
     </div>
@@ -345,7 +346,6 @@
             type: "POST",
             dataType: "json",
             success: function (pageInfo) {
-                //console.log(pageInfo);
 
                 buildArticles(pageInfo.list);
 
@@ -361,7 +361,7 @@
             }
         });
 
-    //
+        //自动登录
         AutomaticLoginOrNot()
     });
 
@@ -470,6 +470,7 @@
                     var button = $("<button></button>").addClass("layui-btn").addClass("layui-btn-radius").text("登录");
                     a.append(button);
                     $("#userInfo").append(a);
+                    $("#addArticle").hide();
                 } else {
                     $("#userInfo").text("");
                     var a = $("<a></a>").attr("href", "manager?method=managerProfile");
@@ -481,11 +482,13 @@
                         src = result.extend.user.userAvatar;
                     }
 
+
                     var img = $("<img>").attr("src", src).attr("alt", "个人中心");
                     div.append(img);
                     a.append(div);
 
                     $("#userInfo").append(a);
+
                 }
             }
         });

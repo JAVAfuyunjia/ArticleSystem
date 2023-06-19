@@ -15,7 +15,7 @@
 <div class="layui-layout-admin">
     <div class="layui-header">
         <div class="layui-logo"><a style="color:#009688;">
-            付云佳文章管理后台
+            文章管理系统
         </a>
         </div>
 
@@ -45,12 +45,7 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">文章<span class="layui-nav-more"></span></a>
                     <dl class="layui-nav-child">
-                        <dd>
-                            <div id="articleInsert"><a href="manager?method=managerArticleInsert">写文章</a></div>
-                        </dd>
-                        <dd>
-                            <div><a href="manager?method=managerArticles">我的文章</a></div>
-                        </dd>
+
 
                     </dl>
                 </li>
@@ -203,8 +198,7 @@
 
         // 回显文章内容
         echoArticleInfo();
-        // 判断当前用户是否为管理员，是则生成用户管理菜单项
-        CurrentLoggedUserIsAdmin();
+
         // 获取附件列表
         attachments = getAttachmentsByArticleId()
         // 构建附件表格
@@ -212,9 +206,36 @@
             buildaTtachments(attachments);
         }
 
+        getOperationalFunctionAndbuild()
     });
 
-    // 构建附件表格
+    // 判断当前登录的用户有那些可以操作的栏
+    function getOperationalFunctionAndbuild() {
+        $.ajax({
+            url: "userServlet?method=getOperationalFunctionAndbuild",
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
+                var menus = result.extend.menus;
+
+                let i = 0;
+                for (i; i < menus.length; i++) {
+
+                    var a = $("<a></a>").attr("href", menus[i].menuUrl).text(menus[i].menuName);
+                    var divInsert = $("<div></div>");
+
+                    var dd = $("<dd></dd>");
+                    divInsert.append(a)
+                    dd.append(divInsert)
+                    $(".layui-nav-child").append(dd);
+
+                }
+
+            }
+        });
+    }
+
+        // 构建附件表格
     function buildaTtachments(attachments) {
         $("#tishi").attr("hidden","true");
         $("tbody").text("");
@@ -236,7 +257,6 @@
 
     }
 
-
     $(document).on("click",".deleteBtn",function () {
         var attachmentId = $(this).attr("attachmentId");
         layer.confirm("请问是否确定删除，删除后不可恢复？", {
@@ -247,8 +267,6 @@
             layer.msg("已撤销");
         });
     });
-
-
 
     // 判断当前用户是否为管理员，是则生成用户管理菜单项
     function CurrentLoggedUserIsAdmin() {

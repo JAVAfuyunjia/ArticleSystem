@@ -534,6 +534,7 @@ public class ArticleDao {
     }
 
     public void deleteAttachmentByAttachmentId(int AttachmentId) {
+        // 删除附加和和文章的关系
         Connection connection = null;
         try {
             connection = JDBCUtils.getConnection();
@@ -547,7 +548,7 @@ public class ArticleDao {
                 JDBCUtils.releaseConnection(connection);
             }
         }
-
+        // 删除附件
         try {
             connection = JDBCUtils.getConnection();
             String sql = "DELETE FROM `as_attachment` WHERE attachment_id = ?;";

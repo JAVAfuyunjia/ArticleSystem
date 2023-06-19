@@ -12,30 +12,30 @@ import java.util.List;
  */
 public interface ArticleService {
 
-    void insertArticle(Article article);
+  void insertArticle(Article article);
 
-    PageUtils<Article> getArticlePageInfo(String keyword, int currentPage, int pageSize);
+  PageUtils<Article> getArticlePageInfo(String keyword, int currentPage, int pageSize);
 
-    PageUtils<Article> getArticlePageInfoByCategoryId(int categoryId, int currentPage, int pageSize);
+  PageUtils<Article> getArticlePageInfoByCategoryId(int categoryId, int currentPage, int pageSize);
 
-    Article getArticleByArticleId(int articleId);
+  Article getArticleByArticleId(int articleId);
 
-    PageUtils<Article> getArticlePageInfoByUserId(int currentPage, int pageSize, Integer userId);
+  PageUtils<Article> getArticlePageInfoByUserId(int currentPage, int pageSize, Integer userId);
 
-    void deleteArticleByArticleId(int articleId);
+  void deleteArticleByArticleId(int articleId);
 
-    int getCategoryIdByArticleId(int articleId);
+  int getCategoryIdByArticleId(int articleId);
 
-    void articleUpdate(Article article);
+  void articleUpdate(Article article);
 
-    List<Integer> getArticleIdsByUserId(int userId);
+  List<Integer> getArticleIdsByUserId(int userId);
 
-    List<Article> getTenArticleRandom();
+  List<Article> getTenArticleRandom();
 
-    int addAttachment(Attachment attachment);
+  int addAttachment(Attachment attachment);
 
 
-    List<Attachment> getAttachmentsByArticleId(int articleId);
+  List<Attachment> getAttachmentsByArticleId(int articleId);
 
-    void deleteAttachmentByAttachmentId(int AttachmentId);
+  void deleteAttachmentByAttachmentId(int AttachmentId);
 }

@@ -46,7 +46,7 @@
     <!--头部导航栏-->
     <div class="layui-header">
         <div class="layui-logo"><a style="color:#009688;">
-            付云佳文章管理后台
+            文章管理系统
         </a>
         </div>
 
@@ -74,12 +74,7 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">文章<span class="layui-nav-more"></span></a>
                     <dl class="layui-nav-child">
-                        <dd>
-                            <div id="articleInsert"><a href="manager?method=managerArticleInsert">写文章</a></div>
-                        </dd>
-                        <dd>
-                            <div><a href="manager?method=managerArticles">我的文章</a></div>
-                        </dd>
+
                     </dl>
                 </li>
 
@@ -137,9 +132,9 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">选择角色 <span style="color: #FF5722; ">*</span> </label>
 
-                        <select name="role" style="display: block" id="roleSelect">
-                            <option value="user">user</option>
-                            <option value="admin">admin</option>
+                        <select name="role" style="display: block ;width: 100px" id="roleSelect">
+                            <option value="2">普通用户</option>
+                            <option value="1">管理员</option>
                         </select>
                 </div>
 
@@ -171,18 +166,44 @@
                 $("#ImgDasplay").attr('src', result.extend.user.userAvatar);
             }
         });
-        // 判断当前用户是否为管理员，是则生成用户管理菜单项
-        CurrentLoggedUserIsAdmin();
+
 
         // 构建用户表格
         var users = getAllUsers();
         buildUserList(users)
-
+        getOperationalFunctionAndbuild()
 
     });
 
+     // 判断当前登录的用户有那些可以操作的栏
+    function getOperationalFunctionAndbuild() {
+        $.ajax({
+            url: "userServlet?method=getOperationalFunctionAndbuild",
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
+                var menus = result.extend.menus;
 
-    // 修改用户角色
+                let i = 0;
+                for (i; i < menus.length; i++) {
+
+                    var a = $("<a></a>").attr("href", menus[i].menuUrl).text(menus[i].menuName);
+                    var divInsert = $("<div></div>");
+
+                    var dd = $("<dd></dd>");
+                    divInsert.append(a)
+                    dd.append(divInsert)
+                    $(".layui-nav-child").append(dd);
+
+                }
+
+            }
+        });
+    }
+
+
+
+        // 修改用户角色
     $(document).on("click",".editBtn",function () {
         $(".popur").show();
         var userId = $(this).attr("userId")
@@ -203,24 +224,6 @@
 
     });
 
-    // 判断当前用户是否为管理员，是则生成用户管理菜单项
-    function CurrentLoggedUserIsAdmin() {
-        $.ajax({
-            url: "userServlet?method=getUser",
-            type: "POST",
-            dataType: "json",
-            success: function (result) {
-                if (result.extend.user != "no") {
-                    if (result.extend.user.userRole == "admin") {
-                        var a = $("<a></a>").attr("href", "userManage").text("用户管理");
-                        var div = $("<div></div>").append(a);
-                        var d = $("<dd></dd>").append(div);
-                        $(".layui-nav-child").append(d);
-                    }
-                }
-            }
-        });
-    }
 
     // 构建用户表格
     function getAllUsers() {

@@ -42,7 +42,7 @@ public class ArticleServiceImpl implements ArticleService {
         // 添加文章与分类的关系
         articleDao.insertArticleRefCategory(article.getCategoryId(),articleId);
         // 添加文章与附件的关系
-        if(article.getFileId() != -1){
+        if(article.getFileId() != -1 && article.getFileId() != null){
             articleDao.insertArticleRefAttachment(article.getFileId(),articleId);
         }
     }

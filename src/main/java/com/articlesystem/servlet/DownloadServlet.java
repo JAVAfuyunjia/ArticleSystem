@@ -17,36 +17,39 @@ import java.net.URLEncoder;
 
 @WebServlet(urlPatterns = "/manager/attachmentDownload")
 public class DownloadServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request,response);
-	}
+  private static final long serialVersionUID = 1L;
 
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("application/x-msdownload");
+  @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+    doPost(request, response);
+  }
 
-		String fileNameNow = request.getParameter("attachmentPath");
-		response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileNameNow, "UTF-8"));
+  @Override
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+    response.setContentType("application/x-msdownload");
 
-		String attachemntPath = "D:\\files\\"+fileNameNow;
+    String fileNameNow = request.getParameter("attachmentPath");
+    response.setHeader("Content-Disposition",
+        "attachment;filename=" + URLEncoder.encode(fileNameNow, "UTF-8"));
 
-		OutputStream out = response.getOutputStream();
+    String attachemntPath = "D:\\files\\" + fileNameNow;
 
-		//D:\files\1671951553784202211590072付云佳-第十四周实验.doc
-		InputStream in = new FileInputStream(attachemntPath);
+    OutputStream out = response.getOutputStream();
 
-		byte [] buffer = new byte[1024];
-		int len = 0;
+    //D:\files\1671951553784202211590072付云佳-第十四周实验.doc
+    InputStream in = new FileInputStream(attachemntPath);
 
-		while((len = in.read(buffer)) != -1){
-			out.write(buffer, 0, len);
-		}
+    byte[] buffer = new byte[1024];
+    int len = 0;
 
-		in.close();
+    while ((len = in.read(buffer)) != -1) {
+      out.write(buffer, 0, len);
+    }
+    in.close();
 
-	}
+  }
 
 }

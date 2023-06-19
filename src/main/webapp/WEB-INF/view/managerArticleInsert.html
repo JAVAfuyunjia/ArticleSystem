@@ -17,7 +17,7 @@
 <div class="layui-layout-admin">
     <div class="layui-header">
         <div class="layui-logo"><a style="color:#009688;">
-            付云佳文章管理后台
+            文章管理系统
         </a>
         </div>
 
@@ -40,28 +40,28 @@
             <span class="layui-nav-bar"></span>
         </ul>
     </div>
-    <!--侧边导航栏-->
-    <div class="layui-side layui-bg-black">
-        <div class="layui-side-scroll">
-            <ul class="layui-nav layui-nav-tree" style="background-color: #282828;">
-                <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="javascript:;">文章<span class="layui-nav-more"></span></a>
-                    <dl class="layui-nav-child">
-                        <dd>
-                            <div id="articleInsert"><a href="manager?method=managerArticleInsert">写文章</a></div>
-                        </dd>
-                        <dd>
-                            <div><a href="manager?method=managerArticles">我的文章</a></div>
-                        </dd>
-                    </dl>
-                </li>
+<!--    &lt;!&ndash;侧边导航栏&ndash;&gt;-->
+<!--    <div class="layui-side layui-bg-black">-->
+<!--        <div class="layui-side-scroll">-->
+<!--            <ul class="layui-nav layui-nav-tree" style="background-color: #282828;">-->
+<!--                <li class="layui-nav-item layui-nav-itemed">-->
+<!--                    <a class="" href="javascript:;">文章<span class="layui-nav-more"></span></a>-->
+<!--                    <dl class="layui-nav-child">-->
+<!--                        <dd>-->
+<!--                            <div id="articleInsert"><a href="manager?method=managerArticleInsert">写文章</a></div>-->
+<!--                        </dd>-->
+<!--                        <dd>-->
+<!--                            <div><a href="manager?method=managerArticles">我的文章</a></div>-->
+<!--                        </dd>-->
+<!--                    </dl>-->
+<!--                </li>-->
 
-            </ul>
-        </div>
+<!--            </ul>-->
+<!--        </div>-->
 
-    </div>
-    //内容主体
-    <div class="layui-body">
+<!--    </div>-->
+<!--    内容主体-->
+    <div class="layui-body" style="left: -10px;">
         <div id="layui-container" style="padding: 15px;">
             <blockquote class="layui-elem-quote">
 						<span class="layui-breadcrumb" lay-separator="/" style="visibility: visible;">
@@ -219,8 +219,6 @@
             }
         });
 
-        // 判断当前用户是否为管理员，是则生成用户管理菜单项
-        CurrentLoggedUserIsAdmin();
     });
 
     // 判断当前用户是否为管理员，是则生成用户管理菜单项

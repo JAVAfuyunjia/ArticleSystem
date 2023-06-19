@@ -1,5 +1,6 @@
 package com.articlesystem.service;
 
+import com.articlesystem.entity.Menu;
 import com.articlesystem.entity.User;
 
 import java.util.List;
@@ -11,20 +12,24 @@ import java.util.List;
  */
 public interface UserService {
 
-    boolean insert(User user);
+  boolean insert(User user);
 
-    User getUserByUserName(String username);
+  User getUserByUserName(String username);
 
-    User getUserByUserId(int userId);
+  User getUserByUserId(int userId);
 
-    boolean update(User user);
+  boolean update(User user);
 
 
-    boolean updateNoNewPassword(User user);
+  boolean updateNoNewPassword(User user);
 
-    List<User> getUsers();
+  List<User> getUsers();
 
-    void deleteUserByUserId(int userId);
+  void deleteUserByUserId(int userId);
 
-    void updateRole(int userId, String userRole);
+  void updateRole(int userId, String userRole);
+
+  List<Menu> getMenuByUserId(int userId);
+
+  void updateRoleId(int userId, String userRole);
 }

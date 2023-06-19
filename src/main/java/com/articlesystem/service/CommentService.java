@@ -10,11 +10,12 @@ import java.util.List;
  * @往之不谏，来者可追。
  */
 public interface CommentService {
-    void commentInsert(Comment comment);
 
-    List<Comment> getCommentListByArticleId(int articleId);
+  void commentInsert(Comment comment);
 
-    void deleteCommentByCommentId(int commentId);
+  List<Comment> getCommentListByArticleId(int articleId);
 
-    void deleteCommentByUserName(String userName);
+  void deleteCommentByCommentId(int commentId);
+
+  void deleteCommentByUserName(String userName);
 }

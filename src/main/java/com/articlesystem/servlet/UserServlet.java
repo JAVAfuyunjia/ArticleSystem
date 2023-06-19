@@ -1,6 +1,7 @@
 package com.articlesystem.servlet;
 
 import com.articlesystem.Utils.MyUtils;
+import com.articlesystem.entity.Menu;
 import com.articlesystem.entity.Msg;
 import com.articlesystem.entity.User;
 import com.articlesystem.service.UserService;
@@ -228,6 +229,25 @@ public class UserServlet extends HttpServlet {
     }
 
 
+    public void getOperationalFunctionAndbuild(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        int userId;
+        Msg msg ;
+        List<Menu> menus;
+        try {
+            userId = ((User) request.getSession().getAttribute("user")).getUserId();
+
+            menus = userService.getMenuByUserId(userId);
+            msg = Msg.success().add("menus", menus);
+
+        } catch (NullPointerException e) {
+            msg = Msg.success().add("menus", "no");
+        }
+        // 返回数据给前端。
+        MyUtils.JsonResultToWrite(msg, response.getWriter());
+    }
+
+
+
     /**
      * 通过Id获取user用户信息
      * @param request
@@ -307,9 +327,10 @@ public class UserServlet extends HttpServlet {
         int userId = Integer.parseInt(request.getParameter("userId"));
         String userRole = request.getParameter("role");
 
-        userService.updateRole(userId,userRole);
+        String userRoleName = userRole.equals("1") ? "管理员":"普通用户";
+        userService.updateRoleId(userId,userRole);
+        userService.updateRole(userId,userRoleName);
         request.getRequestDispatcher("/WEB-INF/view/userManage.html").forward(request,response);
     }
-
 }
 
