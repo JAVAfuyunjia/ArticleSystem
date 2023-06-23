@@ -11,7 +11,7 @@
  Target Server Version : 50553
  File Encoding         : 65001
 
- Date: 06/05/2023 20:42:43
+ Date: 23/06/2023 13:15:36
 */
 
 SET NAMES utf8mb4;
@@ -33,7 +33,7 @@ CREATE TABLE `as_article`  (
   `article_attachment_id` int(11) NULL DEFAULT NULL COMMENT '附件ID',
   PRIMARY KEY (`article_id`) USING BTREE,
   INDEX `article_is_comment`(`article_is_comment`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 751 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 10764 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of as_article
@@ -45,7 +45,7 @@ INSERT INTO `as_article` VALUES (596, 7, '网传恒大汽车员工今日起停�
 INSERT INTO `as_article` VALUES (597, 7, '什么是大国智慧？看看瓦良格航母回国后，我们是怎么对待土耳其的', '<p data-track=\"1\" style=\"text-align: justify;\">2000年6月，我国购买的瓦良格号航母离开黑海造船厂准备回国，却意外地遭到土耳其的刁难。他们声称瓦良格号体型过大且没有动力，在通过博斯普鲁斯海峡时容易阻塞航道云云。两国为此展开了长达18个月的谈判，直到满足了一系列的条件之后土耳其才放行。时至今日，许多网友回忆这段往事仍然气愤填膺，希望国家能好好教训一下这个忘恩负义的家伙。然而，事实上两国关系经过这件事情之后，似乎更加密切了，仅从经贸往来上就可以看出来。</p><div class=\"pgc-img\" style=\"text-align: justify;\"><img src=\"https://p3-sign.toutiaoimg.com/tos-cn-i-qvj2lq49k0/c48a555f3a4b437389e5e61ca9948b86~noop.image?_iz=58558&amp;from=article.pc_detail&amp;x-expires=1670482175&amp;x-signature=InoR3sSBn0rYcvT13mo2I%2BPoC%2FU%3D\" img_width=\"1000\" img_height=\"672\" image_type=\"1\" mime_type=\"image/jpeg\" web_uri=\"tos-cn-i-qvj2lq49k0/c48a555f3a4b437389e5e61ca9948b86\" class=\"syl-page-img\"><p class=\"pgc-img-caption\"></p></div><p data-track=\"4\" style=\"text-align: justify;\">【从这个图上看，所谓的阻塞航道完全是无稽之谈】</p><p data-track=\"5\" style=\"text-align: justify;\">中土两国于1971年8月建交，两个月后，中国就派出一个代表团赴土耳其，就开展双边贸易一事进行磋商。按照伟人的划分，土耳其亦属于第三世界国家，和中国是一对“穷哥们儿”，理应互相帮助。</p><p data-track=\"6\" style=\"text-align: justify;\">土耳其突然拥有了一个如此巨大的贸易伙伴，当然是喜出望外，第一年两国的贸易总额就达到5000万美元。而这种贸易，我们很多时候是带着援助性质的。如我国当时棉花产量早就稳居世界第二，但仍坚持从土耳其进口棉花，纯粹是给他变相输血。</p><div class=\"pgc-img\" style=\"text-align: justify;\"><img src=\"https://p3-sign.toutiaoimg.com/tos-cn-i-qvj2lq49k0/59c257ca4f8c41fd93678817f1704ce2~noop.image?_iz=58558&amp;from=article.pc_detail&amp;x-expires=1670482175&amp;x-signature=9qMTYK%2BBWwPY%2BqAf1vmwvP6W1Jo%3D\" img_width=\"1200\" img_height=\"800\" image_type=\"1\" mime_type=\"image/png\" web_uri=\"tos-cn-i-qvj2lq49k0/59c257ca4f8c41fd93678817f1704ce2\" class=\"syl-page-img\"><p class=\"pgc-img-caption\"></p></div><p data-track=\"9\" style=\"text-align: justify;\">这种变相输血一直持续了29年，直到1998年亚洲金融危机才暂时停止。但土耳其却不管那么多，立刻和我们翻脸了。当瓦良格号航母想通过博斯普鲁斯海峡回国时，就受到了土耳其的百般刁难。</p><p data-track=\"10\" style=\"text-align: justify;\">他们以瓦良格号航母体型庞大且没有动力，容易阻塞航道为由，不让瓦良格号从此经过，瓦良格号因此无法驶出黑海。双方于是进行了长达18个月的艰难谈判。</p><p data-track=\"11\" style=\"text-align: justify;\">今天网友们都说当年瓦良格号航母过境时，土耳其要收我们10亿美元过路费，这个说法其实不准确。而且这也只是土耳其提出的“二十一条”中的一条。当时土耳其提出的要求是中国为这次航母过境开具两年期10亿美元的保函，而不是直接交10亿美元的过路费。</p><div class=\"pgc-img\" style=\"text-align: justify;\"><img src=\"https://p3-sign.toutiaoimg.com/tos-cn-i-qvj2lq49k0/b35482b4fc8e43fca3b324661aa234e7~noop.image?_iz=58558&amp;from=article.pc_detail&amp;x-expires=1670482175&amp;x-signature=vza8ZDuHbRSP4XRJLupbkN91Qvc%3D\" img_width=\"1088\" img_height=\"726\" image_type=\"1\" mime_type=\"image/jpeg\" web_uri=\"tos-cn-i-qvj2lq49k0/b35482b4fc8e43fca3b324661aa234e7\" class=\"syl-page-img\"><p class=\"pgc-img-caption\"></p></div><p data-track=\"14\" style=\"text-align: justify;\">【土耳其仿制的我国远程火箭炮】</p><p data-track=\"15\" style=\"text-align: justify;\">只是这个保函不能由中国的银行开具，只能由土耳其的银行开具，但中方必须存10亿美元到土耳其的银行中。虽然两年到期后，这10亿美元会如数退回，但由此发生的各项费用将多达3300万美元。我国买瓦良格号才花了2000万美元，现在手续费就要交3300万美元，而且10亿美元的外汇要白白被人占用两年，我国当然是不同意。</p><p data-track=\"16\" style=\"text-align: justify;\">除此之外，土耳其还提出了将土耳其列为中国公民的旅游目的地，并保证每年至少200万人次的游客、出口卫士-1型火箭炮技术和B611战术导弹技术、雇佣16艘土籍拖船等一系列条件。</p><div class=\"pgc-img\" style=\"text-align: justify;\"><img src=\"https://p3-sign.toutiaoimg.com/tos-cn-i-qvj2lq49k0/fa63b1f15123464ea16180d3999bda5e~noop.image?_iz=58558&amp;from=article.pc_detail&amp;x-expires=1670482175&amp;x-signature=NRkZHDBpF4MRKOy9%2BtJpVLQ5Wbg%3D\" img_width=\"1280\" img_height=\"976\" image_type=\"1\" mime_type=\"image/jpeg\" web_uri=\"tos-cn-i-qvj2lq49k0/fa63b1f15123464ea16180d3999bda5e\" class=\"syl-page-img\"><p class=\"pgc-img-caption\"></p></div><p data-track=\"19\" style=\"text-align: justify;\">在国人眼里，这简直是趁火打劫。但为了圆我们的航母梦，有些条件我们只能捏着鼻子认了下来，有些则在其他国家的帮助下予以免除。最终双方终于达成一致，瓦良格号又开启了回国之路，前后历时123天，航程15200公里，于2002年3月回到祖国的怀抱。如果算上被土耳其刁难的时间，整个过程共历时639天。</p><p data-track=\"20\" style=\"text-align: justify;\">有人以为经过这件事情之后，两国的关系会降到冰点，毕竟趁火打劫、坐地起价这是小人的行为。但事实上，两国的关系非但没有降温，反而有越来越密切的迹象，这从双边贸易的数字上就可以看得出来。</p><p data-track=\"21\" style=\"text-align: justify;\">2000年，两国的贸易总额仅有14亿美元，到2021年两国双边贸易额为633亿美元，短短20年间增长了45倍之多。我国也从土耳其第十四大贸易伙伴一跃成为第二大贸易伙伴。此外，我国还在运输、能源、轻工业等领域向土耳其提供低息贷款，帮助其国内经济发展。</p><div class=\"pgc-img\" style=\"text-align: justify;\"><img src=\"https://p3-sign.toutiaoimg.com/tos-cn-i-qvj2lq49k0/d1a7fbca4729452cb17ea7ff436a2b1e~noop.image?_iz=58558&amp;from=article.pc_detail&amp;x-expires=1670482175&amp;x-signature=VRl5ebFe83DElPDjhgl4SkWqHPE%3D\" img_width=\"1024\" img_height=\"718\" image_type=\"1\" mime_type=\"image/jpeg\" web_uri=\"tos-cn-i-qvj2lq49k0/d1a7fbca4729452cb17ea7ff436a2b1e\" class=\"syl-page-img\"><p class=\"pgc-img-caption\"></p></div><p data-track=\"24\" style=\"text-align: justify;\">【土耳其的地缘位置很重要】</p><p data-track=\"25\" style=\"text-align: justify;\">为什么会出现这种结果？这不是以德报怨吗？事实虽是如此，但国与国的关系毕竟不是那么简单的，要考虑的因素很多，瓦良格号事件给我们提了个醒，那就是土耳其的地缘位置很重要，我们对土耳其的影响力很有限。</p><p data-track=\"26\" style=\"text-align: justify;\">土耳其是亚欧大陆的重要枢纽。陆路向西可进入欧洲，向北可进至东欧和中亚五国，海上战略位置更是无可替代。这样的地缘优势可以作为助力，而不宜反目成仇。</p><p data-track=\"27\" style=\"text-align: justify;\">土耳其敢在航母过境中刁难我国，说明我们对他们的影响力有限，在国际上话语权不够，这恰恰给我们提了个醒。我们只有更多地参与他们的经济生活，让其国内经济对我们产生依赖性，他才会重视我们的利益，才会想办法维持这种环境而不是去破坏这种环境。</p><p data-track=\"28\" style=\"text-align: justify;\">在国际交往中，大国要有大国的使命和担当，要有应对各种挑战的勇气和能力，普通人可以讨厌他，但国家不能意气用事，一味地喊打喊杀解决不了问题。</p>', 1, '2022-12-01 14:50:37', '2000年6月，我国购买的瓦良格号航母离开黑海造船厂准备回国，却意外地遭到土耳其的刁难。他们声称瓦良格号体型过大且没有动力，在通过博斯普鲁斯海峡时容易阻塞航道云云。两国为此展开了长达18个月的谈判，直到满足了一系列的条件之后土耳其才放行。时至今日，许多网友回忆这段往事仍然气愤填膺，希望国家能好好教训', 'http://localhost:8080/ArticleSystem/ArticleSystemImg/166987743411043266.png', NULL);
 INSERT INTO `as_article` VALUES (600, 7, '体检发现血脂高，就要吃药吗？提醒：日常坚持7个方法降低血脂', '<p data-track=\"1\" style=\"text-align: justify;\"><span>很多粉丝说：“我体检发现血脂高了，医生开了他汀，一定要吃吗？”。也有人问：“日常生活饮食怎么吃，对降低血脂有帮助？”今天就来谈一谈。</span></p><div class=\"pgc-img\" style=\"text-align: justify;\"><img src=\"https://p3-sign.toutiaoimg.com/tos-cn-i-qvj2lq49k0/e9cd6d1c5c9840b3b2d18879707992db~noop.image?_iz=58558&amp;from=article.pc_detail&amp;x-expires=1670482565&amp;x-signature=TNXxk%2FXuNx7XRzApUQlRmF6WLsI%3D\" img_width=\"750\" img_height=\"500\" image_type=\"1\" mime_type=\"image/jpeg\" web_uri=\"tos-cn-i-qvj2lq49k0/e9cd6d1c5c9840b3b2d18879707992db\" class=\"syl-page-img\"><p class=\"pgc-img-caption\"></p></div><h1 class=\"pgc-h-arrow-right\" data-track=\"3\" style=\"text-align: justify;\">大家首先来了解，什么是血脂？</h1><p data-track=\"3\" style=\"text-align: justify;\"><span>血脂</span>是一种脂肪物质，<span>一部分来源于身体自我合成，另外一部分来源于摄入富含脂肪的食物。</span>血脂，尤其是胆固醇是人体必需物质，它帮助我们消化食物，产生激素，并参与构成细胞膜，维持正常生理功能，但是血脂需维持在正常范围内。</p><p data-track=\"70\" style=\"text-align: justify;\">当我们长期饮食不合理，久坐，不运动，持续的慢性压力和作息不规律等因素就会打破胆固醇的平衡，就会出现血脂升高，隐匿的造成动脉粥样硬化，最终诱发心脑血管疾病。</p><p data-track=\"71\" style=\"text-align: justify;\">我们抽血查血脂有4个指标：低密度脂蛋白、甘油三酯、总胆固醇和高密度脂蛋白，前三者应该低一点好，最后一个高一点好。</p><div class=\"pgc-img\" style=\"text-align: justify;\"><img src=\"https://p9-sign.toutiaoimg.com/tos-cn-i-qvj2lq49k0/fc65c6ead0e44e21964bfdc890bf992d~noop.image?_iz=58558&amp;from=article.pc_detail&amp;x-expires=1670482565&amp;x-signature=EkiGVBdaXFUf%2FcGcXlQXDRI7lMw%3D\" img_width=\"1000\" img_height=\"864\" image_type=\"1\" mime_type=\"image/jpeg\" web_uri=\"tos-cn-i-qvj2lq49k0/fc65c6ead0e44e21964bfdc890bf992d\" class=\"syl-page-img\"><p class=\"pgc-img-caption\"></p></div><h1 class=\"pgc-h-arrow-right\" data-track=\"69\" style=\"text-align: justify;\">发现高血脂，就要吃他汀药物吗？</h1><p data-track=\"12\" style=\"text-align: justify;\">他汀类药物是一种通过限制参与人体胆固醇生成的酶来降低胆固醇的药物，主要用于降低低密度脂蛋白。与任何药物一样，他汀类药物也确实有一些副作用。最常见的症状是肌肉酸痛、疼痛，大约 5%服用他汀类药物的人会出现 。其他不常见的副作用包括血糖升高、肝功能异常和精神异常。甚至，他汀类药物也会降低体内辅酶 Q10 的水平，而辅酶 Q10 与许多神经和肌肉活动有关 。</p><p data-track=\"14\" style=\"text-align: justify;\">他汀类药物可以改善一部分人的血脂水平，并可能降低心脑血管病的发生风险。例如，医生可能会出于血管病家族史，或者高危人群等原因向你开具他汀类药物。</p><p data-track=\"15\" style=\"text-align: justify;\">然而，对于我们大多数人来说，他汀类药物并不能解决最常见的根本原因，那就是不健康的生活饮食方式。实际上，通过改善饮食、坚持锻炼和舒缓压力可以将心脑血管疾病的发生风险降低多达 50% 。</p><p data-track=\"16\" style=\"text-align: justify;\"><span>我的意思是：并不是毫无理由地拒绝服用他汀类药物，而是对于高血脂的初发期的人群来说，可以先尝试改善生活饮食方式的方法去降低血脂水平。</span></p><div class=\"pgc-img\" style=\"text-align: justify;\"><img src=\"https://p3-sign.toutiaoimg.com/tos-cn-i-qvj2lq49k0/16887ff9788c438ca7591e688948bd60~noop.image?_iz=58558&amp;from=article.pc_detail&amp;x-expires=1670482565&amp;x-signature=57Se8K0QI4QSZ8yNZjvtaUfmhfg%3D\" img_width=\"850\" img_height=\"564\" image_type=\"1\" mime_type=\"image/png\" web_uri=\"tos-cn-i-qvj2lq49k0/16887ff9788c438ca7591e688948bd60\" class=\"syl-page-img\"><p class=\"pgc-img-caption\"></p></div><h1 class=\"pgc-h-arrow-right\" style=\"text-align: justify;\">重点来了，日常生活饮食中，坚持“7个方法”有助于降低血脂</h1><p data-track=\"21\" style=\"text-align: justify;\"><span>第一、多吃鱼</span></p><p data-track=\"22\" style=\"text-align: justify;\">鱼是白肉，长期吃鱼，不会导致肥胖，鱼主要分为淡水鱼和深海鱼。从健康角度来看，常吃深海鱼更好，它富含EPA和DHA，属于不饱和脂肪酸（健康的脂肪），具有抗炎特性，已在许多大型研究中显示，可显著降低甘油三酯 的水平。如果不经常吃鱼，也可以选择高纯度的鱼油。</p><p data-track=\"25\" style=\"text-align: justify;\"><span>第二、多摄入膳食纤维</span></p><p data-track=\"26\" style=\"text-align: justify;\">膳食纤维可与胆固醇相结合，并帮助排泄，从而有效降低总胆固醇和低密度脂蛋白的水平。我们每天至少需要摄入 30克膳食纤维，富含纤维的食物包括蔬菜、水果、全谷物、豆类等。</p><p data-track=\"29\" style=\"text-align: justify;\"><span>第三、控糖</span></p><p data-track=\"31\" style=\"text-align: justify;\">糖在我们饮食中无处不在，包括糖果，饮料，蛋糕，饼干，糖醋里脊，红糖糍粑等等，甚至精制的米饭、面条、馒头。</p><p data-track=\"32\" style=\"text-align: justify;\">糖是一种能量物质，并不是人体必需物质，所以日常饮食中要控制糖的摄入量，因为糖会转化成脂肪，造成肥胖，升高血脂。</p><p data-track=\"35\" style=\"text-align: justify;\"><span>第四、摄入有益健康的脂肪</span></p><p data-track=\"36\" style=\"text-align: justify;\">饮食中应摄入富含有益健康脂肪的低碳水化合物，从而有助于降低甘油三酯，同时增加高密度脂蛋白的水平。</p><p data-track=\"37\" style=\"text-align: justify;\">大部分健康的脂肪来自单不饱和脂肪和多不饱和脂肪，包括深海鱼、坚果、牛油果、橄榄油等，这些脂肪不仅有助于提高饱腹感，并有助于平衡血糖，从而减少你吃含糖零食的量。</p><p data-track=\"39\" style=\"text-align: justify;\">不一定要关注食物热量是多少，而是要专注于吃健康的食物（成分单一，少加工）。</p><p data-track=\"41\" style=\"text-align: justify;\"><span>第五、坚持运动</span></p><p data-track=\"42\" style=\"text-align: justify;\">研究表明，体育锻炼是提高高密度脂蛋白（HDL）较好的方法，从而降低心脑血管病的发生风险。</p><p data-track=\"43\" style=\"text-align: justify;\">对于中老年朋友来说，运动不一定非要强度很大，持久的步行是一种非常有效的减肥和改善血脂的方法。</p><p data-track=\"44\" style=\"text-align: justify;\">每天给自己设定一个运动的小目标，鼓励自己去实现，锻炼完了多喝水，也可以吃坚果，让身体更加健康。</p><p data-track=\"46\" style=\"text-align: justify;\"><span>第六、添加高镁食物</span></p><p data-track=\"47\" style=\"text-align: justify;\">一半以上中国人群镁摄入不足，这种强大的矿物质对身体有很多好处。</p><p data-track=\"48\" style=\"text-align: justify;\">具体来说，镁可以降低C反应蛋白的水平，这是一种在身体有炎症时会升高的蛋白质。研究表明，高血脂、心脑血管疾病与炎症高度相关，所以降低C-反应蛋白对健康很有益处。</p><p data-track=\"50\" style=\"text-align: justify;\">富含镁的食物包括，深绿叶蔬菜、杏仁、芝麻、葵花籽、西兰花、南瓜子、黑豆、牛油果、香蕉等。</p><p data-track=\"52\" style=\"text-align: justify;\"><span>第七、多摄入维生素K2</span></p><p data-track=\"53\" style=\"text-align: justify;\">维生素K2有助于清除动脉中积聚的钙，虽然这种维生素可能不会直接降低胆固醇，但钙的积累是动脉斑块形成的关键组成部分。</p><p data-track=\"54\" style=\"text-align: justify;\">维生素K2的良好来源包括<span>全脂牛奶、蛋黄、鸡肉、牛肉、动物肝脏</span>。与谷物喂养的动物相比，草饲动物含有更高水平的维生素K2。</p><p data-track=\"55\" style=\"text-align: justify;\">你可能会注意到，维生素K2的最佳来源还含有饱和脂肪，担心会升高血脂。事实上，虽然饱和脂肪不应该是你饮食中脂肪的主要来源，但不要因为饱和脂肪含量而害怕摄入富含维生素 K2 的食物。最重要的是，确保维生素 K2 来源是高质量、草食和牧场饲养的动物来源。</p><p data-track=\"57\" style=\"text-align: justify;\">当然，一如既往，植物食物仍然应该是我们膳食的主要部分。</p><div class=\"pgc-img\" style=\"text-align: justify;\"><img src=\"https://p3-sign.toutiaoimg.com/tos-cn-i-qvj2lq49k0/298ee2e26aa04c0bbccb775c91bcf22d~noop.image?_iz=58558&amp;from=article.pc_detail&amp;x-expires=1670482565&amp;x-signature=vE1ertUI0%2BesSDZzjPy5FoyPwKs%3D\" img_width=\"1080\" img_height=\"720\" image_type=\"1\" mime_type=\"image/jpeg\" web_uri=\"tos-cn-i-qvj2lq49k0/298ee2e26aa04c0bbccb775c91bcf22d\" class=\"syl-page-img\"></div>', 1, '2022-12-01 14:57:17', '很多粉丝说：“我体检发现血脂高了，医生开了他汀，一定要吃吗？”。也有人问：“日常生活饮食怎么吃，对降低血脂有帮助？”今天就来谈一谈。大家首先来了解，什么是血脂？血脂是一种脂肪物质，一部分来源于身体自我合成，另外一部分来源于摄入富含脂肪的食物。血脂，尤其是胆固醇是人体必需物质，它帮助我们消化食物，产生', 'http://localhost:8080/ArticleSystem/ArticleSystemImg/166987783395974441.jpg', NULL);
 INSERT INTO `as_article` VALUES (594, 7, '为什么科比在世界大赛穿10号，而在NBA穿8号和24号？', '<div class=\"_3ygOc lg-fl \"><p>科比的篮球生涯穿多个号码，有10号、8号、24号、33号，每个号码都有故事，下面我们就讲述一下这些号码有着怎样的故事。</p><p></p></div><div class=\"_3ygOc lg-fl \"><p></p><h3>高中时期：33号球衣</h3><p></p></div><p></p><div class=\"_213jB lg-fl \"></div><p></p><div class=\"_3ygOc lg-fl \" style=\"text-align: start;\"><p></p><p>科比高中时期穿的球衣号码是33号，就读于美国费城劳尔梅里恩中学。因为篮球天赋太过出众，科比一进入校队就成为球队的明星球员，并且打出了名声。</p><p><img src=\"http://localhost:8080/ArticleSystem/ArticleSystemImg/166987629356322893.jpg\" alt=\"filename\" width=\"100%\"><br></p><div class=\"_3ygOc lg-fl \"><p>高四那年，科比率队拿下50年来第一个州冠军，并且当选全美最佳高中生。整个高中生涯，科比率队取得77胜13负的惊人战绩，总共砍下2359分，成功打破了张伯伦保持的得分记录。</p><p></p></div><div class=\"_3ygOc lg-fl \"><p></p><p>高中毕业之后，科比跳过大学进入NBA，并在NBA打出名堂。因为科比，劳尔梅里恩中学闻名于世，2002年，劳尔梅里恩中学退役了科比的33号球衣。</p><p><br></p><p><img src=\"http://localhost:8080/ArticleSystem/ArticleSystemImg/166987635062789829.jpg\" alt=\"filename\" width=\"100%\"><br></p><p><span>因为科比太有名了，以致于他在中学时期所穿的33号球衣被小偷盯上。2017年2月，科比退役的33号裱框球衣失窃，最终这件球衣被一名中国的收藏家买走。但是这名中国的收藏家听说科比的高中33号球衣失窃了，于是就联系了劳尔梅里恩中学，将这件球衣完璧归赵。</span></p><p><span><img src=\"http://localhost:8080/ArticleSystem/ArticleSystemImg/166987639796495505.jpg\" alt=\"filename\" width=\"100%\"><br></span></p></div><p></p></div>', 1, '2022-12-01 14:33:25', '科比的篮球生涯穿多个号码，有10号、8号、24号、33号，每个号码都有故事，下面我们就讲述一下这些号码有着怎样的故事。高中时期：33号球衣科比高中时期穿的球衣号码是33号，就读于美国费城劳尔梅里恩中学。因为篮球天赋太过出众，科比一进入校队就成为球队的明星球员，并且打出了名声。高四那年，科比率队拿下5', 'http://localhost:8080/ArticleSystem/ArticleSystemImg/166987683419866123.png', NULL);
-INSERT INTO `as_article` VALUES (750, 10, '热热热二二恶', '覆盖非官方挂号费', 1, '2023-04-21 20:33:44', '覆盖非官方挂号费', 'http://localhost:8080/ArticleSystem/ArticleSystemImg/168208017871665129.jpeg', 24);
+INSERT INTO `as_article` VALUES (750, 10, '“中西绿色发展合作潜力巨大”', '<p><br></p><p><span style=\"text-align: justify;\">正午时分，走进西班牙阿尔科雷斯光伏电站，深蓝色的光伏板随着太阳自动旋转，最大程度地吸收光照。在光伏板下的阴凉处，则是正在休息的羊群。该电站由中国三峡集团运营、占地面积114万平方米，在日常运营中实现了经济、环保等多重目标。</span></p><p><img src=\"https://p3-sign.toutiaoimg.com/tos-cn-i-tjoges91tu/ThNlXHp394Lgb3~noop.image?_iz=58558&amp;from=article.pc_detail&amp;x-expires=1687747190&amp;x-signature=tJBqW7%2BiSFaJLxrkbmBFeg6V5z8%3D\" img_width=\"400\" img_height=\"304\" image_type=\"1\" mime_type=\"image/jpeg\" web_uri=\"tos-cn-i-tjoges91tu/ThNlXHp394Lgb3\" class=\"syl-page-img\" style=\"text-align: justify;\"></p><p style=\"text-align: justify;\">正午时分，走进西班牙阿尔科雷斯光伏电站，深蓝色的光伏板随着太阳自动旋转，最大程度地吸收光照。在光伏板下的阴凉处，则是正在休息的羊群。该电站由中国三峡集团运营、占地面积114万平方米，在日常运营中实现了经济、环保等多重目标。</p><p style=\"text-align: justify;\">西班牙每年光照时长约3000小时，是欧洲光照条件最好的地区之一。近年来，西班牙政府大力推动清洁能源产业发展。西班牙电网公司数据显示，从发电量结构看，去年西班牙清洁能源占比42%，今年有望达到50%。广阔的市场和优越的自然条件，也吸引着中国清洁能源企业。2021年，中国三峡集团在西班牙收购了包括阿尔科雷斯光伏电站在内的13个光伏电站组成的光伏发电集群，总装机572兆瓦，年均发电量约10亿千瓦时。光伏发电集群自2019年12月投入商业运营以来，已累计发电约35亿千瓦时。</p><p style=\"text-align: justify;\">记者采访时，阿尔科雷斯光伏电站正在进行每半年一次的设备清洁。一辆重型清洁车来回穿梭，不到1小时就完成了约200块光伏板的清洁工作（见上图。本报记者颜欢摄）。运维技术人员何塞·罗丹向记者展示：只需轻轻点击手机上的控制程序，将界面上的“自动”模式切换成“清洁”模式，眼前的光伏板便开始缓缓旋转，达到程序设定的倾斜角度，随后开始清洗流程。</p><p style=\"text-align: justify;\">深耕电力行业20多年的三峡欧洲公司资产管理经理阿列杭德罗·卡尔德龙告诉记者，清洁能源产业技术日新月异，目前已实现高度数字化管理。“西班牙企业早在建设阶段，就选择了中国光伏板和智能逆变器，中国产品技术含量高、寿命长、质保周期也长。”</p><p style=\"text-align: justify;\">卡尔德龙指着白色的逆变器箱介绍，这款由中国企业设计生产的逆变器，具有无线通信功能，也是全球首款通过西班牙认证测试的逆变器，意味着其性能可满足西班牙任何类型的光伏电站。逆变器的作用在于将光伏板输出的直流电转换为交流电，以并入电网。卡尔德龙表示：“毫无疑问，中国在光伏产业乃至新能源领域都已处在全球领先地位。”</p><p style=\"text-align: justify;\">光伏电站大多位于开阔的平原地区，场地容易杂草丛生。“我们接手阿尔科雷斯光伏电站后，在当地员工帮助下，找到了附近的牧民米盖尔，让米盖尔家的1500多只羊到电站吃草，既解决了杂草问题，又帮助牧民解决了饲养问题，真正实现了互利共赢。中西绿色发展合作潜力巨大。”三峡欧洲公司副总工程师万明告诉记者。</p><p style=\"text-align: justify;\">西班牙运输、出行与城市议程大臣拉克尔·桑切斯表示，促进经济社会绿色低碳发展是西中两国的共同愿景，“西班牙非常欢迎中国企业前来投资、洽谈合作”。</p>', 1, '2023-04-21 20:33:44', '正午时分，走进西班牙阿尔科雷斯光伏电站，深蓝色的光伏板随着太阳自动旋转，最大程度地吸收光照。在光伏板下的阴凉处，则是正在休息的羊群。该电站由中国三峡集团运营、占地面积114万平方米，在日常运营中实现了经济、环保等多重目标。正午时分，走进西班牙阿尔科雷斯光伏电站，深蓝色的光伏板随着太阳自动旋转，最大程', 'http://localhost:8080/ArticleSystem/ArticleSystemImg/168714255179377930.png', -1);
 
 -- ----------------------------
 -- Table structure for as_article_attachment_ref
@@ -59,10 +59,10 @@ CREATE TABLE `as_article_attachment_ref`  (
 -- ----------------------------
 -- Records of as_article_attachment_ref
 -- ----------------------------
-INSERT INTO `as_article_attachment_ref` VALUES (750, 13);
-INSERT INTO `as_article_attachment_ref` VALUES (750, 22);
 INSERT INTO `as_article_attachment_ref` VALUES (750, 23);
 INSERT INTO `as_article_attachment_ref` VALUES (750, 24);
+INSERT INTO `as_article_attachment_ref` VALUES (750, 25);
+INSERT INTO `as_article_attachment_ref` VALUES (751, 27);
 
 -- ----------------------------
 -- Table structure for as_article_category_ref
@@ -84,7 +84,7 @@ INSERT INTO `as_article_category_ref` VALUES (596, 0);
 INSERT INTO `as_article_category_ref` VALUES (597, 100000010);
 INSERT INTO `as_article_category_ref` VALUES (599, 100000013);
 INSERT INTO `as_article_category_ref` VALUES (600, 100000011);
-INSERT INTO `as_article_category_ref` VALUES (750, 100000009);
+INSERT INTO `as_article_category_ref` VALUES (750, 100000011);
 
 -- ----------------------------
 -- Table structure for as_attachment
@@ -95,7 +95,7 @@ CREATE TABLE `as_attachment`  (
   `attachment_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `attachment_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of as_attachment
@@ -124,6 +124,9 @@ INSERT INTO `as_attachment` VALUES (21, 'Image 3.png', 'D:\\files\\1682084952221
 INSERT INTO `as_attachment` VALUES (22, '1.png', 'D:\\files\\16820850133411.png');
 INSERT INTO `as_attachment` VALUES (23, '1.png', 'D:\\files\\16820851457711.png');
 INSERT INTO `as_attachment` VALUES (24, '44cf974a0e21780e6411e55e7f8babff.jpeg', 'D:\\files\\168267992999744cf974a0e21780e6411e55e7f8babff.jpeg');
+INSERT INTO `as_attachment` VALUES (25, '01_尚硅谷_MySQL基础_课程引入.avi', 'D:\\files\\168510375543001_尚硅谷_MySQL基础_课程引入.avi');
+INSERT INTO `as_attachment` VALUES (26, '02_尚硅谷_MySQL基础_为什么学习数据库.avi', 'D:\\files\\168510554427602_尚硅谷_MySQL基础_为什么学习数据库.avi');
+INSERT INTO `as_attachment` VALUES (27, '3.png', 'D:\\files\\16851065211163.png');
 
 -- ----------------------------
 -- Table structure for as_category
@@ -159,7 +162,7 @@ CREATE TABLE `as_comment`  (
   `comment_content` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '内容',
   `comment_create_time` datetime NULL DEFAULT NULL COMMENT '评论时间',
   PRIMARY KEY (`comment_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 66 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 78 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of as_comment
@@ -168,6 +171,49 @@ INSERT INTO `as_comment` VALUES (44, 559, '付锦芝', 'http://localhost:8080/Ar
 INSERT INTO `as_comment` VALUES (54, 559, '付锦芝', 'http://localhost:8080/ArticleSystem/ArticleSystemImg/166895120316110694.jpeg', '广告分会场', '2022-11-24 20:42:47');
 INSERT INTO `as_comment` VALUES (64, 559, '付锦芝', 'http://localhost:8080/ArticleSystem/ArticleSystemImg/166895120316110694.jpeg', '', '2022-12-03 15:25:33');
 INSERT INTO `as_comment` VALUES (65, 559, '付锦芝', 'http://localhost:8080/ArticleSystem/ArticleSystemImg/166895120316110694.jpeg', 'VG发发发v', '2022-12-03 15:25:53');
+INSERT INTO `as_comment` VALUES (75, 750, 'admin', 'http://localhost:8080/ArticleSystem/ArticleSystemImg/166989579634916664.png', '说的好', '2023-06-19 10:24:29');
+INSERT INTO `as_comment` VALUES (76, 750, 'admin', 'http://localhost:8080/ArticleSystem/ArticleSystemImg/166989579634916664.png', '哈哈哈', '2023-06-19 10:46:50');
+INSERT INTO `as_comment` VALUES (77, 750, '付锦芝', 'http://localhost:8080/ArticleSystem/ArticleSystemImg/166895120316110694.jpeg', '非常好', '2023-06-19 10:48:15');
+
+-- ----------------------------
+-- Table structure for as_menu
+-- ----------------------------
+DROP TABLE IF EXISTS `as_menu`;
+CREATE TABLE `as_menu`  (
+  `menu_id` int(11) NOT NULL AUTO_INCREMENT,
+  `menu_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `menu_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `pid` int(11) NULL DEFAULT NULL,
+  `orderID` int(11) NULL DEFAULT NULL,
+  `icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`menu_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of as_menu
+-- ----------------------------
+INSERT INTO `as_menu` VALUES (1, 'manager?method=managerArticles', '文章管理', NULL, NULL, NULL, NULL);
+INSERT INTO `as_menu` VALUES (2, 'manager?method=managerArticleInsert', '添加文章', NULL, NULL, NULL, NULL);
+INSERT INTO `as_menu` VALUES (3, 'userManage', '用户管理', NULL, NULL, NULL, NULL);
+
+-- ----------------------------
+-- Table structure for as_role
+-- ----------------------------
+DROP TABLE IF EXISTS `as_role`;
+CREATE TABLE `as_role`  (
+  `role_id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `perstr` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`role_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of as_role
+-- ----------------------------
+INSERT INTO `as_role` VALUES (1, 'admin', '什么都管理', '1,2,3');
+INSERT INTO `as_role` VALUES (2, 'user', '管理自己的东西', '1,2');
 
 -- ----------------------------
 -- Table structure for as_user
@@ -180,15 +226,15 @@ CREATE TABLE `as_user`  (
   `user_phone_number` char(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '用户电话名',
   `user_role` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'user' COMMENT '用户角色',
   `user_avatar` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像',
+  `user_role_id` int(11) NOT NULL,
   PRIMARY KEY (`user_id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 37 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of as_user
 -- ----------------------------
-INSERT INTO `as_user` VALUES (7, '付锦芝', 'c4ca4238a0b923820dcc509a6f75849b', '15025044541', 'user', 'http://localhost:8080/ArticleSystem/ArticleSystemImg/166895120316110694.jpeg');
-INSERT INTO `as_user` VALUES (10, 'admin', 'c4ca4238a0b923820dcc509a6f75849b', '15087277758', 'admin', 'http://localhost:8080/ArticleSystem/ArticleSystemImg/166989579634916664.png');
-INSERT INTO `as_user` VALUES (11, '苏令', 'c4ca4238a0b923820dcc509a6f75849b', '15025044546', 'user', 'http://localhost:8080/ArticleSystem/ArticleSystemImg/166904074529628274.jpg');
-INSERT INTO `as_user` VALUES (36, '刘晓丽', 'c4ca4238a0b923820dcc509a6f75849b', '15025044549', 'user', NULL);
+INSERT INTO `as_user` VALUES (7, '付锦芝', 'c4ca4238a0b923820dcc509a6f75849b', '15025044541', '普通用户', 'http://localhost:8080/ArticleSystem/ArticleSystemImg/166895120316110694.jpeg', 2);
+INSERT INTO `as_user` VALUES (10, 'admin', 'c4ca4238a0b923820dcc509a6f75849b', '15087277758', 'admin', 'http://localhost:8080/ArticleSystem/ArticleSystemImg/166989579634916664.png', 1);
+INSERT INTO `as_user` VALUES (11, '苏令', 'c4ca4238a0b923820dcc509a6f75849b', '15025044546', '普通用户', 'http://localhost:8080/ArticleSystem/ArticleSystemImg/166904074529628274.jpg', 2);
 
 SET FOREIGN_KEY_CHECKS = 1;
